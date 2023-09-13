@@ -1,0 +1,4 @@
+*
+!.gitignore
+!dark.lua
+!light.lua
