@@ -222,7 +222,7 @@ function theme.highlights(colors, config)
       healthSuccess = { fg = colors.green },
       healthWarning = { fg = colors.warn },
       -- the column separating vertically split windows
-      VertSplit = { fg = colors.border },
+      VertSplit = { fg = colors.bg },
       EndOfBuffer = { fg = colors.gray },
       -- diff
       diffAdded = { fg = colors.green },
@@ -693,16 +693,16 @@ function theme.highlights(colors, config)
       p['NotifyTRACETitle'] = { fg = colors.hint }
     end
     if config.plugins.trouble then
-      p['TroubleFile'] = { fg = colors.purple }
-      p['TroubleCount'] = { fg = colors.red }
+      p['TroubleFile'] = { fg = colors.blue }
+      p['TroubleCount'] = { fg = colors.purple }
       p['TroubleNormal'] = { fg = colors.fg }
-      p['TroubleText'] = { fg = colors.fg }
+      p['TroubleText'] = { fg = colors.green }
       p['TroubleLocation'] = { fg = colors.cyan }
       p['TroubleFoldIcon'] = { fg = colors.purple }
-      p['TroubleIndent'] = { fg = colors.high_gray }
+      p['TroubleIndent'] = { fg = colors.low_gray }
       p['TroubleTextError'] = { link = 'DiagnosticError' }
       p['TroubleTextWarning'] = { link = 'DiagnosticWarn' }
-      p['TroubleTextInformation'] = { fg = colors.blue }
+      p['TroubleTextInformation'] = { link = 'DiagnosticInformation' }
       p['TroubleTextHint'] = { link = 'DiagnosticHint' }
     end
     if config.plugins.neogit then

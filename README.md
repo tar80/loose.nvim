@@ -61,7 +61,7 @@ require("loose").setup({
     borders = true, -- Enable split window borders
     fade_nc = false, -- Change the background color of other buffers
     fade_tr = false, -- Transparent background of current buffer while changing background color of other buffers
-    -- "NONE"|"[bold][, underline][, italic][, ...]"]
+    -- "NONE"|"[bold][,underline][,italic][,...]"]
     styles = {
         comments = "NONE",
         strings = "NONE",
