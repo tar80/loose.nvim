@@ -61,7 +61,7 @@ colors.feline = {
   green = '#79A269',
   olive = '#A89E67',
   orange = '#BB8970',
-  pink = '#C36A74',
+  red = '#C36A74',
   purple = '#A176B5',
 }
 

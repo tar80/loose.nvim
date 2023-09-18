@@ -10,7 +10,7 @@ M.theme = {
   green = "#279A1A",
   olive = "#A39223",
   orange = "#D76400",
-  pink = "#C61D37",
+  red = "#C61D37",
   purple = "#9C3FC6",
 }
 
@@ -18,18 +18,18 @@ M.vi_mode = {
   NORMAL = M.theme.fg,
   INSERT = M.theme.cyan,
   REPLACE = M.theme.orange,
-  OP = M.theme.pink,
+  OP = M.theme.red,
   VISUAL = M.theme.purple,
   LINES = M.theme.purple,
   BLOCK = M.theme.purple,
   ['V-REPLACE'] = M.theme.purple,
   ENTER = M.theme.cyan,
   MORE = M.theme.cyan,
-  SELECT = M.theme.pink,
+  SELECT = M.theme.red,
   COMMAND = M.theme.green,
   SHELL = M.theme.green,
   TERM = M.theme.blue,
-  NONE = M.theme.pink,
+  NONE = M.theme.red,
 }
 
 return M
