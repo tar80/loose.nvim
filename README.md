@@ -10,10 +10,10 @@ the color does not always come out beautifully.
 
 ![sample](https://github.com/tar80/test/assets/45842304/0be2c3dd-9cf5-4cb3-9c5d-58f809261062)
 
-You can choose between a `light` template and a `dark` template. If `user.lua` exists in the
+You can choose between the `light` template and the `dark` template. If `user.lua` exists in the
 `loose/lua/loose/color` directory, you can also select `user` in the template.
 If you need the user template, create one by copying another template.  
-If the template has a `feline` setting, a Feline theme with the same name will also be output.  
+If the template has a `colors.feline` table, a Feline theme with the same name will also be output.  
 
 Note. `Feline` has been archived, so it is not recommended to install it from now on.  
 I might start using lualine.nvim eventually, but I'll probably stick with feline.nvim for a while.  
@@ -30,7 +30,8 @@ require('loose.util').create_theme(name, temlate, background, rbg)
 require('loose.util').delete_theme()
 
 ---Color palette reference
-require('loose').colors(name)
+local colors = require('loose').colors(name)
+vim.print(colors)
 ```
 
 Each color consists of three types: high, normal and low,
