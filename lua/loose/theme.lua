@@ -107,6 +107,8 @@ function theme.highlights(colors, config)
       Conceal = { bg = colors.bg },
       -- the character under the cursor
       Cursor = { fg = colors.fg, bg = colors.none, style = 'reverse' },
+      -- the search word under the cursor
+      CurSearch = { link = 'IncSearch' },
       -- like Cursor, but used when in IME mode
       CursorIM = { fg = colors.fg, bg = colors.none, style = 'reverse' },
       -- directory names (and other special names in listings)

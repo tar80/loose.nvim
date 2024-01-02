@@ -6,7 +6,7 @@
 
 Loose has a function to output a palette (theme) that matches the background color.  
 Since the difference from the default background color is only increased or decreased,  
-the color does not always come out beautifully.  
+colors does not always come out beautifully.  
 
 ![sample](https://github.com/tar80/test/assets/45842304/0be2c3dd-9cf5-4cb3-9c5d-58f809261062)
 
