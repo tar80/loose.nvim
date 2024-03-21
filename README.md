@@ -24,7 +24,7 @@ I might start using lualine.nvim eventually, but I'll probably stick with feline
 ---@param template string Template name "light"|"dark"|"user"
 ---@param bakground string Base background color "light"|"dark"
 ---@param rgb string Specify the background color in the format "#rrggbb"
-require('loose.util').create_theme(name, temlate, background, rbg)
+require('loose.util').create_theme(name, temlate, background, rgb)
 
 ---Delete user color palette
 require('loose.util').delete_theme()
@@ -116,7 +116,7 @@ require("loose").setup({
 })
 ```
 
-## statusline
+## Statusline
 
 To use Feline's color theme, do the following:  
 

@@ -782,36 +782,46 @@ function theme.highlights(colors, config)
       p['WhichKeyFloat'] = { bg = colors.nc }
     end
     if config.plugins.lspsaga then
-      p['LspFloatWinNormal'] = { fg = colors.fg, bg = colors.bg }
-      p['LspFloatWinBorder'] = { fg = colors.purple }
-      p['DiagnosticError'] = { fg = colors.error }
-      p['DiagnosticWarning'] = { fg = colors.warn }
-      p['DiagnosticInformation'] = { fg = colors.info }
-      p['DiagnosticHint'] = { fg = colors.hint }
-      p['LspSagaDiagnosticBorder'] = { fg = colors.gray }
-      p['LspSagaDiagnosticHeader'] = { fg = colors.blue }
-      p['LspSagaDiagnosticTruncateLine'] = { fg = colors.highlight }
-      p['ProviderTruncateLine'] = { fg = colors.highlight }
-      p['LspSagaShTruncateLine'] = { fg = colors.highlight }
-      p['LspSagaDocTruncateLine'] = { fg = colors.highlight }
-      p['LineDiagTruncateLine'] = { fg = colors.highlight }
-      p['LspSagaBorderTitle'] = { fg = colors.cyan }
-      p['LspSagaHoverBorder'] = { fg = colors.blue }
-      p['LspSagaRenameBorder'] = { fg = colors.green }
-      p['LspSagaDefPreviewBorder'] = { fg = colors.green }
-      p['LspSagaCodeActionTitle'] = { fg = colors.blue }
-      p['LspSagaCodeActionContent'] = { fg = colors.purple }
-      p['LspSagaCodeActionBorder'] = { fg = colors.blue }
-      p['LspSagaCodeActionTruncateLine'] = { fg = colors.highlight }
-      p['LspSagaSignatureHelpBorder'] = { fg = colors.low_red }
-      p['LspSagaFinderSelection'] = { fg = colors.green }
-      p['LspSagaAutoPreview'] = { fg = colors.red }
-      p['ReferencesCount'] = { fg = colors.purple }
-      p['DefinitionCount'] = { fg = colors.purple }
-      p['DefinitionPreviewTitle'] = { fg = colors.green }
-      p['DefinitionIcon'] = { fg = colors.blue }
-      p['ReferencesIcon'] = { fg = colors.blue }
-      p['TargetWord'] = { fg = colors.cyan }
+      p['SagaTitle'] = { fg = colors.info }
+      p['SagaBorder'] = { fg = colors.border, bg = colors.nc }
+      p['SagaNormal'] = { fg = colors.fg, bg = colors.float }
+      p['SagaToggle'] = { fg = colors.high_purple }
+      p['SagaBeacon'] = { fg = colors.olive }
+      p['SagaVirtLine'] = { fg = colors.low_purple }
+      p['SagaSpinnerTitle'] = { fg = colors.match, bg = colors.nc }
+      p['SagaSpinner'] = { fg = colors.hint, bg = colors.nc }
+      p['SagaText'] = { fg = colors.fg }
+      p['SagaSelect'] = { fg = colors.match }
+      p['SagaSearch'] = { fg = colors.bg, bg = colors.high_orange }
+      p['SagaFinderFname'] = { fg = colors.high_cyan }
+      p['SagaDetail'] = { fg = colors.warn }
+      p['SagaInCurrent'] = { fg = colors.low_purple }
+      p['SageCount'] = { fg = colors.orange }
+      p['SagaSep'] = { fg = colors.low_olive }
+      p['ActionFix'] = { fg = colors.green }
+      p['ActionPreviewNormal'] = { link = 'SagaNormal' }
+      p['ActionPreviewBorder'] = { link = 'SagaBorder' }
+      p['ActionPreviewTitle'] = { link = 'SagaTitle' }
+      p['CodeActionText'] = { link = 'SagaText' }
+      p['CodeActionNumber'] = { fg = colors.high_purple }
+      p['HoverNormal'] = { link = 'SagaNormal' }
+      p['HoverBorder'] = { fg = colors.border, bg = colors.bg }
+      p['RenameBorder'] = { link = 'sagaBorder' }
+      p['RenameNormal'] = { link = 'SagaNormal' }
+      p['RenameMatch'] = { link = 'SagaSearch' }
+      p['DiagnosticBorder'] = { link = 'SagaBorder' }
+      p['DiagnosticNormal'] = { link = 'SagaNormal' }
+      p['DiagnosticText'] = { link = 'SagaText' }
+      p['DiagnosticShowNormal'] = { link = 'SagaNormal' }
+      p['DiagnosticShowBorder'] = { link = 'sagaBorder' }
+      p['SagaLightBulb'] = { fg = colors.high_olive }
+      p['TerminalBorder'] = { link = 'SagaBorder' }
+      p['TerminalNormal'] = {}
+      p['SagaImpIcon'] = { fg = colors.warn }
+      p['SagaWinbarSep'] = { fg = colors.purple }
+      p['SagaWinbarFileName'] = { fg = colors.green }
+      p['SagaWinbarFolderName'] = { fg = colors.blue }
+      p['SagaWinbarFolder'] = { fg = colors.cyan }
     end
     if config.plugins.bufferline then
       p['BufferLineIndicatorSelected'] = { fg = colors.olive }

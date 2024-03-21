@@ -44,7 +44,7 @@ local colors = {
 }
 
 colors.error = colors.high_red
-colors.warn = colors.high_olive
+colors.warn = colors.high_orange
 colors.info = colors.high_blue
 colors.hint = colors.high_purple
 
