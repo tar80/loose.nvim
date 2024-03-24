@@ -594,27 +594,28 @@ function theme.highlights(colors, config)
       p['CmpItemAbbrDeprecated'] = { fg = colors.gray, style = 'underline' }
       p['CmpItemAbbrMatch'] = { fg = colors.match, style = 'bold' }
       p['CmpItemAbbrMatchFuzzy'] = { fg = colors.match, style = 'bold' }
-      p['CmpItemMenu'] = { fg = colors.gray }
       p['CmpItemKind'] = { fg = colors.low_gray }
-      p['CmpItemKindText'] = { fg = colors.low_gray }
-      p['CmpItemKindMethod'] = { fg = colors.low_blue }
-      p['CmpItemKindFunction'] = { fg = colors.low_blue }
-      p['CmpItemKindConstructor'] = { fg = colors.low_olive }
-      p['CmpItemKindField'] = { fg = colors.low_olive }
+      p['CmpItemMenu'] = { fg = colors.gray }
       p['CmpItemKindClass'] = { fg = colors.low_red }
+      p['CmpItemKindConstant'] = { fg = colors.low_gray }
+      p['CmpItemKindConstructor'] = { fg = colors.low_olive }
+      p['CmpItemKindCopilot'] = { fg = colors.gray }
+      p['CmpItemKindEnum'] = { fg = colors.low_orange }
+      p['CmpItemKindEnumMember'] = { fg = colors.low_orange }
+      p['CmpItemKindField'] = { fg = colors.low_olive }
+      p['CmpItemKindFile'] = { fg = colors.low_gray }
+      p['CmpItemKindFolder'] = { fg = colors.low_cyan }
+      p['CmpItemKindFunction'] = { fg = colors.low_blue }
       p['CmpItemKindInterface'] = { fg = colors.low_red }
+      p['CmpItemKindKeyword'] = { fg = colors.low_purple }
+      p['CmpItemKindMethod'] = { fg = colors.low_blue }
       p['CmpItemKindModule'] = { fg = colors.low_cyan }
       p['CmpItemKindProperty'] = { fg = colors.low_gray }
-      p['CmpItemKindValue'] = { fg = colors.low_gray }
-      p['CmpItemKindEnum'] = { fg = colors.low_orange }
-      p['CmpItemKindKeyword'] = { fg = colors.low_purple }
       p['CmpItemKindSnippet'] = { fg = colors.cyan }
-      p['CmpItemKindFile'] = { fg = colors.low_green }
-      p['CmpItemKindEnumMember'] = { fg = colors.low_orange }
-      p['CmpItemKindConstant'] = { fg = colors.low_gray }
       p['CmpItemKindStruct'] = { fg = colors.low_olive }
+      p['CmpItemKindText'] = { fg = colors.low_gray }
       p['CmpItemKindTypeParameter'] = { fg = colors.low_cyan }
-      p['CmpItemKindCopilot'] = { fg = colors.gray }
+      p['CmpItemKindValue'] = { fg = colors.low_gray }
       p['CmpGhostText'] = { fg = colors.selection, style = 'italic' }
     end
     if config.plugins.skkeleton_indicator then
@@ -784,9 +785,9 @@ function theme.highlights(colors, config)
     if config.plugins.lspsaga then
       p['SagaTitle'] = { fg = colors.info }
       p['SagaBorder'] = { fg = colors.border, bg = colors.nc }
-      p['SagaNormal'] = { fg = colors.fg, bg = colors.float }
+      p['SagaNormal'] = { fg = colors.fg, bg = colors.bg }
       p['SagaToggle'] = { fg = colors.high_purple }
-      p['SagaBeacon'] = { fg = colors.olive }
+      p['SagaBeacon'] = { bg = colors.high_red }
       p['SagaVirtLine'] = { fg = colors.low_purple }
       p['SagaSpinnerTitle'] = { fg = colors.match, bg = colors.nc }
       p['SagaSpinner'] = { fg = colors.hint, bg = colors.nc }
