@@ -15,9 +15,6 @@ You can choose between the `light` template and the `dark` template. If `user.lu
 If you need the user template, create one by copying another template.  
 If the template has a `colors.feline` table, a Feline theme with the same name will also be output.  
 
-Note. `Feline` has been archived, so it is not recommended to install it from now on.  
-I might start using lualine.nvim eventually, but I'll probably stick with feline.nvim for a while.  
-
 ```lua
 ---Create user color palette
 ---@param name string Palette name
@@ -52,6 +49,7 @@ the author's favorite plugins are also added.
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
 - [Vim-sandwich](https://github.com/machakann/vim-sandwich)
+- [rainbow-delimiters.nvim](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
 
 ## Configuration
 
@@ -82,7 +80,7 @@ require("loose").setup({
     custom_highlights = {},
     plugins = {
         lsp = true,
-        treesitter = false,
+        treesitter = true,
         treesitter_context = false,
         confliet_marker = false,
         fret = false,
@@ -95,6 +93,8 @@ require("loose").setup({
         dashboard = false,
         notify = false,
         trouble = false,
+        rainbow_delimiters_high = false, -- Rainbow Delimiters can choose one of
+        rainbow_delimiters_low = false,  -- either high contrast or low contrast
         neogit = false,
         gitsigns = false,
         telescope = false, -- If "border_fade" is specified, the border background fades

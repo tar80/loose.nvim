@@ -22,7 +22,7 @@ config.options = {
   },
   -- Override default highlight groups
   custom_highlights = {},
-  plugins = { lsp = true },
+  plugins = { lsp = true, treesitter = true },
 }
 
 -- config.options = {}

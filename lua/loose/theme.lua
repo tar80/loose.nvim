@@ -13,13 +13,13 @@ function theme.highlights(colors, config)
     -- Syntax highlight groups
     local syntax = {
       -- int, long, char, etc.
-      Type = { fg = colors.olive },
+      Type = { fg = colors.low_olive },
       -- static, register, volatile, etc.
-      StorageClass = { fg = colors.purple },
+      StorageClass = { fg = colors.high_purple },
       -- struct, union, enum, etc.
       Structure = { fg = colors.olive },
       -- any constant
-      Constant = { fg = colors.orange },
+      Constant = { fg = colors.high_gray },
       -- any character constant: 'c', '\n'
       Character = { fg = colors.green },
       -- a number constant: 5
@@ -31,7 +31,7 @@ function theme.highlights(colors, config)
       -- any statement
       Statement = { fg = colors.gray },
       -- case, default, etc.
-      Label = { fg = colors.cyan },
+      Label = { fg = colors.high_purple },
       -- sizeof", "+", "*", etc.
       Operator = { fg = colors.red },
       -- try, catch, throw
@@ -45,13 +45,13 @@ function theme.highlights(colors, config)
       -- same as Define
       Macro = { fg = colors.high_cyan },
       -- A typedef
-      Typedef = { fg = colors.purple },
+      Typedef = { fg = colors.low_purple },
       -- preprocessor #if, #else, #endif, etc.
       PreCondit = { fg = colors.purple },
       -- any special symbol
       Special = { fg = colors.olive },
       -- special character in a constant
-      SpecialChar = { fg = colors.high_olive },
+      SpecialChar = { fg = colors.olive },
       -- you can use CTRL-] on this
       Tag = { fg = colors.green },
       -- character that needs attention like , or .
@@ -76,7 +76,7 @@ function theme.highlights(colors, config)
       -- normal any other keyword
       Repeat = { fg = colors.purple, style = config.styles.keywords },
       -- normal function names
-      Function = { fg = colors.olive, style = config.styles.functions },
+      Function = { fg = colors.blue, style = config.styles.functions },
       -- any variable name
       Identifier = { fg = colors.fg, style = config.styles.variables },
       -- any string
@@ -219,10 +219,10 @@ function theme.highlights(colors, config)
       VisualMode = { fg = colors.high_purple, bg = colors.none, style = 'reverse' },
       -- Command mode message in the cmdline
       CommandMode = { fg = colors.high_olive, bg = colors.none, style = 'reverse' },
-      Warnings = { fg = colors.warn },
+      Warnings = { link = 'WarningMsg' },
       healthError = { fg = colors.error },
       healthSuccess = { fg = colors.green },
-      healthWarning = { fg = colors.warn },
+      healthWarning = { link = 'WarningMsg' },
       -- the column separating vertically split windows
       VertSplit = { fg = colors.bg },
       EndOfBuffer = { fg = colors.gray },
@@ -278,7 +278,7 @@ function theme.highlights(colors, config)
   local function load_treesitter()
     local ex = {}
 
-    if config.plugins.treesitter and vim.fn.has('nvim-0.8') then
+    if config.plugins.treesitter and vim.fn.has('nvim-0.10') then
       -- TreeSitter highlight groups
       ex = {
         -- Annotations that can be attached to the code to denote some kind of meta information. e.g. C++/Dart attributes.
@@ -286,51 +286,77 @@ function theme.highlights(colors, config)
         -- Boolean literals: `True` and `False` in Python.
         ['@boolean'] = { link = 'Boolean' },
         -- Character literals: `'a'` in C.
-        ['@character'] = { fg = colors.green },
+        ['@character'] = { link = 'Character' },
+        ['@character.special'] = { link = 'SpecialChar' },
         -- Line comments and block comments.
-        ['@comment'] = { fg = colors.low_gray, style = config.styles.comments },
+        ['@comment'] = { link = 'Comment' },
         -- Keywords related to conditionals: `if`, `when`, `cond`, etc.
         ['@conditional'] = { link = 'Conditional' },
         -- Constants identifiers. These might not be semantically constant. E.g. uppercase variables in Python.
-        ['@constant'] = { fg = colors.olive },
+        ['@constant'] = { link = 'Constant' },
         -- Built-in constant values: `nil` in Lua.
         ['@constant.builtin'] = { fg = colors.orange },
         -- Constants defined by macros: `NULL` in C.
-        ['@constant.macro'] = { fg = colors.red },
+        ['@constant.macro'] = { fg = colors.orange },
         -- Constructor calls and definitions: `{}` in Lua, and Java constructors.
         ['@constructor'] = { fg = colors.olive },
         ['@define'] = { link = 'Define' },
+        -- Added text (for diff files)
+        -- ['@diff.plus'] = { fg = 'Added', bg = colors.diff_add_bg },
+        -- Deleted text (for diff files)
+        -- ['@diff.minus'] = { bg = colors.diff_remove_bg },
+        -- Changed text (for diff files)
+        -- ['@diff.delta'] = { bg = colors.diff_change_bg },
         -- Syntax/parser errors. This might highlight large sections of code while the user is typing
         -- still incomplete code, use a sensible highlight.
-        ['@error'] = { fg = colors.error },
+        ['@error'] = { link = 'Error' },
         -- Exception related keywords: `try`, `except`, `finally` in Python.
-        ['@exception'] = { fg = colors.purple },
+        ['@exception'] = { link = 'Exception' },
         -- Object and struct fields.
-        ['@field'] = { link = 'Identifier' },
+        ['@field'] = { fg = colors.gray },
         -- Floating-point number literals.
         ['@float'] = { link = 'Float' },
         -- Function calls and definitions.
-        ['@function'] = { fg = colors.blue, style = config.styles.functions },
+        ['@function'] = { link = 'Function' },
         -- Built-in functions: `print` in Lua.
-        ['@function.builtin'] = { fg = colors.high_blue, style = config.styles.functions },
-        ['@function.call'] = { fg = colors.high_blue, style = config.styles.functions },
+        ['@function.builtin'] = { link = 'Function' },
+        ['@function.call'] = { link = 'Function' },
         -- Macro defined functions (calls and definitions): each `macro_rules` in Rust.
-        ['@function.macro'] = { fg = colors.high_blue },
+        ['@function.macro'] = { link = 'Function' },
+        -- Method calls and definitions.
+        ['@function.method'] = { link = 'Function' },
         -- File or module inclusion keywords: `#include` in C, `use` or `extern crate` in Rust.
-        ['@include'] = { fg = colors.high_blue },
+        ['@include'] = { fg = colors.high_cyan },
         -- Keywords that don't fit into other categories.
         ['@keyword'] = { link = 'Keyword' },
-        -- Keywords used to define a function: `function` in Lua, `def` and `lambda` in Python.
+        -- Keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+        ['@keyword.coroutine'] = { fg = colors.bule, style = 'bold' },
+        ['@keyword.conditional'] = { link = 'Conditional' },
+        -- KeyworTernary operator. (e.g. `?`, `:`)
+        ['@keyword.conditional.ternary'] = { link = '@keyword.operator' },
+        -- Keywords that define a function (e.g. `func` in Go, `def` in Python).
         ['@keyword.function'] = { fg = colors.cyan, style = config.styles.keywords },
         -- Unary and binary operators that are English words: `and`, `or` in Python; `sizeof` in C.
-        ['@keyword.operator'] = { fg = colors.red },
+        ['@keyword.operator'] = { fg = colors.red, style = config.styles.keywords },
+        -- File or module import keywords: `import` in TypeScript.
+        ['@keyword.import'] = { fg = colors.cyan, style = config.styles.keywords },
+        -- Keywords defining composite types (e.g. `struct`, `enum`)
+        ['@keyword.type'] = { fg = colors.olive },
+        -- Keywords definining type modifiers (e.g. `const`, `static`, `public`)
+        ['@keyword.modifier'] = { fg = colors.low_purple },
+        -- Keywords related to loops (e.g. `for`, `while`)
+        ['@keyword.repeat'] = { link = 'Repeat' },
         -- Keywords like `return` and `yield`.
         ['@keyword.return'] = { fg = colors.cyan, style = config.styles.keywords },
         -- GOTO labels: `label:` in C, and `::label::` in Lua.
         ['@label'] = { link = 'Label' },
         ['@Macro'] = { link = 'Macro' },
         -- Method calls and definitions.
-        ['@method'] = { fg = colors.high_blue, style = config.styles.functions },
+        ['@method'] = { fg = colors.blue },
+        -- Modules or namespaces: `a:`, `v:` in Vim;
+        ['@module'] = { fg = colors.olive },
+        -- Built-in modules or namespaces.
+        ['@module.builtin'] = { link = '@module' },
         -- Identifiers referring to modules and namespaces.
         ['@namespace'] = { fg = colors.olive },
         -- Numeric literals that don't fit into other categories.
@@ -338,17 +364,17 @@ function theme.highlights(colors, config)
         -- Binary or unary operators: `+`, and also `->` and `*` in C.
         ['@operator'] = { link = 'Operator' },
         -- Parameters of a function.
-        ['@parameter'] = { fg = colors.cyan },
+        ['@parameter'] = { fg = colors.high_blue },
         -- References to parameters of a function.
         ['@parameter.reference'] = { fg = colors.red },
         -- Same as `TSField`.
-        ['@property'] = { link = 'Identifier' },
+        ['@property'] = { fg = colors.gray },
         -- Punctuation delimiters: Periods, commas, semicolons, etc.
         ['@punctuation.delimiter'] = { fg = colors.low_olive },
         -- Brackets, braces, parentheses, etc.
         ['@punctuation.bracket'] = { fg = colors.low_olive },
         -- Special punctuation that doesn't fit into the previous categories.
-        ['@punctuation.special'] = { fg = colors.low_olive },
+        ['@punctuation.special'] = { fg = colors.olive },
         -- Keywords related to loops: `for`, `while`, etc.
         ['@repeat'] = { link = 'Repeat' },
         -- String literals.
@@ -356,16 +382,18 @@ function theme.highlights(colors, config)
         -- Escape characters within a string: `\n`, `\t`, etc.
         ['@string.escape'] = { fg = colors.high_green },
         -- Regular expression literals.
-        ['@string.regex'] = { fg = colors.high_green },
-        ['@string.special'] = { fg = colors.high_green },
+        ['@string.regexp'] = { fg = colors.high_green },
+        ['@string.special'] = { link = 'Special' },
+        ['@string.special.path'] = { fg = colors.green },
+        ['@string.special.url'] = { fg = colors.blue, style = 'underline' },
         -- Identifiers referring to symbols or atoms.
         ['@symbol'] = { fg = colors.cyan },
         -- Tags like HTML tag names.
         ['@tag'] = { fg = colors.olive },
         -- HTML tag attributes.
-        ['@tag.attribute'] = { fg = colors.high_cyan },
+        ['@tag.attribute'] = { fg = colors.red },
         -- Tag delimiters like `<` `>` `/`.
-        ['@tag.delimiter'] = { fg = colors.high_olive },
+        ['@tag.delimiter'] = { fg = colors.low_olive },
         -- Non-structured text. Like text in a markup language.
         ['@text'] = { fg = colors.fg },
         -- Text to be represented in bold.
@@ -395,13 +423,17 @@ function theme.highlights(colors, config)
         -- Text representation of a danger note.
         ['@danger'] = { fg = colors.error, style = 'bold' },
         -- Type (and class) definitions and annotations.
-        ['@type'] = { fg = colors.low_cyan },
+        ['@type'] = { link = 'Type' },
         -- Built-in types: `i32` in Rust.
-        ['@type.builtin'] = { fg = colors.low_blue },
-        -- Variable names that don't fit into other categories.
+        ['@type.builtin'] = { fg = colors.low_olive },
+        -- Various variable names.
         ['@variable'] = { fg = colors.fg, style = config.styles.variables },
-        -- Variable names defined by the language: `this` or `self` in Javascript.
+        -- Built-in variable names (e.g. `this`, `self`)
         ['@variable.builtin'] = { fg = colors.high_gray, style = config.styles.variables },
+        -- Paramaters of a function.
+        ['@variable.parameter'] = { link = '@parameter' },
+        -- Object and struct fields.
+        ['@variable.member'] = { fg = colors.gray, style = config.styles.variables },
       }
     else
       -- Standard filetype highlight groups
@@ -510,31 +542,33 @@ function theme.highlights(colors, config)
         LspCodeLens = { fg = colors.high_gray },
         LspInlayHint = { fg = colors.selection, style = 'italic,bold' },
 
-        ['@lsp.type.namespace'] = { link = '@namespace' },
-        ['@lsp.type.type'] = { link = '@type' },
-        ['@lsp.type.class'] = { link = '@type' },
-        ['@lsp.type.enum'] = { link = '@type' },
-        ['@lsp.type.interface'] = { link = '@type' },
-        ['@lsp.type.struct'] = { link = '@type' },
-        ['@lsp.type.typeParameter'] = { link = '@type' },
+        ['@lsp.type.class'] = { link = 'Type' },
+        ['@lsp.type.event'] = { link = 'WarningMsg' },
         ['@lsp.type.parameter'] = { link = '@parameter' },
-        ['@lsp.type.variable'] = { link = '@variable' },
-        ['@lsp.type.property'] = { link = '@property' },
-        ['@lsp.type.enumMember'] = { link = '@constant' },
-        ['@lsp.type.function'] = { link = '@function' },
-        ['@lsp.type.method'] = { link = '@method' },
-        ['@lsp.type.macro'] = { link = '@constant.macro' },
+        ['@lsp.type.type'] = { fg = colors.low_olive },
+        ['@lsp.type.variable'] = { fg = colors.none },
+        ['@lsp.mod.documentation'] = { fg = colors.low_gray, style = config.styles.keywords },
+
         ['@lsp.type.keyword'] = { link = '@keyword' },
-        ['@lsp.type.comment'] = { link = '@comment' },
+        ['@lsp.type.property'] = { link = '@property' },
+        ['@lsp.type.method'] = { link = '@method' },
+
+        ['@lsp.type.namespace'] = { link = '@namespace' },
+        ['@lsp.type.enum'] = { link = 'Type' },
+        ['@lsp.type.interface'] = { link = 'Type' },
+        ['@lsp.type.struct'] = { link = 'Type' },
+        ['@lsp.type.typeParameter'] = { link = '@parameter' },
+        ['@lsp.type.enumMember'] = { link = '@constant' },
+        ['@lsp.type.macro'] = { link = '@constant.macro' },
         ['@lsp.type.string'] = { link = '@string' },
         ['@lsp.type.number'] = { link = '@number' },
         ['@lsp.type.regexp'] = { link = '@string.regex' },
         ['@lsp.type.operator'] = { link = '@operator' },
         ['@lsp.type.decorator'] = { link = '@function.macro' },
-        ['@lsp.mod.deprecated'] = { style = 'strikethrough' },
+        ['@lsp.mod.deprecated'] = { style = 'underline' },
         ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
-        ['@lsp.typemod.variable.defaultLibrary'] = { link = '@variable.builtin' },
+        ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
 
         DiagnosticError = { link = 'LspDiagnosticsDefaultError' },
         DiagnosticWarn = { link = 'LspDiagnosticsDefaultWarning' },
@@ -707,6 +741,24 @@ function theme.highlights(colors, config)
       p['TroubleTextWarning'] = { link = 'DiagnosticWarn' }
       p['TroubleTextInformation'] = { link = 'DiagnosticInformation' }
       p['TroubleTextHint'] = { link = 'DiagnosticHint' }
+    end
+    if config.plugins.rainbow_delimiters_high then
+      p['RainbowDelimiterRed'] = { fg = colors.high_red }
+      p['RainbowDelimiterYellow'] = { fg = colors.high_olive }
+      p['RainbowDelimiterBlue'] = { fg = colors.high_blue }
+      p['RainbowDelimiterOrange'] = { fg = colors.high_orange }
+      p['RainbowDelimiterGreen'] = { fg = colors.high_green }
+      p['RainbowDelimiterViolet'] = { fg = colors.high_purple }
+      p['RainbowDelimiterCyan'] = { fg = colors.high_cyan }
+    end
+    if config.plugins.rainbow_delimiters_low then
+      p['RainbowDelimiterRed'] = { fg = colors.low_red }
+      p['RainbowDelimiterYellow'] = { fg = colors.low_olive }
+      p['RainbowDelimiterBlue'] = { fg = colors.low_blue }
+      p['RainbowDelimiterOrange'] = { fg = colors.low_orange }
+      p['RainbowDelimiterGreen'] = { fg = colors.low_green }
+      p['RainbowDelimiterViolet'] = { fg = colors.low_purple }
+      p['RainbowDelimiterCyan'] = { fg = colors.low_cyan }
     end
     if config.plugins.neogit then
       p['NeogitBranch'] = { fg = colors.purple }
