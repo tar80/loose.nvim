@@ -68,7 +68,8 @@ require("loose").setup({
         functions = "NONE",
         variables = "NONE",
         diagnostics = "underline",
-        references = "underline"
+        references = "underline",
+        virtualtext = "NONE",
     },
     disable = {
         background = false, -- Remove background color and enable transparency (fade_xx is ignored)

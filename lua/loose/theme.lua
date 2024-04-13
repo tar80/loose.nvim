@@ -67,7 +67,7 @@ function theme.highlights(colors, config)
       -- any erroneous construct
       Error = { fg = colors.error, bg = colors.none, style = 'bold' },
       -- anything that needs extra attention; mostly the keywords TODO FIXME and XXX
-      Todo = { fg = colors.high_olive, bg = colors.none, style = 'bold' },
+      Todo = { fg = colors.bg, bg = colors.high_olive },
       Comment = { fg = colors.low_gray, style = config.styles.comments },
       -- normal if, then, else, endif, switch, etc.
       Conditional = { fg = colors.purple, style = config.styles.keywords },
@@ -106,11 +106,11 @@ function theme.highlights(colors, config)
       -- placeholder characters substituted for concealed text (see 'conceallevel')
       Conceal = { bg = colors.bg },
       -- the character under the cursor
-      Cursor = { fg = colors.fg, bg = colors.none, style = 'reverse' },
+      Cursor = { fg = colors.fg, style = 'reverse' },
       -- the search word under the cursor
       CurSearch = { link = 'IncSearch' },
       -- like Cursor, but used when in IME mode
-      CursorIM = { fg = colors.fg, bg = colors.none, style = 'reverse' },
+      CursorIM = { fg = colors.fg, style = 'reverse' },
       -- directory names (and other special names in listings)
       Directory = { fg = colors.blue, bg = colors.none },
       -- diff mode: Added line
@@ -208,7 +208,8 @@ function theme.highlights(colors, config)
       -- Screen-column at the cursor, when 'cursorcolumn' is set.
       CursorColumn = { fg = colors.none, bg = colors.float },
       -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
-      CursorLine = { fg = colors.none, bg = colors.nc },
+      CursorLine = { bg = colors.nc },
+      -- CursorLine = { fg = colors.none, bg = colors.nc },
       -- Normal mode message in the cmdline
       NormalMode = { fg = colors.high_gray, bg = colors.none, style = 'reverse' },
       -- Insert mode message in the cmdline
@@ -290,6 +291,10 @@ function theme.highlights(colors, config)
         ['@character.special'] = { link = 'SpecialChar' },
         -- Line comments and block comments.
         ['@comment'] = { link = 'Comment' },
+        -- ['@comment.error'] = { link = '@error' },
+        -- ['@comment.warning'] = { link = '@warning'},
+        ['@comment.todo'] = { link = 'Todo' },
+        ['@comment.note'] = { fg = colors.blue },
         -- Keywords related to conditionals: `if`, `when`, `cond`, etc.
         ['@conditional'] = { link = 'Conditional' },
         -- Constants identifiers. These might not be semantically constant. E.g. uppercase variables in Python.
@@ -493,13 +498,13 @@ function theme.highlights(colors, config)
     if config.plugins.lsp then
       lsp = {
         -- used for "Error" diagnostic virtual text
-        LspDiagnosticsDefaultError = { fg = colors.error },
+        LspDiagnosticsDefaultError = { fg = colors.error, style = config.styles.virtualtext },
         -- used for "Error" diagnostic signs in sign column
         LspDiagnosticsSignError = { fg = colors.error },
         -- used for "Error" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingError = { fg = colors.error },
         -- Virtual text "Error"
-        LspDiagnosticsVirtualTextError = { fg = colors.low_red, bg = colors.nc, style = 'italic' },
+        LspDiagnosticsVirtualTextError = { fg = colors.low_red, bg = colors.nc, style = config.styles.virtualtext },
         -- used to underline "Error" diagnostics.
         LspDiagnosticsUnderlineError = { style = config.styles.diagnostics, sp = colors.error },
         -- used for "Warning" diagnostic signs in sign column
@@ -509,27 +514,31 @@ function theme.highlights(colors, config)
         -- used for "Warning" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingWarning = { fg = colors.warn },
         -- Virtual text "Warning"
-        LspDiagnosticsVirtualTextWarning = { fg = colors.low_olive, bg = colors.nc, style = 'italic' },
+        LspDiagnosticsVirtualTextWarning = { fg = colors.low_olive, bg = colors.nc, style = config.styles.virtualtext },
         -- used to underline "Warning" diagnostics.
         LspDiagnosticsUnderlineWarning = { style = config.styles.diagnostics, sp = colors.warn },
         -- used for "Information" diagnostic virtual text
-        LspDiagnosticsDefaultInformation = { fg = colors.info },
+        LspDiagnosticsDefaultInformation = { fg = colors.info, style = config.styles.virtualtext },
         -- used for "Information" diagnostic signs in sign column
         LspDiagnosticsSignInformation = { fg = colors.info },
         -- used for "Information" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingInformation = { fg = colors.info },
         -- Virtual text "Information"
-        LspDiagnosticsVirtualTextInformation = { fg = colors.low_blue, bg = colors.nc, style = 'italic' },
+        LspDiagnosticsVirtualTextInformation = {
+          fg = colors.low_blue,
+          bg = colors.nc,
+          style = config.styles.virtualtext,
+        },
         -- used to underline "Information" diagnostics.
         LspDiagnosticsUnderlineInformation = { style = config.styles.diagnostics, sp = colors.info },
         -- used for "Hint" diagnostic virtual text
-        LspDiagnosticsDefaultHint = { fg = colors.hint },
+        LspDiagnosticsDefaultHint = { fg = colors.hint, style = config.styles.virtualtext },
         -- used for "Hint" diagnostic signs in sign column
         LspDiagnosticsSignHint = { fg = colors.hint },
         -- used for "Hint" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingHint = { fg = colors.hint },
         -- Virtual text "Hint"
-        LspDiagnosticsVirtualTextHint = { fg = colors.low_purple, bg = colors.nc, style = 'italic' },
+        LspDiagnosticsVirtualTextHint = { fg = colors.low_purple, bg = colors.nc, style = config.styles.virtualtext },
         -- used to underline "Hint" diagnostics.
         LspDiagnosticsUnderlineHint = { style = config.styles.diagnostics, sp = colors.hint },
         -- used for highlighting "text" references
@@ -543,6 +552,7 @@ function theme.highlights(colors, config)
         LspInlayHint = { fg = colors.selection, style = 'italic,bold' },
 
         ['@lsp.type.class'] = { link = 'Type' },
+        ['@lsp.type.comment'] = { fg = colors.none },
         ['@lsp.type.event'] = { link = 'WarningMsg' },
         ['@lsp.type.parameter'] = { link = '@parameter' },
         ['@lsp.type.type'] = { fg = colors.low_olive },
@@ -565,7 +575,7 @@ function theme.highlights(colors, config)
         ['@lsp.type.regexp'] = { link = '@string.regex' },
         ['@lsp.type.operator'] = { link = '@operator' },
         ['@lsp.type.decorator'] = { link = '@function.macro' },
-        ['@lsp.mod.deprecated'] = { style = 'underline' },
+        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underline' },
         ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
@@ -915,10 +925,13 @@ function theme.highlights(colors, config)
       p['DapStopped'] = { fg = colors.low_red }
     end
     if config.plugins.dap_virtual_text then
-      p['NvimDapVirtualText'] = { fg = colors.high_purple, bg = colors.diff_remove_bg }
+      p['NvimDapVirtualText'] =
+        { fg = colors.high_purple, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
       p['NvimDapVirtualTextInfo'] = { fg = colors.bg, bg = colors.red }
-      p['NvimDapVirtualTextChanged'] = { fg = colors.blue, bg = colors.diff_remove_bg }
-      p['NvimDapVirtualTextError'] = { fg = colors.low_red, bg = colors.diff_remove_bg }
+      p['NvimDapVirtualTextChanged'] =
+        { fg = colors.blue, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
+      p['NvimDapVirtualTextError'] =
+        { fg = colors.low_red, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
     end
     if config.plugins.illuminate then
       p['illuminatedWord'] = { bg = colors.highlight }

@@ -14,6 +14,7 @@ config.options = {
     variables = 'NONE',
     diagnostics = 'underline',
     references = 'underline',
+    virtualtext = 'NONE',
   },
   disable = {
     background = false, -- Disable setting the background color. This is override fade_nc
