@@ -783,15 +783,34 @@ function theme.highlights(colors, config)
       p['NeogitNotificationError'] = { fg = colors.error }
     end
     if config.plugins.gitsigns then
-      p['GitSignsAdd'] = { fg = colors.diff_add } -- diff mode: Added line |diff.txt|
-      p['GitSignsAddNr'] = { fg = colors.diff_add } -- diff mode: Added line |diff.txt|
-      p['GitSignsAddLn'] = { fg = colors.diff_add } -- diff mode: Added line |diff.txt|
-      p['GitSignsChange'] = { fg = colors.diff_change } -- diff mode: Changed line |diff.txt|
-      p['GitSignsChangeNr'] = { fg = colors.diff_change } -- diff mode: Changed line |diff.txt|
-      p['GitSignsChangeLn'] = { fg = colors.diff_change } -- diff mode: Changed line |diff.txt|
-      p['GitSignsDelete'] = { fg = colors.diff_remove } -- diff mode: Deleted line |diff.txt|
-      p['GitSignsDeleteNr'] = { fg = colors.diff_remove } -- diff mode: Deleted line |diff.txt|
-      p['GitSignsDeleteLn'] = { fg = colors.diff_remove } -- diff mode: Deleted line |diff.txt|
+      p['GitSignsAdd'] = { fg = colors.high_blue } -- diff mode: Added line |diff.txt|
+      p['GitSignsChange'] = { fg = colors.high_green } -- diff mode: Changed line |diff.txt|
+      -- p['GitSignsChangeDelete'] = { link = 'GitSignsChange' } -- diff mode: Changed line |diff.txt|
+      p['GitSignsDelete'] = { fg = colors.high_red } -- diff mode: Deleted line |diff.txt|
+      -- p['GitSignsTopdelete'] = { link = 'GitSignsDelete' }
+      -- p['GitSignsUntracked'] = { link = 'GitSignsAdd' }
+      -- p['GitSignsAddNr'] = { link = 'GitSignsAddNr' }
+      -- p['GitSignsChangeNr'] = { link = 'GitSignsChange' }
+      -- p['GitSignsDeleteNr'] = { link = 'GitSignsDelete' }
+      -- p['GitSignsChangeDeleteNr'] = { link = 'GitSignsChangeNr' }
+      -- p['GitSignsTopdeleteNr'] = { link = 'GitSignsDeleteNr' }
+      -- p['GitSignsUntracked'] = { link = 'GitSignsAddNr' }
+      p['GitSignsAddLn'] = { link = 'DiffAdd' }
+      p['GitSignsChangeLn'] = { link = 'DiffChange' }
+      -- p['GitSignsChangeDeleteLn'] = { link = 'GitSignsChangeLn' }
+      p['GitSignsUntrackedLn'] = { link = 'DiffText' }
+      p['GitSignsAddPreview'] = { fg = colors.cyan }
+      p['GitSignsDeletePreview'] = { fg = colors.red }
+      p['GitSignsCurrentLineBlame'] = { fg = colors.low_purple, bg = colors.nc, style = config.styles.virtualtext }
+      p['GitSignsAddInline'] = { bg = colors.diff_add_bg }
+      p['GitSignsChangeInline'] = {  bg = colors.diff_change_bg }
+      p['GitSignsDeleteInline'] = {  bg = colors.diff_remove_bg }
+      -- p['GitSignsAddLnInline'] = { link = 'GitSignsAddInline' }
+      -- p['GitSignsChangeLnInline'] = { link = 'GitSignsChangeInline' }
+      -- p['GitSignsDeleteLnInline'] = { link = 'GitSignsDeleteInline' }
+      p['GitSignsDeleteVirtLn'] = { link = 'DiffDelete' }
+      -- p['GitSignsDeleteVirtLnInline'] = { link = 'GitSignsDeleteVirtLn' }
+      -- p['GitSignsDeleteVirtLnum'] = { link = 'GitSignsDeleteVirtLn' }
     end
     local telescope = config.plugins.telescope
     if telescope then
