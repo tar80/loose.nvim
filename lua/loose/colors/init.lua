@@ -17,7 +17,7 @@ function M.load()
 
   if not ok then
     local msg = string.format('[loose] theme %s is not exists', theme)
-    vim.notiry(msg, 4)
+    vim.notify(msg, vim.log.level.ERROR)
   end
 
   return contents

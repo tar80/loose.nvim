@@ -90,7 +90,7 @@ local function write(path, highlights)
   local handle, message = io.open(path, 'w')
 
   if not handle then
-    vim.notify(string.format('%s %s', title, message), 4, { title = title })
+    vim.notify(string.format('%s %s', title, message), vim.log.levels.ERROR, { title = title })
     return
   end
 
@@ -106,7 +106,7 @@ end
 function util.create_theme(name, template, background, rgb)
   if name == 'light' or name == 'dark' or name == 'user' then
     local msg = string.format('Name %s is not allowed', name)
-    vim.notify(msg, 4)
+    vim.notify(msg, vim.log.levels.ERROR)
     return
   end
 
@@ -158,7 +158,7 @@ function util.create_theme(name, template, background, rgb)
     write(feline_theme, vim.list_extend(theme, feline_ex))
   end
 
-  vim.notify(string.format('%s create %s.lua', title, name), 3, { title = title })
+  vim.notify(string.format('%s create %s.lua', title, name), vim.log.levels.WARN, { title = title })
 end
 
 ---Delete user theme
@@ -188,7 +188,7 @@ function util.delete_theme()
 
     if err == 1 then
       local msg = string.format('%s Could not delete files', title)
-      vim.notify(msg, 4)
+      vim.notify(msg, vim.log.levels.ERROR)
     end
   end)
 end
