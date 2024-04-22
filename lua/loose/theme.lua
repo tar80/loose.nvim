@@ -57,7 +57,7 @@ function theme.highlights(colors, config)
       -- character that needs attention like , or .
       Delimiter = { fg = colors.low_olive },
       -- special things inside a comment
-      SpecialComment = { fg = colors.gray },
+      SpecialComment = { fg = colors.gray, style = config.styles.comments },
       -- debugging statements
       Debug = { fg = colors.red },
       -- text that stands out, HTML links
@@ -66,7 +66,7 @@ function theme.highlights(colors, config)
       Ignore = { fg = colors.high_red, bg = colors.bg, style = 'bold' },
       -- any erroneous construct
       Error = { fg = colors.error, bg = colors.none, style = 'bold' },
-      -- anything that needs extra attention; mostly the keywords TODO FIXME and XXX
+      -- anything that needs extra attention; mostly the keywords ToDo FIXME and XXX
       Todo = { fg = colors.bg, bg = colors.high_olive },
       Comment = { fg = colors.low_gray, style = config.styles.comments },
       -- normal if, then, else, endif, switch, etc.
@@ -99,6 +99,7 @@ function theme.highlights(colors, config)
       FloatBorder = { link = 'Normal' },
       -- floating window title
       FloatTitle = { link = 'Normal' },
+      -- FloatFooter = { link = 'FloatTitle' },
       -- used for the columns set with 'signcolumn'
       SignColumn = { fg = colors.gray, bg = colors.none },
       -- used for the columns set with 'colorcolumn'
@@ -356,6 +357,33 @@ function theme.highlights(colors, config)
         -- GOTO labels: `label:` in C, and `::label::` in Lua.
         ['@label'] = { link = 'Label' },
         ['@Macro'] = { link = 'Macro' },
+        -- Non-structured text. Like text in a markup language.
+        ['@markup'] = { fg = colors.fg },
+        -- Text to be represented in bold.
+        -- ['@markup.strong'] = { fg = colors.purple, style = 'bold' },
+        -- Text to be represented with emphasis.
+        -- ['@markup.italic'] = { fg = colors.yellow, style = 'italic' },
+        -- Text to be represented with an underline.
+        -- ['@markup.underline'] = { style = 'underline' },
+        -- Text that is part of a title.
+        -- ['@markup.heading'] = {link = 'Title'},
+        -- Literal or verbatim text.
+        -- ['@markup.raw'] = { fg = colors.fg },
+        -- ['@markup.raw.block'] = { bg = colors.float },
+        -- URIs like hyperlinks or email addresses.
+        ['@markup.link.url'] = { link = '@string.special.url' },
+        -- Math environments like LaTeX's `$ ... $`
+        ['@markup.math'] = { fg = colors.fg },
+        -- Footnotes, text references, citations, etc.
+        ['@markup.link'] = { fg = colors.purple },
+        -- Text environments of markup languages.
+        ['@markup.environment'] = { link = '@text.environment' },
+        -- Text/string indicating the type of text environment. Like the name of a `\begin` block in LaTeX.
+        ['@markup.environment.name'] = { link = '@text.environment.name' },
+        -- Checked todo notes.
+        ['@markup.list.checked'] = { fg = colors.green },
+        -- Unchecked todo notes.
+        ['@markup.list.unchecked'] = { link = '@note' },
         -- Method calls and definitions.
         ['@method'] = { fg = colors.blue },
         -- Modules or namespaces: `a:`, `v:` in Vim;
@@ -575,7 +603,7 @@ function theme.highlights(colors, config)
         ['@lsp.type.regexp'] = { link = '@string.regex' },
         ['@lsp.type.operator'] = { link = '@operator' },
         ['@lsp.type.decorator'] = { link = '@function.macro' },
-        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underline' },
+        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'strikethrough' },
         ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
@@ -803,8 +831,8 @@ function theme.highlights(colors, config)
       p['GitSignsDeletePreview'] = { fg = colors.red }
       p['GitSignsCurrentLineBlame'] = { fg = colors.low_purple, bg = colors.nc, style = config.styles.virtualtext }
       p['GitSignsAddInline'] = { bg = colors.diff_add_bg }
-      p['GitSignsChangeInline'] = {  bg = colors.diff_change_bg }
-      p['GitSignsDeleteInline'] = {  bg = colors.diff_remove_bg }
+      p['GitSignsChangeInline'] = { bg = colors.diff_change_bg }
+      p['GitSignsDeleteInline'] = { bg = colors.diff_remove_bg }
       -- p['GitSignsAddLnInline'] = { link = 'GitSignsAddInline' }
       -- p['GitSignsChangeLnInline'] = { link = 'GitSignsChangeInline' }
       -- p['GitSignsDeleteLnInline'] = { link = 'GitSignsDeleteInline' }
@@ -814,22 +842,16 @@ function theme.highlights(colors, config)
     end
     local telescope = config.plugins.telescope
     if telescope then
-      p['TelescopeNormal'] = { fg = colors.fg, bg = colors.bg }
+      p['TelescopeNormal'] = { link = 'Normal' }
+      p['TelescopeSelection'] = { fg = colors.fg, bg = colors.selection }
+      p['TelescopeMultiIcon'] = { fg = colors.high_green }
+      p['TelescopeMultiSelection'] = { bg = colors.diff_change_bg }
       p['TelescopePromptPrefix'] = { fg = colors.cyan }
       p['TelescopePromptCounter'] = { fg = colors.gray }
-      p['TelescopeSelectionCaret'] = { fg = colors.cyan, bg = colors.selection }
-      p['TelescopeSelection'] = { fg = colors.fg, bg = colors.selection }
-      p['TelescopeMultiIcon'] = { fg = colors.green }
-      p['TelescopeMultiSelection'] = { fg = colors.green }
       p['TelescopeMatching'] = { fg = colors.match, style = 'bold' }
       if telescope == 'border_fade' then
-        p['TelescopePromptBorder'] = { link = 'NormalNC' }
-        p['TelescopeResultsBorder'] = { link = 'TelescopePromptBorder' }
-        p['TelescopePreviewBorder'] = { link = 'TelescopePromptBorder' }
+        p['TelescopeBorder'] = { link = 'NormalNC' }
         p['TelescopeTitle'] = { link = 'NormalNC' }
-        p['TelescopeResultsTitle'] = { link = 'TelescopeTitle' }
-        p['TelescopePromptTitle'] = { link = 'TelescopeTitle' }
-        p['TelescopePreviewTitle'] = { link = 'TelescopeTitle' }
       end
     end
     if config.plugins.nvimtree then
