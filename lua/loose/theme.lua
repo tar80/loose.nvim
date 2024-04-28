@@ -145,7 +145,7 @@ function theme.highlights(colors, config)
       -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist
       -- in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line).
       -- See also |hl-EndOfBuffer|.
-      NonText = { fg = colors.high_red },
+      NonText = { fg = colors.low_cyan },
       -- normal item |hl-Pmenu|
       Pmenu = { fg = colors.fg, bg = colors.float },
       -- selected item |hl-PmenuSel|
@@ -166,15 +166,15 @@ function theme.highlights(colors, config)
       -- But not 'listchars' whitespace. |hl-Whitespace|
       SpecialKey = { fg = colors.high_blue },
       -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
-      SpellBad = { fg = colors.red, bg = colors.none, style = 'italic,underline', sp = colors.red },
+      SpellBad = { fg = colors.red, bg = colors.none, style = config.styles.spell, sp = colors.red },
       -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
-      SpellCap = { fg = colors.olive, bg = colors.none, style = 'italic,underline', sp = colors.olive },
+      SpellCap = { fg = colors.olive, bg = colors.none, style = config.styles.spell, sp = colors.olive },
       -- Word that is recognized by the spellchecker as one that is used in another region.
       -- |spell| Combined with the highlighting used otherwise.
-      SpellLocal = { fg = colors.cyan, bg = colors.none, style = 'italic,underline', sp = colors.cyan },
+      SpellLocal = { fg = colors.cyan, bg = colors.none, style = config.styles.spell, sp = colors.cyan },
       -- Word that is recognized by the spellchecker as one that is hardly ever used.
       -- |spell| Combined with the highlighting used otherwise.
-      SpellRare = { fg = colors.purple, bg = colors.none, style = 'italic,underline', sp = colors.purple },
+      SpellRare = { fg = colors.purple, bg = colors.none, style = config.styles.spell, sp = colors.purple },
       -- status line of current window
       StatusLine = { fg = colors.fg, bg = colors.border },
       -- status lines of not-current windows Note: if this is equal to "StatusLine"
@@ -368,7 +368,7 @@ function theme.highlights(colors, config)
         -- Text that is part of a title.
         -- ['@markup.heading'] = {link = 'Title'},
         -- Literal or verbatim text.
-        -- ['@markup.raw'] = { fg = colors.fg },
+        ['@markup.raw'] = { fg = colors.fg },
         -- ['@markup.raw.block'] = { bg = colors.float },
         -- URIs like hyperlinks or email addresses.
         ['@markup.link.url'] = { link = '@string.special.url' },
@@ -603,7 +603,8 @@ function theme.highlights(colors, config)
         ['@lsp.type.regexp'] = { link = '@string.regex' },
         ['@lsp.type.operator'] = { link = '@operator' },
         ['@lsp.type.decorator'] = { link = '@function.macro' },
-        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'strikethrough' },
+        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underdouble' },
+        -- ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'strikethrough' },
         ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },

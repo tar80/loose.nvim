@@ -15,6 +15,7 @@ config.options = {
     diagnostics = 'underline',
     references = 'underline',
     virtualtext = 'NONE',
+    spell = 'undercurl',
   },
   disable = {
     background = false, -- Disable setting the background color. This is override fade_nc
@@ -26,12 +27,8 @@ config.options = {
   plugins = { lsp = true, treesitter = true },
 }
 
--- config.options = {}
-
 function config.set_options(opts)
   config.options = vim.tbl_deep_extend('force', config.options, opts or {})
 end
-
--- config.set_options(defaults)
 
 return config
