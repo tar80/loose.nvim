@@ -12,10 +12,10 @@ config.options = {
     keywords = 'NONE',
     functions = 'NONE',
     variables = 'NONE',
-    diagnostics = 'underline',
+    diagnostics = 'undercurl',
     references = 'underline',
-    virtualtext = 'NONE',
     spell = 'undercurl',
+    virtualtext = 'NONE',
   },
   disable = {
     background = false, -- Disable setting the background color. This is override fade_nc
@@ -28,7 +28,23 @@ config.options = {
 }
 
 function config.set_options(opts)
-  config.options = vim.tbl_deep_extend('force', config.options, opts or {})
+  if not opts then
+    return {}
+  end
+
+  vim.validate({
+    background = { opts.background, 'string', true },
+    theme = { opts.theme, 'string', true },
+    borders = { opts.borders, 'boolean', true },
+    fade_nc = { opts.fade_nc, 'boolean', true },
+    fade_tr = { opts.fade_tr, 'boolean', true },
+    styles = { opts.styles, 'table', true },
+    disable = { opts.disable, 'table', true },
+    custom_highlights = { opts.custom_highlights, 'table', true },
+    plugins = { opts.plugins, 'table', true },
+  })
+
+  config.options = vim.tbl_deep_extend('force', config.options, opts)
 end
 
 return config

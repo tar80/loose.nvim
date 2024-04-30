@@ -67,8 +67,9 @@ require("loose").setup({
         keywords = "NONE",
         functions = "NONE",
         variables = "NONE",
-        diagnostics = "underline",
+        diagnostics = "undercurl",
         references = "underline",
+        spell = "undercurl",
         virtualtext = "NONE",
     },
     disable = {

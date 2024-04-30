@@ -650,11 +650,11 @@ function theme.highlights(colors, config)
       p['ConflictMarkerCommonAncestorsHunk'] = { fg = colors.high_red, bg = colors.diff_remove_bg }
     end
     if config.plugins.fret then
-      p['FretConfirm'] = { fg = colors.match }
-      p['FretConfirmSub'] = { fg = colors.matchsub, style = 'underline' }
-      p['FretCandidate'] = { fg = colors.matchsub }
       p['FretIgnore'] = { fg = colors.gray }
-      p['FretAlternative'] = { fg = colors.bg, bg = colors.match }
+      p['FretCandidateFirst'] = { fg = colors.match, style = 'underline' }
+      p['FretCandidateSecond'] = { fg = colors.match, style = 'underline' }
+      p['FretCandidateSub'] = { fg = colors.matchsub, style = 'underdotted' }
+      p['FretAlternative'] = { fg = colors.match, bg = colors.bg, style = 'reverse' }
     end
     if config.plugins.fuzzy_motion then
       p['FuzzyMotionShade'] = { fg = colors.low_gray }

@@ -18,8 +18,8 @@ local function set_hl(group, colors)
       hl['sp'] = colors.sp
     end
     if colors.style and colors.style ~= 'NONE' then
-      for i in string.gmatch(colors.style, '[^,]+') do
-        hl[i] = true
+      for v in string.gmatch(colors.style, '[^,]+') do
+        hl[v] = true
       end
     end
   end
@@ -42,16 +42,16 @@ function core.load(colors, exec_autocmd)
   vim.go.termguicolors = true
   vim.g.colors_name = 'loose'
 
+  if opts.fade_tr then
+    opts.custom_highlights['Normal'] = { guibg = 'NONE' }
+    opts.custom_highlights['LineNr'] = { guibg = 'NONE' }
+    opts.custom_highlights['SignColumn'] = { guibg = 'NONE' }
+  end
+
   local highlights = vim.tbl_extend('force', theme.highlights(colors, opts), opts.custom_highlights)
 
   for group, color in pairs(highlights) do
     set_hl(group, color)
-  end
-
-  if opts.fade_tr then
-    vim.cmd.highlight('Normal guibg=NONE')
-    vim.cmd.highlight('LineNr guibg=NONE')
-    vim.cmd.highlight('SignColumn guibg=NONE')
   end
 
   theme.load_terminal()
