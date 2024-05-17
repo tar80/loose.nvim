@@ -691,6 +691,11 @@ function theme.highlights(colors, config)
       p['CmpItemKindValue'] = { fg = colors.low_gray }
       p['CmpGhostText'] = { fg = colors.selection, style = 'italic' }
     end
+    if config.plugins.matchwith then
+      p['Matchwith'] = { style = 'underline' }
+      p['MatchwithOut'] = { style = 'underdouble' }
+      p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
+    end
     if config.plugins.skkeleton_indicator then
       p['SkkeletonIndicatorEiji'] = { fg = colors.bg, bg = colors.cyan }
       p['SkkeletonIndicatorHira'] = { fg = colors.bg, bg = colors.high_green }

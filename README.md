@@ -49,7 +49,7 @@ the author's favorite plugins are also added.
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
 - [Vim-sandwich](https://github.com/machakann/vim-sandwich)
-- [rainbow-delimiters.nvim](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
+- [Rainbow-delimiters](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
 
 ## Configuration
 
