@@ -963,7 +963,10 @@ function theme.highlights(colors, config)
     end
     if config.plugins.indent_blankline then
       p['IndentBlanklineChar'] = { fg = colors.selection, style = 'nocombine' }
+      p['IndentBlanklineSpaceChar'] = { fg = colors.gray, style = 'nocombine' }
+      p['IndentBlanklineSpaceCharBlankline'] = { fg = colors.gray, style = 'nocombine' }
       p['IndentBlanklineContextChar'] = { fg = colors.purple, style = 'nocombine' }
+      p['IndentBlanklineContextStart'] = { sp = colors.purple, style = 'underline' }
     end
     if config.plugins.dap then
       p['DapBreakpoint'] = { fg = colors.low_red }

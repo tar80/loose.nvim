@@ -47,6 +47,7 @@ the author's favorite plugins are also added.
 - [Lazy](https://github.com/folke/lazy.nvim)
 - [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
+- [Matchwith](https://github.com/tar80/matchwith.nvim)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
 - [Vim-sandwich](https://github.com/machakann/vim-sandwich)
 - [Rainbow-delimiters](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
@@ -81,39 +82,42 @@ require("loose").setup({
     -- highlight_group = {fg = "white", bg = "black", style = "underline"}
     custom_highlights = {},
     plugins = {
+        -- maintained
         lsp = true,
         treesitter = true,
-        treesitter_context = false,
         confliet_marker = false,
+        dap = false,
+        dap_virtual_text = false,
         fret = false,
         fuzzy_motion = false,
-        skkeleton_indicator = false,
-        sandwich = false,
+        gitsigns = false,
         lazy = false,
         lspconfig = false,
+        lspsaga = false,
+        matchwith = false,
+        skkeleton_indicator = false,
+        sandwich = false,
         cmp = false,
-        dashboard = false,
-        notify = false,
+        telescope = false, -- If "border_fade" is specified, the border background fades
         trouble = false,
         rainbow_delimiters_high = false, -- Rainbow Delimiters can choose one of
         rainbow_delimiters_low = false,  -- either high contrast or low contrast
-        neogit = false,
-        gitsigns = false,
-        telescope = false, -- If "border_fade" is specified, the border background fades
-        nvimtree = false,
-        whichkey = false,
-        lspsaga = false,
+        -- non-maintained
         bufferline = false,
         barbar = false,
-        sneak = false,
-        indent_blankline = false,
-        dap = false,
-        dap_virtual_text = false,
-        illuminate = false,
-        hop = false,
+        dashboard = false,
         fern = false,
+        hop = false,
+        indent_blankline = false,
+        illuminate = false,
         lightspeed = false,
         navic = false
+        notify = false,
+        neogit = false,
+        nvimtree = false,
+        sneak = false,
+        treesitter_context = false,
+        whichkey = false,
     }
 })
 ```
