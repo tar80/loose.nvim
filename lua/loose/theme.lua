@@ -227,6 +227,7 @@ function theme.highlights(colors, config)
       healthWarning = { link = 'WarningMsg' },
       -- the column separating vertically split windows
       VertSplit = { fg = colors.bg },
+      WinSeparator = { fg = colors.bg },
       EndOfBuffer = { fg = colors.gray },
       -- diff
       diffAdded = { fg = colors.green },
@@ -271,7 +272,7 @@ function theme.highlights(colors, config)
 
     -- Add window split borders
     if config.borders then
-      editor.VertSplit['fg'] = colors.border
+      editor.WinSeparator['fg'] = colors.border
     end
 
     return editor
@@ -536,7 +537,7 @@ function theme.highlights(colors, config)
         -- used to underline "Error" diagnostics.
         LspDiagnosticsUnderlineError = { style = config.styles.diagnostics, sp = colors.error },
         -- used for "Warning" diagnostic signs in sign column
-        LspDiagnosticsDefaultWarning = { fg = colors.warn },
+        LspDiagnosticsDefaultWarning = { fg = colors.warn, style = config.styles.virtualtext },
         -- used for "Warning" diagnostic signs in sign column
         LspDiagnosticsSignWarning = { fg = colors.warn },
         -- used for "Warning" diagnostic messages in the diagnostics float
@@ -603,32 +604,39 @@ function theme.highlights(colors, config)
         ['@lsp.type.regexp'] = { link = '@string.regex' },
         ['@lsp.type.operator'] = { link = '@operator' },
         ['@lsp.type.decorator'] = { link = '@function.macro' },
-        ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underdouble' },
-        -- ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'strikethrough' },
+        -- ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underdouble' },
+        ['@lsp.mod.deprecated'] = { fg = colors.high_red, style = 'strikethrough' },
         ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
         ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
 
         DiagnosticError = { link = 'LspDiagnosticsDefaultError' },
-        DiagnosticWarn = { link = 'LspDiagnosticsDefaultWarning' },
-        DiagnosticInfo = { link = 'LspDiagnosticsDefaultInformation' },
-        DiagnosticHint = { link = 'LspDiagnosticsDefaultHint' },
-        DiagnosticVirtualTextWarn = { link = 'LspDiagnosticsVirtualTextWarning' },
-        DiagnosticUnderlineWarn = { link = 'LspDiagnosticsUnderlineWarning' },
-        DiagnosticFloatingWarn = { link = 'LspDiagnosticsFloatingWarning' },
-        DiagnosticSignWarn = { link = 'LspDiagnosticsSignWarning' },
         DiagnosticVirtualTextError = { link = 'LspDiagnosticsVirtualTextError' },
         DiagnosticUnderlineError = { link = 'LspDiagnosticsUnderlineError' },
         DiagnosticFloatingError = { link = 'LspDiagnosticsFloatingError' },
         DiagnosticSignError = { link = 'LspDiagnosticsSignError' },
+        DiagnosticWarn = { link = 'LspDiagnosticsDefaultWarning' },
+        DiagnosticVirtualTextWarn = { link = 'LspDiagnosticsVirtualTextWarning' },
+        DiagnosticUnderlineWarn = { link = 'LspDiagnosticsUnderlineWarning' },
+        DiagnosticFloatingWarn = { link = 'LspDiagnosticsFloatingWarning' },
+        DiagnosticSignWarn = { link = 'LspDiagnosticsSignWarning' },
+        DiagnosticInfo = { link = 'LspDiagnosticsDefaultInformation' },
         DiagnosticVirtualTextInfo = { link = 'LspDiagnosticsVirtualTextInformation' },
         DiagnosticUnderlineInfo = { link = 'LspDiagnosticsUnderlineInformation' },
         DiagnosticFloatingInfo = { link = 'LspDiagnosticsFloatingInformation' },
         DiagnosticSignInfo = { link = 'LspDiagnosticsSignInformation' },
+        DiagnosticHint = { link = 'LspDiagnosticsDefaultHint' },
         DiagnosticVirtualTextHint = { link = 'LspDiagnosticsVirtualTextHint' },
         DiagnosticUnderlineHint = { link = 'LspDiagnosticsUnderlineHint' },
         DiagnosticFloatingHint = { link = 'LspDiagnosticsFloatingHint' },
         DiagnosticSignHint = { link = 'LspDiagnosticsSignHint' },
+        DiagnosticOk = { fg = colors.ok, style = config.styles.virtualtext },
+        DiagnosticVirtualTextOk = { fg = colors.low_green, bg = colors.nc, style = config.styles.virtualtext },
+        DiagnosticUnderlineOk = { style = config.styles.diagnostics, sp = colors.ok },
+        DiagnosticFloatingOk = { fg = colors.ok },
+        DiagnosticSignOk = { fg = colors.ok },
+        DiagnosticDeprecated = { link = '@lsp.mod.deprecated' },
+        DiagnosticUnnecessary = { link = '@comment' },
       }
     end
 
@@ -689,6 +697,7 @@ function theme.highlights(colors, config)
       p['CmpItemKindText'] = { fg = colors.low_gray }
       p['CmpItemKindTypeParameter'] = { fg = colors.low_cyan }
       p['CmpItemKindValue'] = { fg = colors.low_gray }
+      -- p['CmpItemKindTabNine'] = { fg = colors.low_breen }
       p['CmpGhostText'] = { fg = colors.selection, style = 'italic' }
     end
     if config.plugins.matchwith then
@@ -774,17 +783,60 @@ function theme.highlights(colors, config)
       p['NotifyTRACETitle'] = { fg = colors.hint }
     end
     if config.plugins.trouble then
-      p['TroubleFile'] = { fg = colors.blue }
-      p['TroubleCount'] = { fg = colors.purple }
+      -- p['TroubleFile'] = { fg = colors.blue }
+      -- p['TroubleCount'] = { fg = colors.purple }
+      -- p['TroubleNormal'] = { fg = colors.fg }
+      -- p['TroubleText'] = { fg = colors.green }
+      -- p['TroubleLocation'] = { fg = colors.cyan }
+      -- p['TroubleFoldIcon'] = { fg = colors.purple }
+      -- p['TroubleIndent'] = { fg = colors.low_gray }
+      -- p['TroubleTextError'] = { link = 'DiagnosticError' }
+      -- p['TroubleTextWarning'] = { link = 'DiagnosticWarn' }
+      -- p['TroubleTextInformation'] = { link = 'DiagnosticInformation' }
+      -- p['TroubleTextHint'] = { link = 'DiagnosticHint' }
       p['TroubleNormal'] = { fg = colors.fg }
+      p['TroubleNormalNC'] = { link = 'TroubleNormal' }
+      p['TroublePos'] = { link = 'Comment' }
+      p['TroublePreview'] = { link = 'IncSearch' }
+      p['TroubleSource'] = { link = 'Comment' }
       p['TroubleText'] = { fg = colors.green }
-      p['TroubleLocation'] = { fg = colors.cyan }
-      p['TroubleFoldIcon'] = { fg = colors.purple }
+      p['TroubleCount'] = { fg = colors.purple }
+      p['TroubleDirectory'] = { link = 'Directory' }
+      p['TroubleFileName'] = { link = 'Directory' }
+      p['TroubleIconArray'] = { link = '@punctuation.bracket' }
+      p['TroubleIconBoolean'] = { link = '@boolean' }
+      p['TroubleIconClass'] = { link = '@type' }
+      p['TroubleIconConstant'] = { link = '@constant' }
+      p['TroubleIconConstructor'] = { link = '@constructor' }
+      p['TroubleIconDirectory'] = { link = 'Special' }
+      p['TroubleIconEnum'] = { link = '@lsp.type.enum' }
+      p['TroubleIconEnumMember'] = { link = '@lsp.type.enumMember' }
+      p['TroubleIconEvent'] = { link = 'Special' }
+      p['TroubleIconField'] = { link = '@variable.member' }
+      p['TroubleIconFile'] = { link = 'TroubleNormal' }
+      p['TroubleIconFunction'] = { link = '@function' }
+      p['TroubleIconInterface'] = { link = '@lsp.type.interface' }
+      p['TroubleIconKey'] = { link = '@lsp.type.keyword' }
+      p['TroubleIconMethod'] = { link = '@function.method' }
+      p['TroubleIconModule'] = { link = '@module' }
+      p['TroubleIconNamespace'] = { link = '@module' }
+      p['TroubleIconNull'] = { link = '@constant.builtin' }
+      p['TroubleIconNumber'] = { link = '@number' }
+      p['TroubleIconObject'] = { link = '@constant' }
+      p['TroubleIconOperator'] = { link = '@operator' }
+      p['TroubleIconPackage'] = { link = '@module' }
+      p['TroubleIconProperty'] = { link = '@property' }
+      p['TroubleIconString'] = { link = '@string' }
+      p['TroubleIconStruct'] = { link = '@lsp.type.struct' }
+      p['TroubleIconTypeParameter'] = { link = '@lsp.type.typeParameter' }
+      p['TroubleIconVariable'] = { link = '@variable' }
       p['TroubleIndent'] = { fg = colors.low_gray }
-      p['TroubleTextError'] = { link = 'DiagnosticError' }
-      p['TroubleTextWarning'] = { link = 'DiagnosticWarn' }
-      p['TroubleTextInformation'] = { link = 'DiagnosticInformation' }
-      p['TroubleTextHint'] = { link = 'DiagnosticHint' }
+      p['TroubleIndentFoldClosed'] = { link = 'CursorLineNr' }
+      p['TroubleIndentFoldOpen'] = { link = 'TroubleIndent' }
+      p['TroubleIndentLast'] = { link = 'TroubleIndent' }
+      p['TroubleIndentMiddle'] = { link = 'TroubleIndent' }
+      p['TroubleIndentTop'] = { link = 'TroubleIndent' }
+      p['TroubleIndentWs'] = { link = 'TroubleIndent' }
     end
     if config.plugins.rainbow_delimiters_high then
       p['RainbowDelimiterRed'] = { fg = colors.high_red }

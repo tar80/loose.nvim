@@ -2,6 +2,10 @@
 
 ![logo](https://github.com/tar80/test/assets/45842304/6649eafa-0e4d-4468-9060-fa5d94e72aa2)
 
+## Requirements
+
+- Neovim >= 0.10.0
+
 ## Features
 
 Loose has a function to output a palette (theme) that matches the background color.  

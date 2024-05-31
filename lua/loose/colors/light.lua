@@ -48,6 +48,7 @@ colors.error = colors.high_red
 colors.warn = colors.high_orange
 colors.info = colors.high_blue
 colors.hint = colors.high_purple
+colors.ok = colors.high_green
 
 colors.match = colors.high_red
 colors.matchsub = colors.low_red
