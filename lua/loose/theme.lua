@@ -659,16 +659,16 @@ function theme.highlights(colors, config)
     end
     if config.plugins.fret then
       p['FretIgnore'] = { fg = colors.gray }
-      p['FretCandidateFirst'] = { fg = colors.match, style = 'underline' }
-      p['FretCandidateSecond'] = { fg = colors.match, style = 'underline' }
+      p['FretCandidateFirst'] = { fg = colors.match, style = 'bold,underline' }
+      p['FretCandidateSecond'] = { fg = colors.match, style = 'bold,underline' }
       p['FretCandidateSub'] = { fg = colors.matchsub, style = 'underdotted' }
-      p['FretAlternative'] = { fg = colors.match, bg = colors.bg, style = 'reverse' }
+      p['FretAlternative'] = { fg = colors.match, bg = colors.bg, style = 'bold,reverse' }
     end
     if config.plugins.fuzzy_motion then
       p['FuzzyMotionShade'] = { fg = colors.low_gray }
-      p['FuzzyMotionChar'] = { fg = colors.bg, bg = colors.match }
-      p['FuzzyMotionSubChar'] = { fg = colors.match, style = 'underline' }
-      p['FuzzyMotionMatch'] = { fg = colors.high_gray }
+      p['FuzzyMotionChar'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
+      p['FuzzyMotionSubChar'] = { fg = colors.match, style = 'bold,underline' }
+      p['FuzzyMotionMatch'] = { fg = colors.matchsub, style = 'underline' }
     end
     if config.plugins.cmp then
       p['CmpItemAbbr'] = { fg = colors.fg }
