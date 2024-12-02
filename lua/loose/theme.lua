@@ -1,14 +1,16 @@
 local theme = {}
 
+---Set the background color to "NONE"
+---@param group {[string]: string} Color palette
+local function remove_bg(group)
+  group['bg'] = 'NONE'
+end
+
 ---Define highlights
 ---@param colors table
----@param config table
+---@param opts table
 ---@return table # highlights
-function theme.highlights(colors, config)
-  local function remove_background(group)
-    group['bg'] = colors.none
-  end
-
+function theme.highlights(colors, opts)
   local function load_syntax()
     -- Syntax highlight groups
     local syntax = {
@@ -57,30 +59,33 @@ function theme.highlights(colors, config)
       -- character that needs attention like , or .
       Delimiter = { fg = colors.low_olive },
       -- special things inside a comment
-      SpecialComment = { fg = colors.gray, style = config.styles.comments },
+      SpecialComment = { fg = colors.gray, style = opts.styles.comments },
       -- debugging statements
       Debug = { fg = colors.red },
       -- text that stands out, HTML links
-      Underlined = { fg = colors.green, style = 'underline' },
+      Underlined = { fg = colors.green, sp = colors.green, style = 'underline' },
       -- left blank, hidden
       Ignore = { fg = colors.high_red, bg = colors.bg, style = 'bold' },
       -- any erroneous construct
       Error = { fg = colors.error, bg = colors.none, style = 'bold' },
       -- anything that needs extra attention; mostly the keywords ToDo FIXME and XXX
-      Todo = { fg = colors.bg, bg = colors.high_olive },
-      Comment = { fg = colors.low_gray, style = config.styles.comments },
+      Todo = { fg = colors.low_olive, style = 'bold' },
+      Comment = { fg = colors.low_gray, style = opts.styles.comments },
       -- normal if, then, else, endif, switch, etc.
-      Conditional = { fg = colors.purple, style = config.styles.keywords },
+      Conditional = { fg = colors.purple, style = opts.styles.keywords },
       -- normal for, do, while, etc.
-      Keyword = { fg = colors.gray, style = config.styles.keywords },
+      Keyword = { fg = colors.gray, style = opts.styles.keywords },
       -- normal any other keyword
-      Repeat = { fg = colors.purple, style = config.styles.keywords },
+      Repeat = { fg = colors.purple, style = opts.styles.keywords },
       -- normal function names
-      Function = { fg = colors.blue, style = config.styles.functions },
+      Function = { fg = colors.cyan, style = opts.styles.functions },
       -- any variable name
-      Identifier = { fg = colors.fg, style = config.styles.variables },
+      Identifier = { fg = colors.fg, style = opts.styles.variables },
       -- any string
-      String = { fg = colors.green, config.styles.strings },
+      String = { fg = colors.green, opts.styles.strings },
+      Added = { fg = colors.high_cyan, opts.styles.diff },
+      Removed = { fg = colors.high_red, opts.styles.diff },
+      Changed = { fg = colors.high_green, opts.styles.diff },
     }
 
     return syntax
@@ -115,11 +120,11 @@ function theme.highlights(colors, config)
       -- directory names (and other special names in listings)
       Directory = { fg = colors.blue, bg = colors.none },
       -- diff mode: Added line
-      DiffAdd = { bg = colors.diff_add_bg },
+      DiffAdd = { bg = colors.shade_cyan },
       -- diff mode: Changed line
-      DiffChange = { fg = colors.diff_change, bg = colors.diff_change_bg },
+      DiffChange = { fg = colors.diff_change, bg = colors.shade_green },
       -- diff mode: Deleted line
-      DiffDelete = { bg = colors.diff_remove_bg },
+      DiffDelete = { bg = colors.shade_red },
       -- diff mode: Changed text within a changed line
       DiffText = { bg = colors.diff_text_bg },
       -- error messages
@@ -129,7 +134,7 @@ function theme.highlights(colors, config)
       -- 'foldcolumn'
       FoldColumn = { fg = colors.low_blue },
       -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
-      IncSearch = { fg = colors.bg, bg = colors.high_orange },
+      IncSearch = { fg = colors.high_orange, bg = colors.bg, style = 'reverse' },
       -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
       LineNr = { fg = colors.fg, style = 'bold' },
       LineNrAbove = { fg = colors.low_gray },
@@ -137,7 +142,7 @@ function theme.highlights(colors, config)
       -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
       CursorLineNr = { fg = colors.cyan },
       -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-      MatchParen = { fg = colors.high_orange, bg = colors.none, style = 'underline' },
+      MatchParen = { fg = colors.high_orange, bg = colors.none, sp = colors.high_orange, style = 'underline' },
       -- 'showmode' message (e.g., "-- INSERT -- ")
       ModeMsg = { fg = colors.blue },
       -- |more-prompt|
@@ -149,7 +154,7 @@ function theme.highlights(colors, config)
       -- normal item |hl-Pmenu|
       Pmenu = { fg = colors.fg, bg = colors.float },
       -- selected item |hl-PmenuSel|
-      PmenuSel = { bg = colors.selection },
+      PmenuSel = { fg = colors.match, bg = colors.float, style = 'reverse' },
       -- scrollbar |hl-PmenuSbar|
       PmenuSbar = { bg = colors.float },
       -- thumb of the scrollbar  |hl-PmenuThumb|
@@ -166,20 +171,20 @@ function theme.highlights(colors, config)
       -- But not 'listchars' whitespace. |hl-Whitespace|
       SpecialKey = { fg = colors.high_blue },
       -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
-      SpellBad = { fg = colors.red, bg = colors.none, style = config.styles.spell, sp = colors.red },
+      SpellBad = { fg = colors.red, bg = colors.none, style = opts.styles.spell, sp = colors.red },
       -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
-      SpellCap = { fg = colors.olive, bg = colors.none, style = config.styles.spell, sp = colors.olive },
+      SpellCap = { fg = colors.olive, bg = colors.none, style = opts.styles.spell, sp = colors.olive },
       -- Word that is recognized by the spellchecker as one that is used in another region.
       -- |spell| Combined with the highlighting used otherwise.
-      SpellLocal = { fg = colors.cyan, bg = colors.none, style = config.styles.spell, sp = colors.cyan },
+      SpellLocal = { fg = colors.cyan, bg = colors.none, style = opts.styles.spell, sp = colors.cyan },
       -- Word that is recognized by the spellchecker as one that is hardly ever used.
       -- |spell| Combined with the highlighting used otherwise.
-      SpellRare = { fg = colors.purple, bg = colors.none, style = config.styles.spell, sp = colors.purple },
+      SpellRare = { fg = colors.purple, bg = colors.none, style = opts.styles.spell, sp = colors.purple },
       -- status line of current window
-      StatusLine = { fg = colors.fg, bg = colors.border },
+      StatusLine = { fg = colors.fg, bg = colors.border, sp = colors.fg },
       -- status lines of not-current windows Note: if this is equal to "StatusLine"
       -- Vim will use "^^^" in the status line of the current window.
-      StatusLineNC = { fg = colors.high_gray, bg = colors.border },
+      StatusLineNC = { fg = colors.high_gray, bg = colors.border, sp = colors.high_gray },
       -- status line of current terminal window
       StatusLineTerm = { fg = colors.fg, bg = colors.border },
       -- status lines of not-current terminal windows Note: if this is equal to "StatusLine"
@@ -188,8 +193,8 @@ function theme.highlights(colors, config)
       -- tab pages line, where there are no labels
       TabLineFill = { fg = colors.high_gray, bg = colors.border },
       -- tab pages line, active tab page label
-      TablineSel = { fg = colors.cyan, bg = colors.bg },
-      Tabline = { fg = colors.high_purple, bg = colors.border },
+      TabLineSel = { fg = colors.cyan, bg = colors.bg },
+      TabLine = { fg = colors.high_purple, bg = colors.border },
       -- titles for output from ":set all", ":autocmd" etc.
       Title = { fg = colors.fg, bg = colors.float, style = 'bold' },
       -- Visual mode selection
@@ -210,18 +215,6 @@ function theme.highlights(colors, config)
       CursorColumn = { fg = colors.none, bg = colors.float },
       -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
       CursorLine = { bg = colors.nc },
-      -- CursorLine = { fg = colors.none, bg = colors.nc },
-      -- Normal mode message in the cmdline
-      NormalMode = { fg = colors.high_gray, bg = colors.none, style = 'reverse' },
-      -- Insert mode message in the cmdline
-      InsertMode = { fg = colors.high_blue, bg = colors.none, style = 'reverse' },
-      -- Replace mode message in the cmdline
-      ReplacelMode = { fg = colors.high_orange, bg = colors.none, style = 'reverse' },
-      -- Visual mode message in the cmdline
-      VisualMode = { fg = colors.high_purple, bg = colors.none, style = 'reverse' },
-      -- Command mode message in the cmdline
-      CommandMode = { fg = colors.high_olive, bg = colors.none, style = 'reverse' },
-      Warnings = { link = 'WarningMsg' },
       healthError = { fg = colors.error },
       healthSuccess = { fg = colors.green },
       healthWarning = { link = 'WarningMsg' },
@@ -239,39 +232,60 @@ function theme.highlights(colors, config)
       diffLine = { fg = colors.purple },
       diffIndexLine = { fg = colors.orange },
       -- terminal
-      TermCursor = { fg = colors.high_purple, style = 'underline' },
+      TermCursor = { fg = colors.high_purple, sp = colors.high_purpe, style = 'underline' },
       TermCursorNC = { fg = colors.low_purple, style = 'reverse' },
     }
 
     -- Options:
-    if config.fade_tr then
-      config.fade_nc = true
+    if opts.fade_tr then
+      opts.fade_nc = true
     end
 
     -- Set non-current background
-    if config.fade_nc then
+    if opts.fade_nc then
       editor.NormalNC['bg'] = colors.nc
     end
 
     -- Set transparent background
-    if config.disable.background then
-      remove_background(editor.Normal)
-      remove_background(editor.NormalNC)
-      remove_background(editor.SignColumn)
+    if opts.disable.background then
+      remove_bg(editor.Normal)
+      remove_bg(editor.NormalNC)
+      remove_bg(editor.SignColumn)
     end
 
     -- Set transparent cursorline
-    if config.disable.cursorline then
-      remove_background(editor.CursorLine)
+    if opts.disable.cursorline then
+      remove_bg(editor.CursorLine)
+    end
+
+    -- Set transparent statusline background
+    if opts.disable.statusline then
+      remove_bg(editor.StatusLine)
+      remove_bg(editor.StatusLineNC)
+      remove_bg(editor.StatusLineTerm)
+      remove_bg(editor.StatusLineTermNC)
+    end
+
+    -- Set transparent tabline background
+    if opts.disable.tabline then
+      remove_bg(editor.TabLine)
+    end
+
+    if opts.disable.tabsel then
+      remove_bg(editor.TabLineSel)
+    end
+
+    if opts.disable.tabfill then
+      remove_bg(editor.TabLineFill)
     end
 
     -- Set transparent eob lines
-    if config.disable.eob_lines then
+    if opts.disable.eob_lines then
       editor.EndOfBuffer['fg'] = colors.bg
     end
 
     -- Add window split borders
-    if config.borders then
+    if opts.borders then
       editor.WinSeparator['fg'] = colors.border
     end
 
@@ -281,7 +295,7 @@ function theme.highlights(colors, config)
   local function load_treesitter()
     local ex = {}
 
-    if config.plugins.treesitter and vim.fn.has('nvim-0.10') then
+    if opts.plugins.treesitter and vim.fn.has('nvim-0.10') then
       -- TreeSitter highlight groups
       ex = {
         -- Annotations that can be attached to the code to denote some kind of meta information. e.g. C++/Dart attributes.
@@ -293,8 +307,8 @@ function theme.highlights(colors, config)
         ['@character.special'] = { link = 'SpecialChar' },
         -- Line comments and block comments.
         ['@comment'] = { link = 'Comment' },
-        -- ['@comment.error'] = { link = '@error' },
-        -- ['@comment.warning'] = { link = '@warning'},
+        ['@comment.error'] = { link = '@error' },
+        ['@comment.warning'] = { link = '@warning' },
         ['@comment.todo'] = { link = 'Todo' },
         ['@comment.note'] = { fg = colors.blue },
         -- Keywords related to conditionals: `if`, `when`, `cond`, etc.
@@ -309,11 +323,11 @@ function theme.highlights(colors, config)
         ['@constructor'] = { fg = colors.olive },
         ['@define'] = { link = 'Define' },
         -- Added text (for diff files)
-        -- ['@diff.plus'] = { fg = 'Added', bg = colors.diff_add_bg },
+        -- ['@diff.plus'] = { fg = 'Added', bg = colors.shade_cyan },
         -- Deleted text (for diff files)
-        -- ['@diff.minus'] = { bg = colors.diff_remove_bg },
+        -- ['@diff.minus'] = { bg = colors.shade_red },
         -- Changed text (for diff files)
-        -- ['@diff.delta'] = { bg = colors.diff_change_bg },
+        -- ['@diff.delta'] = { bg = colors.shade_green },
         -- Syntax/parser errors. This might highlight large sections of code while the user is typing
         -- still incomplete code, use a sensible highlight.
         ['@error'] = { link = 'Error' },
@@ -342,11 +356,11 @@ function theme.highlights(colors, config)
         -- KeyworTernary operator. (e.g. `?`, `:`)
         ['@keyword.conditional.ternary'] = { link = '@keyword.operator' },
         -- Keywords that define a function (e.g. `func` in Go, `def` in Python).
-        ['@keyword.function'] = { fg = colors.cyan, style = config.styles.keywords },
+        ['@keyword.function'] = { fg = colors.cyan, style = opts.styles.keywords },
         -- Unary and binary operators that are English words: `and`, `or` in Python; `sizeof` in C.
-        ['@keyword.operator'] = { fg = colors.red, style = config.styles.keywords },
+        ['@keyword.operator'] = { fg = colors.red, style = opts.styles.keywords },
         -- File or module import keywords: `import` in TypeScript.
-        ['@keyword.import'] = { fg = colors.cyan, style = config.styles.keywords },
+        ['@keyword.import'] = { fg = colors.cyan, style = opts.styles.keywords },
         -- Keywords defining composite types (e.g. `struct`, `enum`)
         ['@keyword.type'] = { fg = colors.olive },
         -- Keywords definining type modifiers (e.g. `const`, `static`, `public`)
@@ -354,7 +368,7 @@ function theme.highlights(colors, config)
         -- Keywords related to loops (e.g. `for`, `while`)
         ['@keyword.repeat'] = { link = 'Repeat' },
         -- Keywords like `return` and `yield`.
-        ['@keyword.return'] = { fg = colors.cyan, style = config.styles.keywords },
+        ['@keyword.return'] = { fg = colors.cyan, style = opts.styles.keywords },
         -- GOTO labels: `label:` in C, and `::label::` in Lua.
         ['@label'] = { link = 'Label' },
         ['@Macro'] = { link = 'Macro' },
@@ -365,7 +379,7 @@ function theme.highlights(colors, config)
         -- Text to be represented with emphasis.
         -- ['@markup.italic'] = { fg = colors.yellow, style = 'italic' },
         -- Text to be represented with an underline.
-        -- ['@markup.underline'] = { style = 'underline' },
+        ['@markup.underline'] = { style = 'underline' },
         -- Text that is part of a title.
         -- ['@markup.heading'] = {link = 'Title'},
         -- Literal or verbatim text.
@@ -386,7 +400,7 @@ function theme.highlights(colors, config)
         -- Unchecked todo notes.
         ['@markup.list.unchecked'] = { link = '@note' },
         -- Method calls and definitions.
-        ['@method'] = { fg = colors.blue },
+        ['@method'] = { fg = colors.cyan },
         -- Modules or namespaces: `a:`, `v:` in Vim;
         ['@module'] = { fg = colors.olive },
         -- Built-in modules or namespaces.
@@ -402,7 +416,7 @@ function theme.highlights(colors, config)
         -- References to parameters of a function.
         ['@parameter.reference'] = { fg = colors.red },
         -- Same as `TSField`.
-        ['@property'] = { fg = colors.gray },
+        ['@property'] = { fg = colors.blue },
         -- Punctuation delimiters: Periods, commas, semicolons, etc.
         ['@punctuation.delimiter'] = { fg = colors.low_olive },
         -- Brackets, braces, parentheses, etc.
@@ -412,14 +426,14 @@ function theme.highlights(colors, config)
         -- Keywords related to loops: `for`, `while`, etc.
         ['@repeat'] = { link = 'Repeat' },
         -- String literals.
-        ['@string'] = { fg = colors.green, style = config.styles.strings },
+        ['@string'] = { fg = colors.green, style = opts.styles.strings },
         -- Escape characters within a string: `\n`, `\t`, etc.
         ['@string.escape'] = { fg = colors.high_green },
         -- Regular expression literals.
         ['@string.regexp'] = { fg = colors.high_green },
         ['@string.special'] = { link = 'Special' },
         ['@string.special.path'] = { fg = colors.green },
-        ['@string.special.url'] = { fg = colors.blue, style = 'underline' },
+        ['@string.special.url'] = { fg = colors.high_blue, sp = colors.high_blue, style = 'underline' },
         -- Identifiers referring to symbols or atoms.
         ['@symbol'] = { fg = colors.cyan },
         -- Tags like HTML tag names.
@@ -437,11 +451,11 @@ function theme.highlights(colors, config)
         -- Text to be represented with an underline.
         ['@text.underline'] = { style = 'underline' },
         -- Text that is part of a title.
-        ['@text.title'] = { fg = colors.blue, style = 'bold' },
+        ['@text.title'] = { fg = colors.high_blue, style = 'bold' },
         -- Literal or verbatim text.
         ['@text.literal'] = { fg = colors.green },
         -- URIs like hyperlinks or email addresses.
-        ['@text.uri'] = { fg = colors.blue, style = 'underline' },
+        ['@text.uri'] = { fg = colors.high_blue, sp = colors.high_blue, style = 'underline' },
         -- Math environments like LaTeX's `$ ... $`
         ['@text.math'] = { fg = colors.high_cyan },
         -- Footnotes, text references, citations, etc.
@@ -461,18 +475,18 @@ function theme.highlights(colors, config)
         -- Built-in types: `i32` in Rust.
         ['@type.builtin'] = { fg = colors.low_olive },
         -- Various variable names.
-        ['@variable'] = { fg = colors.fg, style = config.styles.variables },
+        ['@variable'] = { fg = colors.fg, style = opts.styles.variables },
         -- Built-in variable names (e.g. `this`, `self`)
-        ['@variable.builtin'] = { fg = colors.high_gray, style = config.styles.variables },
+        ['@variable.builtin'] = { fg = colors.high_cyan, style = opts.styles.variables },
         -- Paramaters of a function.
         ['@variable.parameter'] = { link = '@parameter' },
         -- Object and struct fields.
-        ['@variable.member'] = { fg = colors.gray, style = config.styles.variables },
+        ['@variable.member'] = { fg = colors.blue, style = opts.styles.variables },
       }
     else
       -- Standard filetype highlight groups
       ex = {
-        htmlLink = { fg = colors.green, style = 'underline' },
+        htmlLink = { fg = colors.green, sp = colors.green, style = 'underline' },
         htmlArg = { fg = colors.blue },
         htmlTag = { fg = colors.blue },
         htmlEndTag = { fg = colors.blue },
@@ -513,7 +527,7 @@ function theme.highlights(colors, config)
         markdownListMarker = { fg = colors.red },
         markdownOrderedListMarker = { fg = colors.red },
         markdownRule = { fg = colors.purple },
-        markdownUrl = { fg = colors.cyan, style = 'underline' },
+        markdownUrl = { fg = colors.cyan, sp = colors.cyan, style = 'underline' },
       }
     end
 
@@ -524,30 +538,36 @@ function theme.highlights(colors, config)
     -- Lsp highlight groups
     local lsp = {}
 
-    if config.plugins.lsp then
+    if opts.plugins.lsp then
+      local disable_semantic = not opts.plugins.lsp_semantic
       lsp = {
         -- used for "Error" diagnostic virtual text
-        LspDiagnosticsDefaultError = { fg = colors.error, style = config.styles.virtualtext },
+        LspDiagnosticsDefaultError = { fg = colors.error, style = opts.styles.virtualtext },
         -- used for "Error" diagnostic signs in sign column
         LspDiagnosticsSignError = { fg = colors.error },
         -- used for "Error" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingError = { fg = colors.error },
         -- Virtual text "Error"
-        LspDiagnosticsVirtualTextError = { fg = colors.low_red, bg = colors.nc, style = config.styles.virtualtext },
+        LspDiagnosticsVirtualTextError = {
+          fg = colors.low_red,
+          bg = colors.shade_red,
+          sp = colors.low_red,
+          style = opts.styles.virtualtext,
+        },
         -- used to underline "Error" diagnostics.
-        LspDiagnosticsUnderlineError = { style = config.styles.diagnostics, sp = colors.error },
+        LspDiagnosticsUnderlineError = { style = opts.styles.diagnostics, sp = colors.error },
         -- used for "Warning" diagnostic signs in sign column
-        LspDiagnosticsDefaultWarning = { fg = colors.warn, style = config.styles.virtualtext },
+        LspDiagnosticsDefaultWarning = { fg = colors.warn, style = opts.styles.virtualtext },
         -- used for "Warning" diagnostic signs in sign column
         LspDiagnosticsSignWarning = { fg = colors.warn },
         -- used for "Warning" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingWarning = { fg = colors.warn },
         -- Virtual text "Warning"
-        LspDiagnosticsVirtualTextWarning = { fg = colors.low_olive, bg = colors.nc, style = config.styles.virtualtext },
+        LspDiagnosticsVirtualTextWarning = { fg = colors.low_olive, bg = colors.shade_olive, style = opts.styles.virtualtext },
         -- used to underline "Warning" diagnostics.
-        LspDiagnosticsUnderlineWarning = { style = config.styles.diagnostics, sp = colors.warn },
+        LspDiagnosticsUnderlineWarning = { style = opts.styles.diagnostics, sp = colors.warn },
         -- used for "Information" diagnostic virtual text
-        LspDiagnosticsDefaultInformation = { fg = colors.info, style = config.styles.virtualtext },
+        LspDiagnosticsDefaultInformation = { fg = colors.info, style = opts.styles.virtualtext },
         -- used for "Information" diagnostic signs in sign column
         LspDiagnosticsSignInformation = { fg = colors.info },
         -- used for "Information" diagnostic messages in the diagnostics float
@@ -555,60 +575,30 @@ function theme.highlights(colors, config)
         -- Virtual text "Information"
         LspDiagnosticsVirtualTextInformation = {
           fg = colors.low_blue,
-          bg = colors.nc,
-          style = config.styles.virtualtext,
+          bg = colors.shade_blue,
+          style = opts.styles.virtualtext,
         },
         -- used to underline "Information" diagnostics.
-        LspDiagnosticsUnderlineInformation = { style = config.styles.diagnostics, sp = colors.info },
+        LspDiagnosticsUnderlineInformation = { style = opts.styles.diagnostics, sp = colors.info },
         -- used for "Hint" diagnostic virtual text
-        LspDiagnosticsDefaultHint = { fg = colors.hint, style = config.styles.virtualtext },
+        LspDiagnosticsDefaultHint = { fg = colors.hint, style = opts.styles.virtualtext },
         -- used for "Hint" diagnostic signs in sign column
         LspDiagnosticsSignHint = { fg = colors.hint },
         -- used for "Hint" diagnostic messages in the diagnostics float
         LspDiagnosticsFloatingHint = { fg = colors.hint },
         -- Virtual text "Hint"
-        LspDiagnosticsVirtualTextHint = { fg = colors.low_purple, bg = colors.nc, style = config.styles.virtualtext },
+        LspDiagnosticsVirtualTextHint = { fg = colors.low_purple, bg = colors.shade_purple, style = opts.styles.virtualtext },
         -- used to underline "Hint" diagnostics.
-        LspDiagnosticsUnderlineHint = { style = config.styles.diagnostics, sp = colors.hint },
+        LspDiagnosticsUnderlineHint = { style = opts.styles.diagnostics, sp = colors.hint },
         -- used for highlighting "text" references
-        LspReferenceText = { style = config.styles.references },
+        LspReferenceText = { bg = colors.shade_gray, style = opts.styles.references },
         -- used for highlighting "read" references
-        LspReferenceRead = { style = config.styles.references },
+        LspReferenceRead = { bg = colors.shade_gray, style = opts.styles.references },
         -- used for highlighting "write" references
-        LspReferenceWrite = { style = config.styles.references },
+        LspReferenceWrite = { bg = colors.shade_gray, style = opts.styles.references },
         LspSignatureActiveParameter = { fg = colors.none, bg = colors.highlight, style = 'bold' },
         LspCodeLens = { fg = colors.high_gray },
-        LspInlayHint = { fg = colors.selection, style = 'italic,bold' },
-
-        ['@lsp.type.class'] = { link = 'Type' },
-        ['@lsp.type.comment'] = { fg = colors.none },
-        ['@lsp.type.event'] = { link = 'WarningMsg' },
-        ['@lsp.type.parameter'] = { link = '@parameter' },
-        ['@lsp.type.type'] = { fg = colors.low_olive },
-        ['@lsp.type.variable'] = { fg = colors.none },
-        ['@lsp.mod.documentation'] = { fg = colors.low_gray, style = config.styles.keywords },
-
-        ['@lsp.type.keyword'] = { link = '@keyword' },
-        ['@lsp.type.property'] = { link = '@property' },
-        ['@lsp.type.method'] = { link = '@method' },
-
-        ['@lsp.type.namespace'] = { link = '@namespace' },
-        ['@lsp.type.enum'] = { link = 'Type' },
-        ['@lsp.type.interface'] = { link = 'Type' },
-        ['@lsp.type.struct'] = { link = 'Type' },
-        ['@lsp.type.typeParameter'] = { link = '@parameter' },
-        ['@lsp.type.enumMember'] = { link = '@constant' },
-        ['@lsp.type.macro'] = { link = '@constant.macro' },
-        ['@lsp.type.string'] = { link = '@string' },
-        ['@lsp.type.number'] = { link = '@number' },
-        ['@lsp.type.regexp'] = { link = '@string.regex' },
-        ['@lsp.type.operator'] = { link = '@operator' },
-        ['@lsp.type.decorator'] = { link = '@function.macro' },
-        -- ['@lsp.mod.deprecated'] = { fg = colors.high_cyan, style = 'underdouble' },
-        ['@lsp.mod.deprecated'] = { fg = colors.high_red, style = 'strikethrough' },
-        ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
-        ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
-        ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
+        LspInlayHint = { fg = colors.border, style = 'italic,bold' },
 
         DiagnosticError = { link = 'LspDiagnosticsDefaultError' },
         DiagnosticVirtualTextError = { link = 'LspDiagnosticsVirtualTextError' },
@@ -630,13 +620,44 @@ function theme.highlights(colors, config)
         DiagnosticUnderlineHint = { link = 'LspDiagnosticsUnderlineHint' },
         DiagnosticFloatingHint = { link = 'LspDiagnosticsFloatingHint' },
         DiagnosticSignHint = { link = 'LspDiagnosticsSignHint' },
-        DiagnosticOk = { fg = colors.ok, style = config.styles.virtualtext },
-        DiagnosticVirtualTextOk = { fg = colors.low_green, bg = colors.nc, style = config.styles.virtualtext },
-        DiagnosticUnderlineOk = { style = config.styles.diagnostics, sp = colors.ok },
+        DiagnosticOk = { fg = colors.ok, style = opts.styles.virtualtext },
+        DiagnosticVirtualTextOk = { fg = colors.low_green, bg = colors.shade_gray, style = opts.styles.virtualtext },
+        DiagnosticUnderlineOk = { style = opts.styles.diagnostics, sp = colors.ok },
         DiagnosticFloatingOk = { fg = colors.ok },
         DiagnosticSignOk = { fg = colors.ok },
-        DiagnosticDeprecated = { link = '@lsp.mod.deprecated' },
+        DiagnosticDeprecated = { fg = colors.high_red, sp = colors.high_red, style = opts.styles.deprecated },
         DiagnosticUnnecessary = { link = '@comment' },
+
+        ['@lsp.type.class'] = disable_semantic and {} or { link = '@module' },
+        ['@lsp.type.comment'] = disable_semantic and {} or { fg = colors.none },
+        ['@lsp.type.event'] = disable_semantic and {} or { link = 'WarningMsg' },
+        ['@lsp.type.parameter'] = disable_semantic and {} or { link = '@parameter' },
+        ['@lsp.type.type'] = disable_semantic and {} or { fg = colors.low_olive },
+        ['@lsp.type.variable'] = disable_semantic and {} or { fg = colors.none },
+
+        ['@lsp.type.keyword'] = disable_semantic and {} or { link = '@keyword' },
+        ['@lsp.type.property'] = disable_semantic and {} or { link = '@property' },
+        ['@lsp.type.function'] = disable_semantic and {} or { link = 'Function' },
+        ['@lsp.type.method'] = disable_semantic and {} or { link = '@method' },
+        ['@lsp.type.modifier'] = disable_semantic and {} or { fg = colors.low_purple },
+
+        ['@lsp.type.namespace'] = disable_semantic and {} or { link = '@namespace' },
+        ['@lsp.type.enum'] = disable_semantic and {} or { link = 'Type' },
+        ['@lsp.type.interface'] = disable_semantic and {} or { link = 'Type' },
+        ['@lsp.type.struct'] = disable_semantic and {} or { link = 'Type' },
+        ['@lsp.type.typeParameter'] = disable_semantic and {} or { link = '@parameter' },
+        ['@lsp.type.enumMember'] = disable_semantic and {} or { link = '@constant' },
+        ['@lsp.type.macro'] = disable_semantic and {} or { link = '@constant.macro' },
+        ['@lsp.type.string'] = disable_semantic and {} or { link = '@string' },
+        ['@lsp.type.number'] = disable_semantic and {} or { link = '@number' },
+        ['@lsp.type.regexp'] = disable_semantic and {} or { link = '@string.regex' },
+        ['@lsp.type.operator'] = disable_semantic and {} or { link = '@operator' },
+        ['@lsp.type.decorator'] = disable_semantic and {} or { link = '@function.macro' },
+        ['@lsp.mod.documentation'] = disable_semantic and {} or { fg = colors.low_gray, style = opts.styles.keywords },
+        ['@lsp.mod.deprecated'] = disable_semantic and {} or { link = 'DiagnosticDeprecated' },
+        ['@lsp.typemod.function.defaultLibrary'] = disable_semantic and {} or { link = '@function.builtin' },
+        ['@lsp.typemod.method.defaultLibrary'] = disable_semantic and {} or { link = '@function.builtin' },
+        ['@lsp.typemod.variable.defaultLibrary'] = disable_semantic and {} or { link = '@module.builtin' },
       }
     end
 
@@ -647,65 +668,76 @@ function theme.highlights(colors, config)
     -- Plugins highlight groups
     local p = {}
 
-    if config.plugins.conflict_marker then
+    if opts.plugins.conflict_marker then
       vim.g.conflict_marker_highlow_group = ''
       p['ConflictMarkerBegin'] = { fg = colors.fg, bg = colors.high_green }
-      p['ConflictMarkerOurs'] = { fg = colors.green, bg = colors.diff_change_bg }
-      p['ConflictMarkerTheirs'] = { fg = colors.blue, bg = colors.diff_add_bg }
+      p['ConflictMarkerOurs'] = { fg = colors.green, bg = colors.shade_green }
+      p['ConflictMarkerTheirs'] = { fg = colors.blue, bg = colors.shade_cyan }
       p['ConflictMarkerEnd'] = { fg = colors.fg, bg = colors.high_blue }
       p['ConflictMarkerSeparator'] = { fg = colors.fg, bg = colors.high_red }
       p['ConflictMarkerCommonAncestors'] = { fg = colors.fg, bg = colors.high_red }
-      p['ConflictMarkerCommonAncestorsHunk'] = { fg = colors.high_red, bg = colors.diff_remove_bg }
+      p['ConflictMarkerCommonAncestorsHunk'] = { fg = colors.high_red, bg = colors.shade_red }
     end
-    if config.plugins.fret then
+    if opts.plugins.fret then
       p['FretIgnore'] = { fg = colors.gray }
-      p['FretCandidateFirst'] = { fg = colors.match, style = 'bold,underline' }
-      p['FretCandidateSecond'] = { fg = colors.match, style = 'bold,underline' }
-      p['FretCandidateSub'] = { fg = colors.matchsub, style = 'underdotted' }
+      p['FretCandidateFirst'] = { fg = colors.match, sp = colors.match, style = 'bold,underline' }
+      p['FretCandidateSecond'] = { fg = colors.match, sp = colors.match, style = 'bold,underline' }
+      p['FretCandidateSub'] = { fg = colors.matchsub, sp = colors.matchsub, style = 'underdotted' }
       p['FretAlternative'] = { fg = colors.match, bg = colors.bg, style = 'bold,reverse' }
     end
-    if config.plugins.fuzzy_motion then
+    if opts.plugins.fuzzy_motion then
       p['FuzzyMotionShade'] = { fg = colors.low_gray }
       p['FuzzyMotionChar'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
-      p['FuzzyMotionSubChar'] = { fg = colors.match, style = 'bold,underline' }
-      p['FuzzyMotionMatch'] = { fg = colors.matchsub, style = 'underline' }
+      p['FuzzyMotionSubChar'] = { fg = colors.match, sp = colors.match, style = 'bold,underline' }
+      p['FuzzyMotionMatch'] = { fg = colors.matchsub, sp = colors.matchsub, style = 'underline' }
     end
-    if config.plugins.cmp then
+    if opts.plugins.flash then
+      p['FlashBackdrop'] = { fg = colors.low_gray }
+      p['FlashLabel'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
+      p['FlashCurrent'] = { fg = colors.high_red, sp = colors.bg, style = 'reverse' }
+      p['FlashMatch'] = { fg = colors.matchsub, sp = colors.matchsub, style = 'underline' }
+      p['FlashPrompt'] = { fg = colors.match }
+      p['FlashPromptIcon'] = { fg = colors.matchsub }
+      -- p['FlashCursor'] = {}
+    end
+    if opts.plugins.cmp then
       p['CmpItemAbbr'] = { fg = colors.fg }
-      p['CmpItemAbbrDeprecated'] = { fg = colors.gray, style = 'underline' }
+      p['CmpItemAbbrDeprecated'] = { fg = colors.low_gray, sp = colors.low_gray, style = opts.styles.deprecated }
       p['CmpItemAbbrMatch'] = { fg = colors.match, style = 'bold' }
       p['CmpItemAbbrMatchFuzzy'] = { fg = colors.match, style = 'bold' }
       p['CmpItemKind'] = { fg = colors.low_gray }
       p['CmpItemMenu'] = { fg = colors.gray }
-      p['CmpItemKindClass'] = { fg = colors.low_red }
+      p['CmpItemKindClass'] = { fg = colors.olive }
       p['CmpItemKindConstant'] = { fg = colors.low_gray }
       p['CmpItemKindConstructor'] = { fg = colors.low_olive }
-      p['CmpItemKindCopilot'] = { fg = colors.gray }
+      p['CmpItemKindCopilot'] = { fg = colors.low_red }
       p['CmpItemKindEnum'] = { fg = colors.low_orange }
       p['CmpItemKindEnumMember'] = { fg = colors.low_orange }
       p['CmpItemKindField'] = { fg = colors.low_olive }
       p['CmpItemKindFile'] = { fg = colors.low_gray }
       p['CmpItemKindFolder'] = { fg = colors.low_cyan }
       p['CmpItemKindFunction'] = { fg = colors.low_blue }
-      p['CmpItemKindInterface'] = { fg = colors.low_red }
+      p['CmpItemKindInterface'] = { fg = colors.low_olive }
       p['CmpItemKindKeyword'] = { fg = colors.low_purple }
       p['CmpItemKindMethod'] = { fg = colors.low_blue }
       p['CmpItemKindModule'] = { fg = colors.low_cyan }
-      p['CmpItemKindProperty'] = { fg = colors.low_gray }
-      p['CmpItemKindSnippet'] = { fg = colors.cyan }
+      p['CmpItemKindProperty'] = { fg = colors.low_olive }
+      p['CmpItemKindSnippet'] = { fg = colors.green }
       p['CmpItemKindStruct'] = { fg = colors.low_olive }
-      p['CmpItemKindText'] = { fg = colors.low_gray }
+      p['CmpItemKindText'] = { fg = colors.low_text }
       p['CmpItemKindTypeParameter'] = { fg = colors.low_cyan }
-      p['CmpItemKindValue'] = { fg = colors.low_gray }
-      -- p['CmpItemKindTabNine'] = { fg = colors.low_breen }
+      p['CmpItemKindValue'] = { fg = colors.low_purple }
+      p['CmpItemKindTabNine'] = { fg = colors.low_red }
       p['CmpGhostText'] = { fg = colors.selection, style = 'italic' }
     end
-    if config.plugins.matchwith then
-      p['Matchwith'] = { style = 'underline' }
-      p['MatchwithOut'] = { style = 'underdouble' }
+    if opts.plugins.matchwith then
+      p['Matchwith'] = { sp = colors.high_purple, style = 'underline' }
+      p['MatchwithOut'] = { sp = colors.high_cyan, style = 'underdouble' }
       p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
+      p['MatchwithParent'] = { fg = colors.high_purple }
+      p['MatchwithParentOUT'] = { fg = colors.high_cyan }
     end
-    if config.plugins.skkeleton_indicator then
+    if opts.plugins.skkeleton_indicator then
       p['SkkeletonIndicatorEiji'] = { fg = colors.bg, bg = colors.cyan }
       p['SkkeletonIndicatorHira'] = { fg = colors.bg, bg = colors.high_green }
       p['SkkeletonIndicatorKata'] = { fg = colors.bg, bg = colors.high_olive }
@@ -713,18 +745,18 @@ function theme.highlights(colors, config)
       p['SkkeletonIndicatorZenkaku'] = { fg = colors.bg, bg = colors.orange }
       p['SkkeletonIndicatorAbbrev'] = { fg = colors.bg, bg = colors.high_purple }
     end
-    if config.plugins.sandwich then
+    if opts.plugins.sandwich then
       p['OperatorSandwichAdd'] = { fg = colors.fg, bg = colors.highlight, style = 'bold' }
       p['OperatorSandwichChange'] = { bg = colors.highlight, style = 'bold' }
       p['OperatorSandwichDelete'] = { fg = colors.high_red, style = 'bold' }
     end
-    if config.plugins.dashboard then
+    if opts.plugins.dashboard then
       p['DashboardShortCut'] = { fg = colors.cyan }
       p['DashboardHeader'] = { fg = colors.blue }
       p['DashboardCenter'] = { fg = colors.purple }
       p['DashboardFooter'] = { fg = colors.green, style = 'italic' }
     end
-    if config.plugins.lazy then
+    if opts.plugins.lazy then
       p['LazyButton'] = { fg = colors.gray, bg = colors.selection }
       p['LazyButtonActive'] = { fg = colors.bg, bg = colors.high_cyan, style = 'bold' }
       p['LazyComment'] = { fg = colors.purple }
@@ -757,14 +789,14 @@ function theme.highlights(colors, config)
       p['LazyUrl'] = { fg = colors.high_blue }
       p['LazyValue'] = { fg = colors.olive }
     end
-    if config.plugins.lspconfig then
+    if opts.plugins.lspconfig then
       p['LspInfoTitle'] = { fg = colors.high_orange }
       p['LspInfoList'] = { fg = colors.purple }
       p['LspInfoFiletype'] = { fg = colors.blue }
       p['LspInfoTip'] = { link = 'Comment' }
       p['LspInfoBorder'] = { link = 'NormalNC' }
     end
-    if config.plugins.notify then
+    if opts.plugins.notify then
       -- p['NotifyBackground'] = { bg = '#000000' }
       p['NotifyERRORBorder'] = { fg = colors.error }
       p['NotifyWARNBorder'] = { fg = colors.warn }
@@ -782,7 +814,7 @@ function theme.highlights(colors, config)
       p['NotifyDEBUGTitle'] = { fg = colors.low_gray }
       p['NotifyTRACETitle'] = { fg = colors.hint }
     end
-    if config.plugins.trouble then
+    if opts.plugins.trouble then
       -- p['TroubleFile'] = { fg = colors.blue }
       -- p['TroubleCount'] = { fg = colors.purple }
       -- p['TroubleNormal'] = { fg = colors.fg }
@@ -838,7 +870,7 @@ function theme.highlights(colors, config)
       p['TroubleIndentTop'] = { link = 'TroubleIndent' }
       p['TroubleIndentWs'] = { link = 'TroubleIndent' }
     end
-    if config.plugins.rainbow_delimiters_high then
+    if opts.plugins.rainbow_delimiters_high then
       p['RainbowDelimiterRed'] = { fg = colors.high_red }
       p['RainbowDelimiterYellow'] = { fg = colors.high_olive }
       p['RainbowDelimiterBlue'] = { fg = colors.high_blue }
@@ -847,7 +879,7 @@ function theme.highlights(colors, config)
       p['RainbowDelimiterViolet'] = { fg = colors.high_purple }
       p['RainbowDelimiterCyan'] = { fg = colors.high_cyan }
     end
-    if config.plugins.rainbow_delimiters_low then
+    if opts.plugins.rainbow_delimiters_low then
       p['RainbowDelimiterRed'] = { fg = colors.low_red }
       p['RainbowDelimiterYellow'] = { fg = colors.low_olive }
       p['RainbowDelimiterBlue'] = { fg = colors.low_blue }
@@ -856,19 +888,19 @@ function theme.highlights(colors, config)
       p['RainbowDelimiterViolet'] = { fg = colors.low_purple }
       p['RainbowDelimiterCyan'] = { fg = colors.low_cyan }
     end
-    if config.plugins.neogit then
+    if opts.plugins.neogit then
       p['NeogitBranch'] = { fg = colors.purple }
       p['NeogitRemote'] = { fg = colors.orange }
       p['NeogitHunkHeader'] = { fg = colors.fg, bg = colors.highlight }
       p['NeogitHunkHeaderHighlight'] = { fg = colors.olive, bg = colors.highlight }
-      p['NeogitDiffContextHighlight'] = { bg = colors.nc }
-      p['NeogitDiffDeleteHighlight'] = { fg = colors.diff_remove, bg = colors.diff_remove_bg }
-      p['NeogitDiffAddHighlight'] = { fg = colors.diff_add, bg = colors.diff_add_bg }
+      p['NeogitDiffContextHighlight'] = { bg = colors.shade_gray }
+      p['NeogitDiffDeleteHighlight'] = { fg = colors.diff_remove, bg = colors.shade_red }
+      p['NeogitDiffAddHighlight'] = { fg = colors.diff_add, bg = colors.shade_cyan }
       p['NeogitNotificationInfo'] = { fg = colors.info }
       p['NeogitNotificationWarning'] = { fg = colors.warn }
       p['NeogitNotificationError'] = { fg = colors.error }
     end
-    if config.plugins.gitsigns then
+    if opts.plugins.gitsigns then
       p['GitSignsAdd'] = { fg = colors.high_blue } -- diff mode: Added line |diff.txt|
       p['GitSignsChange'] = { fg = colors.high_green } -- diff mode: Changed line |diff.txt|
       -- p['GitSignsChangeDelete'] = { link = 'GitSignsChange' } -- diff mode: Changed line |diff.txt|
@@ -887,10 +919,10 @@ function theme.highlights(colors, config)
       p['GitSignsUntrackedLn'] = { link = 'DiffText' }
       p['GitSignsAddPreview'] = { fg = colors.cyan }
       p['GitSignsDeletePreview'] = { fg = colors.red }
-      p['GitSignsCurrentLineBlame'] = { fg = colors.low_purple, bg = colors.nc, style = config.styles.virtualtext }
-      p['GitSignsAddInline'] = { bg = colors.diff_add_bg }
-      p['GitSignsChangeInline'] = { bg = colors.diff_change_bg }
-      p['GitSignsDeleteInline'] = { bg = colors.diff_remove_bg }
+      p['GitSignsCurrentLineBlame'] = { fg = colors.low_purple, bg = colors.shade_purple, style = opts.styles.virtualtext }
+      p['GitSignsAddInline'] = { bg = colors.shade_cyan }
+      p['GitSignsChangeInline'] = { bg = colors.shade_green }
+      p['GitSignsDeleteInline'] = { bg = colors.shade_red }
       -- p['GitSignsAddLnInline'] = { link = 'GitSignsAddInline' }
       -- p['GitSignsChangeLnInline'] = { link = 'GitSignsChangeInline' }
       -- p['GitSignsDeleteLnInline'] = { link = 'GitSignsDeleteInline' }
@@ -898,21 +930,21 @@ function theme.highlights(colors, config)
       -- p['GitSignsDeleteVirtLnInline'] = { link = 'GitSignsDeleteVirtLn' }
       -- p['GitSignsDeleteVirtLnum'] = { link = 'GitSignsDeleteVirtLn' }
     end
-    local telescope = config.plugins.telescope
+    local telescope = opts.plugins.telescope
     if telescope then
       p['TelescopeNormal'] = { link = 'Normal' }
       p['TelescopeSelection'] = { fg = colors.fg, bg = colors.selection }
       p['TelescopeMultiIcon'] = { fg = colors.high_green }
-      p['TelescopeMultiSelection'] = { bg = colors.diff_change_bg }
+      p['TelescopeMultiSelection'] = { bg = colors.shade_green }
       p['TelescopePromptPrefix'] = { fg = colors.cyan }
       p['TelescopePromptCounter'] = { fg = colors.gray }
-      p['TelescopeMatching'] = { fg = colors.match, style = 'bold' }
+      p['TelescopeMatching'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
       if telescope == 'border_fade' then
         p['TelescopeBorder'] = { link = 'NormalNC' }
         p['TelescopeTitle'] = { link = 'NormalNC' }
       end
     end
-    if config.plugins.nvimtree then
+    if opts.plugins.nvimtree then
       p['NvimTreeSymlink'] = { fg = colors.cyan, style = 'bold' }
       p['NvimTreeRootFolder'] = { fg = colors.green, style = 'bold' }
       p['NvimTreeFolderName'] = { fg = colors.blue }
@@ -936,14 +968,14 @@ function theme.highlights(colors, config)
       p['LspDiagnosticsInformation'] = { fg = colors.info }
       p['LspDiagnosticsHint'] = { fg = colors.hint }
     end
-    if config.plugins.whichkey then
+    if opts.plugins.whichkey then
       p['WhichKey'] = { fg = colors.purple, style = 'bold' }
       p['WhichKeyGroup'] = { fg = colors.cyan }
       p['WhichKeyDesc'] = { fg = colors.blue, style = 'italic' }
       p['WhichKeySeperator'] = { fg = colors.green }
       p['WhichKeyFloat'] = { bg = colors.nc }
     end
-    if config.plugins.lspsaga then
+    if opts.plugins.lspsaga then
       p['SagaTitle'] = { fg = colors.info }
       p['SagaBorder'] = { fg = colors.border, bg = colors.nc }
       p['SagaNormal'] = { fg = colors.fg, bg = colors.bg }
@@ -985,14 +1017,14 @@ function theme.highlights(colors, config)
       p['SagaWinbarFolderName'] = { fg = colors.blue }
       p['SagaWinbarFolder'] = { fg = colors.cyan }
     end
-    if config.plugins.bufferline then
+    if opts.plugins.bufferline then
       p['BufferLineIndicatorSelected'] = { fg = colors.olive }
       p['BufferLineFill'] = { bg = colors.bg }
     end
-    if config.plugins.treesitter_context then
-      p['TreesitterContext'] = { fg = colors.none, bg = colors.nc }
+    if opts.plugins.treesitter_context then
+      p['TreesitterContext'] = { fg = colors.none, bg = colors.shade_gray }
     end
-    if config.plugins.barbar then
+    if opts.plugins.barbar then
       p['BufferCurrent'] = { fg = colors.fg, bg = colors.bg }
       p['BufferCurrentIndex'] = { fg = colors.fg, bg = colors.bg }
       p['BufferCurrentMod'] = { fg = colors.olive, bg = colors.bg, style = 'bold' }
@@ -1003,52 +1035,50 @@ function theme.highlights(colors, config)
       p['BufferVisibleMod'] = { fg = colors.olive, bg = colors.bg, style = 'bold' }
       p['BufferVisibleSign'] = { fg = colors.low_gray, bg = colors.bg }
       p['BufferVisibleTarget'] = { fg = colors.red, bg = colors.bg, style = 'bold' }
-      p['BufferInactive'] = { fg = colors.low_gray, bg = colors.nc }
-      p['BufferInactiveIndex'] = { fg = colors.low_gray, bg = colors.nc }
-      p['BufferInactiveMod'] = { fg = colors.olive, bg = colors.nc }
-      p['BufferInactiveSign'] = { fg = colors.low_gray, bg = colors.nc }
-      p['BufferInactiveTarget'] = { fg = colors.red, bg = colors.nc, style = 'bold' }
+      p['BufferInactive'] = { fg = colors.low_gray, bg = colors.shade_gray }
+      p['BufferInactiveIndex'] = { fg = colors.low_gray, bg = colors.shade_gray }
+      p['BufferInactiveMod'] = { fg = colors.olive, bg = colors.shade_gray }
+      p['BufferInactiveSign'] = { fg = colors.low_gray, bg = colors.shade_gray }
+      p['BufferInactiveTarget'] = { fg = colors.red, bg = colors.shade_gray, style = 'bold' }
     end
-    if config.plugins.sneak then
+    if opts.plugins.sneak then
       p['Sneak'] = { fg = colors.bg, bg = colors.fg }
       p['SneakScope'] = { bg = colors.selection }
     end
-    if config.plugins.indent_blankline then
+    if opts.plugins.indent_blankline then
       p['IndentBlanklineChar'] = { fg = colors.selection, style = 'nocombine' }
       p['IndentBlanklineSpaceChar'] = { fg = colors.gray, style = 'nocombine' }
       p['IndentBlanklineSpaceCharBlankline'] = { fg = colors.gray, style = 'nocombine' }
       p['IndentBlanklineContextChar'] = { fg = colors.purple, style = 'nocombine' }
       p['IndentBlanklineContextStart'] = { sp = colors.purple, style = 'underline' }
     end
-    if config.plugins.dap then
+    if opts.plugins.dap then
       p['DapBreakpoint'] = { fg = colors.low_red }
       p['DapBreakpointCondition'] = { fg = colors.purple }
       p['DapBreakpointRejected'] = { fg = colors.low_green }
       p['DapStopped'] = { fg = colors.low_red }
     end
-    if config.plugins.dap_virtual_text then
-      p['NvimDapVirtualText'] =
-        { fg = colors.high_purple, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
+    if opts.plugins.dap_virtual_text then
+      p['NvimDapVirtualText'] = { fg = colors.high_purple, bg = colors.shade_red, style = opts.styles.virtualtext }
       p['NvimDapVirtualTextInfo'] = { fg = colors.bg, bg = colors.red }
-      p['NvimDapVirtualTextChanged'] =
-        { fg = colors.blue, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
+      p['NvimDapVirtualTextChanged'] = { fg = colors.blue, bg = colors.shade_red, style = opts.styles.virtualtext }
       p['NvimDapVirtualTextError'] =
-        { fg = colors.low_red, bg = colors.diff_remove_bg, style = config.styles.virtualtext }
+        { fg = colors.low_red, bg = colors.shade_red, style = opts.styles.virtualtext }
     end
-    if config.plugins.illuminate then
+    if opts.plugins.illuminate then
       p['illuminatedWord'] = { bg = colors.highlight }
       p['illuminatedCurWord'] = { bg = colors.highlight }
     end
-    if config.plugins.hop then
+    if opts.plugins.hop then
       p['HopNextKey'] = { fg = colors.fg, style = 'bold' }
       p['HopNextKey1'] = { fg = colors.cyan, style = 'bold' }
       p['HopNextKey2'] = { fg = colors.purple }
       p['HopUnmatched'] = { fg = colors.low_gray }
     end
-    if config.plugins.fern then
+    if opts.plugins.fern then
       p['FernBranchText'] = { fg = colors.blue }
     end
-    if config.plugins.lightspeed then
+    if opts.plugins.lightspeed then
       p['LightspeedLabel'] = { fg = colors.red, style = 'bold,underline' }
       p['LightspeedLabelOverlapped'] = { fg = colors.high_red, style = 'underline' }
       p['LightspeedLabelDistant'] = { fg = colors.cyan, style = 'bold,underline' }
@@ -1059,7 +1089,7 @@ function theme.highlights(colors, config)
       p['LightspeedUnlabeledMatch'] = { fg = colors.fg, style = 'bold' }
       p['LightspeedOneCharMatch'] = { fg = colors.olive, style = 'bold,reverse' }
     end
-    if config.plugins.navic then
+    if opts.plugins.navic then
       p['NavicIconsFile'] = { bg = colors.nc, fg = colors.blue }
       p['NavicIconsModule'] = { bg = colors.nc, fg = colors.blue }
       p['NavicIconsNamespace'] = { bg = colors.nc, fg = colors.olive }
@@ -1090,8 +1120,8 @@ function theme.highlights(colors, config)
       p['NavicSeparator'] = { bg = colors.nc, fg = colors.cyan }
     end
 
-    if config.disable.background and config.plugins.nvimtree then
-      remove_background(p.NvimTreeNormal)
+    if opts.disable.background and opts.plugins.nvimtree then
+      remove_bg(p.NvimTreeNormal)
     end
 
     return p

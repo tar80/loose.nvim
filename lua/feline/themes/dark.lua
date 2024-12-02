@@ -1,19 +1,17 @@
 local M = {}
-
 M.theme = {
-  fg = '#678D8A',
-  fg1 = '#476D6A',
-  bg = '#173334',
-  bg2 = '#215053',
-  cyan = '#67B0B5',
-  blue = '#628EBB',
-  green = '#7C9E7A',
-  olive = '#A89E67',
-  orange = '#BB8970',
-  red = '#C36A74',
-  purple = '#A176B5',
+  purple = "#9d65af",
+  bg2 = "#151515",
+  green = "#7ab690",
+  blue = "#658db6",
+  fg2 = "#6b6b6b",
+  bg = "#292929",
+  olive = "#adae7d",
+  fg = "#c5c5c5",
+  orange = "#c9a175",
+  red = "#da7890",
+  cyan = "#77b4b3",
 }
-
 M.vi_mode = {
   NORMAL = M.theme.fg,
   INSERT = M.theme.cyan,
@@ -22,7 +20,7 @@ M.vi_mode = {
   VISUAL = M.theme.purple,
   LINES = M.theme.purple,
   BLOCK = M.theme.purple,
-  ['V-REPLACE'] = M.theme.purple,
+  ["V-REPLACE"] = M.theme.purple,
   ENTER = M.theme.cyan,
   MORE = M.theme.cyan,
   SELECT = M.theme.red,
@@ -31,5 +29,4 @@ M.vi_mode = {
   TERM = M.theme.blue,
   NONE = M.theme.red,
 }
-
 return M

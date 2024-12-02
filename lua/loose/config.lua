@@ -1,7 +1,8 @@
 local config = {}
-config.options = {
-  background = 'dark',
-  theme = 'dark',
+local _options = {
+  enable_usercmd = false,
+  background = nil,
+  theme = { light = 'light', dark = 'dark' },
   borders = true, -- Split window borders
   fade_nc = false, -- Fade non-current windows, making them more distinguishable
   fade_tr = false, -- Enables fade_nc and makes the current background transparent
@@ -12,6 +13,7 @@ config.options = {
     keywords = 'NONE',
     functions = 'NONE',
     variables = 'NONE',
+    deprecated = 'NONE',
     diagnostics = 'undercurl',
     references = 'underline',
     spell = 'undercurl',
@@ -21,30 +23,25 @@ config.options = {
     background = false, -- Disable setting the background color. This is override fade_nc
     cursorline = false, -- Disable the cursorline
     eob_lines = false, -- Hide the end-of-buffer lines
+    statusline = false, -- Disable setting the statusline background color.
+    tabline = false, -- Disable setting the tabline background color.
+    tabsel = false, -- Disable setting the tablineSel background color.
+    tabfill = false, -- Disable setting the tablineFill background color.
   },
   -- Override default highlight groups
   custom_highlights = {},
-  plugins = { lsp = true, treesitter = true },
+  plugins = { lsp = true, lsp_semantic = true, treesitter = true },
 }
 
+---@param opts table User-specified option values
+---@return table - Options
 function config.set_options(opts)
-  if not opts then
-    return {}
+  config.options = vim.tbl_deep_extend('force', _options, opts or {})
+  if type(opts.theme) ~= 'table' then
+    opts.theme = { light = 'light', dark = 'dark' }
+    vim.deprecate('[loose.nvim] Option "theme"', '"theme.light" and "theme.dark"', 'course.', 'due', false)
   end
-
-  vim.validate({
-    background = { opts.background, 'string', true },
-    theme = { opts.theme, 'string', true },
-    borders = { opts.borders, 'boolean', true },
-    fade_nc = { opts.fade_nc, 'boolean', true },
-    fade_tr = { opts.fade_tr, 'boolean', true },
-    styles = { opts.styles, 'table', true },
-    disable = { opts.disable, 'table', true },
-    custom_highlights = { opts.custom_highlights, 'table', true },
-    plugins = { opts.plugins, 'table', true },
-  })
-
-  config.options = vim.tbl_deep_extend('force', config.options, opts)
+  return config.options
 end
 
 return config

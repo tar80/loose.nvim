@@ -1,16 +1,16 @@
 local M = {}
 M.theme = {
-  purple = "#e136ea",
-  bg2 = "#d0d0d0",
-  red = "#f95874",
-  olive = "#cfac2f",
-  fg2 = "#859387",
-  bg = "#f1f1f1",
-  green = "#6fac33",
-  fg = "#4f4f4f",
-  orange = "#ff7b3c",
-  blue = "#3b84df",
-  cyan = "#52b7d8",
+  blue = "#718aa2",
+  bg = "#282828",
+  fg = "#c4c4c4",
+  orange = "#bba288",
+  green = "#88ad95",
+  fg2 = "#6a6a6a",
+  cyan = "#87acac",
+  red = "#bf8392",
+  bg2 = "#14141a",
+  olive = "#abab8d",
+  purple = "#906d9b",
 }
 M.vi_mode = {
   NORMAL = M.theme.fg,
