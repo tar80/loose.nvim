@@ -147,6 +147,10 @@ function theme.highlights(colors, opts)
       ModeMsg = { fg = colors.blue },
       -- |more-prompt|
       MoreMsg = { fg = colors.blue },
+      -- Area for messages and command-line
+      MsgArea = { link = 'Normal' },
+      -- Separator for scrolled messages msgsep
+      MsgSeparator = { link = 'StatusLine' },
       -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist
       -- in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line).
       -- See also |hl-EndOfBuffer|.
@@ -167,6 +171,8 @@ function theme.highlights(colors, opts)
       qfLineNr = { fg = colors.purple },
       -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
       Search = { fg = colors.orange, bg = colors.highlight, style = 'bold' },
+      -- Tabstops in vim.snippets.
+      SnippetTabstop = { link = 'Visual' },
       -- Unprintable characters: text displayed differently from what it really is.
       -- But not 'listchars' whitespace. |hl-Whitespace|
       SpecialKey = { fg = colors.high_blue },
@@ -541,55 +547,6 @@ function theme.highlights(colors, opts)
     if opts.plugins.lsp then
       local disable_semantic = not opts.plugins.lsp_semantic
       lsp = {
-        -- used for "Error" diagnostic virtual text
-        LspDiagnosticsDefaultError = { fg = colors.error, style = opts.styles.virtualtext },
-        -- used for "Error" diagnostic signs in sign column
-        LspDiagnosticsSignError = { fg = colors.error },
-        -- used for "Error" diagnostic messages in the diagnostics float
-        LspDiagnosticsFloatingError = { fg = colors.error },
-        -- Virtual text "Error"
-        LspDiagnosticsVirtualTextError = {
-          fg = colors.low_red,
-          bg = colors.shade_red,
-          sp = colors.low_red,
-          style = opts.styles.virtualtext,
-        },
-        -- used to underline "Error" diagnostics.
-        LspDiagnosticsUnderlineError = { style = opts.styles.diagnostics, sp = colors.error },
-        -- used for "Warning" diagnostic signs in sign column
-        LspDiagnosticsDefaultWarning = { fg = colors.warn, style = opts.styles.virtualtext },
-        -- used for "Warning" diagnostic signs in sign column
-        LspDiagnosticsSignWarning = { fg = colors.warn },
-        -- used for "Warning" diagnostic messages in the diagnostics float
-        LspDiagnosticsFloatingWarning = { fg = colors.warn },
-        -- Virtual text "Warning"
-        LspDiagnosticsVirtualTextWarning = { fg = colors.low_olive, bg = colors.shade_olive, style = opts.styles.virtualtext },
-        -- used to underline "Warning" diagnostics.
-        LspDiagnosticsUnderlineWarning = { style = opts.styles.diagnostics, sp = colors.warn },
-        -- used for "Information" diagnostic virtual text
-        LspDiagnosticsDefaultInformation = { fg = colors.info, style = opts.styles.virtualtext },
-        -- used for "Information" diagnostic signs in sign column
-        LspDiagnosticsSignInformation = { fg = colors.info },
-        -- used for "Information" diagnostic messages in the diagnostics float
-        LspDiagnosticsFloatingInformation = { fg = colors.info },
-        -- Virtual text "Information"
-        LspDiagnosticsVirtualTextInformation = {
-          fg = colors.low_blue,
-          bg = colors.shade_blue,
-          style = opts.styles.virtualtext,
-        },
-        -- used to underline "Information" diagnostics.
-        LspDiagnosticsUnderlineInformation = { style = opts.styles.diagnostics, sp = colors.info },
-        -- used for "Hint" diagnostic virtual text
-        LspDiagnosticsDefaultHint = { fg = colors.hint, style = opts.styles.virtualtext },
-        -- used for "Hint" diagnostic signs in sign column
-        LspDiagnosticsSignHint = { fg = colors.hint },
-        -- used for "Hint" diagnostic messages in the diagnostics float
-        LspDiagnosticsFloatingHint = { fg = colors.hint },
-        -- Virtual text "Hint"
-        LspDiagnosticsVirtualTextHint = { fg = colors.low_purple, bg = colors.shade_purple, style = opts.styles.virtualtext },
-        -- used to underline "Hint" diagnostics.
-        LspDiagnosticsUnderlineHint = { style = opts.styles.diagnostics, sp = colors.hint },
         -- used for highlighting "text" references
         LspReferenceText = { bg = colors.shade_gray, style = opts.styles.references },
         -- used for highlighting "read" references
@@ -598,28 +555,59 @@ function theme.highlights(colors, opts)
         LspReferenceWrite = { bg = colors.shade_gray, style = opts.styles.references },
         LspSignatureActiveParameter = { fg = colors.none, bg = colors.highlight, style = 'bold' },
         LspCodeLens = { fg = colors.high_gray },
+        --TODO:testing
+        -- LspCodeLensSeparator = { fg = colors.purple, bg = colors.shade_purple },
         LspInlayHint = { fg = colors.border, style = 'italic,bold' },
 
-        DiagnosticError = { link = 'LspDiagnosticsDefaultError' },
-        DiagnosticVirtualTextError = { link = 'LspDiagnosticsVirtualTextError' },
-        DiagnosticUnderlineError = { link = 'LspDiagnosticsUnderlineError' },
-        DiagnosticFloatingError = { link = 'LspDiagnosticsFloatingError' },
-        DiagnosticSignError = { link = 'LspDiagnosticsSignError' },
-        DiagnosticWarn = { link = 'LspDiagnosticsDefaultWarning' },
-        DiagnosticVirtualTextWarn = { link = 'LspDiagnosticsVirtualTextWarning' },
-        DiagnosticUnderlineWarn = { link = 'LspDiagnosticsUnderlineWarning' },
-        DiagnosticFloatingWarn = { link = 'LspDiagnosticsFloatingWarning' },
-        DiagnosticSignWarn = { link = 'LspDiagnosticsSignWarning' },
-        DiagnosticInfo = { link = 'LspDiagnosticsDefaultInformation' },
-        DiagnosticVirtualTextInfo = { link = 'LspDiagnosticsVirtualTextInformation' },
-        DiagnosticUnderlineInfo = { link = 'LspDiagnosticsUnderlineInformation' },
-        DiagnosticFloatingInfo = { link = 'LspDiagnosticsFloatingInformation' },
-        DiagnosticSignInfo = { link = 'LspDiagnosticsSignInformation' },
-        DiagnosticHint = { link = 'LspDiagnosticsDefaultHint' },
-        DiagnosticVirtualTextHint = { link = 'LspDiagnosticsVirtualTextHint' },
-        DiagnosticUnderlineHint = { link = 'LspDiagnosticsUnderlineHint' },
-        DiagnosticFloatingHint = { link = 'LspDiagnosticsFloatingHint' },
-        DiagnosticSignHint = { link = 'LspDiagnosticsSignHint' },
+        -- used for "Error" diagnostic virtual text
+        DiagnosticError = { fg = colors.error, style = opts.styles.virtualtext },
+        -- used for "Error" diagnostic signs in sign column
+        DiagnosticSignError = { fg = colors.error },
+        -- used for "Error" diagnostic messages in the diagnostics float
+        DiagnosticFloatingError = { fg = colors.error },
+        -- Virtual text "Error"
+        DiagnosticVirtualTextError = {
+          fg = colors.low_red,
+          bg = colors.shade_gray,
+          sp = colors.low_red,
+          style = opts.styles.virtualtext,
+        },
+        -- used to underline "Error" diagnostics.
+        DiagnosticUnderlineError = { style = opts.styles.diagnostics, sp = colors.error },
+        -- used for "Warning" diagnostic signs in sign column
+        DiagnosticWarn = { fg = colors.warn, style = opts.styles.virtualtext },
+        -- used for "Warning" diagnostic signs in sign column
+        DiagnosticSignWarn = { fg = colors.warn },
+        -- used for "Warning" diagnostic messages in the diagnostics float
+        DiagnosticFloatingWarn = { fg = colors.warn },
+        -- Virtual text "Warning"
+        DiagnosticVirtualTextWarn = { fg = colors.low_olive, bg = colors.shade_gray, style = opts.styles.virtualtext },
+        -- used to underline "Warning" diagnostics.
+        DiagnosticUnderlineWarn = { style = opts.styles.diagnostics, sp = colors.warn },
+        -- used for "Information" diagnostic virtual text
+        DiagnosticInfo = { fg = colors.info, style = opts.styles.virtualtext },
+        -- used for "Information" diagnostic signs in sign column
+        DiagnosticSignInfo = { fg = colors.info },
+        -- used for "Information" diagnostic messages in the diagnostics float
+        DiagnosticFloatingInfo = { fg = colors.info },
+        -- Virtual text "Information"
+        DiagnosticVirtualTextInfo = { fg = colors.low_blue, bg = colors.shade_gray, style = opts.styles.virtualtext },
+        -- used to underline "Information" diagnostics.
+        DiagnosticUnderlineInfo = { style = opts.styles.diagnostics, sp = colors.info },
+        -- used for "Hint" diagnostic virtual text
+        DiagnosticHint = { fg = colors.hint, style = opts.styles.virtualtext },
+        -- used for "Hint" diagnostic signs in sign column
+        DiagnosticSignHint = { fg = colors.hint },
+        -- used for "Hint" diagnostic messages in the diagnostics float
+        DiagnosticFloatingHint = { fg = colors.hint },
+        -- Virtual text "Hint"
+        DiagnosticVirtualTextHint = {
+          fg = colors.low_purple,
+          bg = colors.shade_purple,
+          style = opts.styles.virtualtext,
+        },
+        -- used to underline "Hint" diagnostics.
+        DiagnosticUnderlineHint = { style = opts.styles.diagnostics, sp = colors.hint },
         DiagnosticOk = { fg = colors.ok, style = opts.styles.virtualtext },
         DiagnosticVirtualTextOk = { fg = colors.low_green, bg = colors.shade_gray, style = opts.styles.virtualtext },
         DiagnosticUnderlineOk = { style = opts.styles.diagnostics, sp = colors.ok },
@@ -789,6 +777,7 @@ function theme.highlights(colors, opts)
       p['LazyUrl'] = { fg = colors.high_blue }
       p['LazyValue'] = { fg = colors.olive }
     end
+    ---@deprecated
     if opts.plugins.lspconfig then
       p['LspInfoTitle'] = { fg = colors.high_orange }
       p['LspInfoList'] = { fg = colors.purple }
@@ -919,7 +908,8 @@ function theme.highlights(colors, opts)
       p['GitSignsUntrackedLn'] = { link = 'DiffText' }
       p['GitSignsAddPreview'] = { fg = colors.cyan }
       p['GitSignsDeletePreview'] = { fg = colors.red }
-      p['GitSignsCurrentLineBlame'] = { fg = colors.low_purple, bg = colors.shade_purple, style = opts.styles.virtualtext }
+      p['GitSignsCurrentLineBlame'] =
+        { fg = colors.low_purple, bg = colors.shade_purple, style = opts.styles.virtualtext }
       p['GitSignsAddInline'] = { bg = colors.shade_cyan }
       p['GitSignsChangeInline'] = { bg = colors.shade_green }
       p['GitSignsDeleteInline'] = { bg = colors.shade_red }
@@ -1062,8 +1052,7 @@ function theme.highlights(colors, opts)
       p['NvimDapVirtualText'] = { fg = colors.high_purple, bg = colors.shade_red, style = opts.styles.virtualtext }
       p['NvimDapVirtualTextInfo'] = { fg = colors.bg, bg = colors.red }
       p['NvimDapVirtualTextChanged'] = { fg = colors.blue, bg = colors.shade_red, style = opts.styles.virtualtext }
-      p['NvimDapVirtualTextError'] =
-        { fg = colors.low_red, bg = colors.shade_red, style = opts.styles.virtualtext }
+      p['NvimDapVirtualTextError'] = { fg = colors.low_red, bg = colors.shade_red, style = opts.styles.virtualtext }
     end
     if opts.plugins.illuminate then
       p['illuminatedWord'] = { bg = colors.highlight }

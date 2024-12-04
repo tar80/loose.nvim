@@ -10,7 +10,7 @@
 
 ## Features
 
-Loose has a function to output a palette (theme) that matches the background color.  
+Loose has a function to output the palettes (theme) that matches the background color.  
 Since the difference from the default background color is only increased or decreased,  
 the colors do not always appear beautifully.
 
@@ -35,7 +35,7 @@ will also be output.
 ---@param rgb string Specify the background color in the format "#rrggbb"
 require('loose.util').create_theme(name, template, background, rgb)
 
----Delete user color palette
+---Delete user color palettes
 require('loose.util').delete_theme()
 
 ---Color settings reference
@@ -65,7 +65,7 @@ the author's favorite plugins are also added.
 - [Fuzzy-motion](https://github.com/yuki-yano/fuzzy-motion.vim)
 - [Flash](https://github.com/folke/flash.nvim)
 - [Lazy](https://github.com/folke/lazy.nvim)
-- [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) @deprecated
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Matchwith](https://github.com/tar80/matchwith.nvim)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
@@ -154,10 +154,9 @@ require("loose").setup({
         dap_virtual_text = false,
         flash = false,
         fret = false,
-        fuzzy_motion = false,
         gitsigns = false,
         lazy = false,
-        lspconfig = false,
+        lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
         skkeleton_indicator = false,
         sandwich = false,
@@ -170,6 +169,7 @@ require("loose").setup({
         confliet_marker = false,
         dashboard = false,
         fern = false,
+        fuzzy_motion = false,
         hop = false,
         indent_blankline = false,
         illuminate = false,
