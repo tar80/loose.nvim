@@ -60,35 +60,6 @@ local staline_ex = {
   '  ["c"] = M.theme.cyan,',
   '  ["t"] = M.theme.cyan,',
   '}',
-  'M.vi_mode2 = {',
-  '  ["n"] = { name = "StalineNormal", fg = M.theme.fg },',
-  '  ["niI"] = { name = "StalineInsert", fg = M.theme.green },',
-  '  ["niR"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["niV"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["no"] = { name = "StalineNormal", fg = M.theme.fg },',
-  '  ["nov"] = { name = "StalineNormal", fg = M.theme.fg },',
-  '  ["noV"] = { name = "StalineNormal", fg = M.theme.fg },',
-  '  ["no"] = { name = "StalineNormal", fg = M.theme.fg },',
-  '  ["i"] = { name = "StalineInsert", fg = M.theme.green },',
-  '  ["ic"] = { name = "StalineInsert", fg = M.theme.green },',
-  '  ["ix"] = { name = "StalineInsert", fg = M.theme.green },',
-  '  ["s"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["S"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["R"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["Rv"] = { name = "StalineReplace", fg = M.theme.red },',
-  '  ["v"] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  ["V"] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  [""] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  ["vs"] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  ["Vs"] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  ["s"] = { name = "StalineVisual", fg = M.theme.purple },',
-  '  ["?"] = { name = "StalineSearch", fg = M.theme.orange },',
-  '  ["r"] = { name = "StalineCommand", fg = M.theme.cyan },',
-  '  ["r?"] = { name = "StalineCommand", fg = M.theme.cyan },',
-  '  ["c"] = { name = "StalineCommand", fg = M.theme.cyan },',
-  '  ["t"] = { name = "StalineCommand", fg = M.theme.cyan },',
-  '  ["!"] = { name = "StalineCommand", fg = M.theme.cyan },',
-  '}',
   'return M',
 }
 
@@ -272,7 +243,7 @@ end
 
 ---Estimate the background brightness
 ---@param name string
----@return BackGround
+---@return string BackGround
 local function estimate_bg_lightness(name)
   local colors = require(require('loose.colors').get_palette_name(name))
   local r, g, b = split_rgb(colors.bg or vim.o.background)

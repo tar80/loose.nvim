@@ -97,11 +97,11 @@ function theme.highlights(colors, opts)
       -- normal text and background color
       Normal = { fg = colors.fg, bg = colors.bg },
       -- normal text and background color for non-current windows
-      NormalNC = { bg = colors.bg },
+      NormalNC = { fg = colors.fg, bg = colors.bg },
       -- normal text and background color for floating windows
       NormalFloat = { fg = colors.fg, bg = colors.float },
       -- floating window border
-      FloatBorder = { link = 'Normal' },
+      FloatBorder = { fg = colors.low_gray, bg = colors.bg },
       -- floating window title
       FloatTitle = { link = 'Normal' },
       -- FloatFooter = { link = 'FloatTitle' },
@@ -109,6 +109,8 @@ function theme.highlights(colors, opts)
       SignColumn = { fg = colors.gray, bg = colors.none },
       -- used for the columns set with 'colorcolumn'
       ColorColumn = { fg = colors.none, bg = colors.nc },
+      -- matched text of the currently inserted completion
+      ComplMatchIns = { link = 'Search' },
       -- placeholder characters substituted for concealed text (see 'conceallevel')
       Conceal = { bg = colors.bg },
       -- the character under the cursor
@@ -136,7 +138,7 @@ function theme.highlights(colors, opts)
       -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
       IncSearch = { fg = colors.high_orange, bg = colors.bg, style = 'reverse' },
       -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
-      LineNr = { fg = colors.fg, style = 'bold' },
+      LineNr = { fg = colors.fg },
       LineNrAbove = { fg = colors.low_gray },
       LineNrBelow = { fg = colors.low_gray },
       -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
@@ -147,10 +149,10 @@ function theme.highlights(colors, opts)
       ModeMsg = { fg = colors.blue },
       -- |more-prompt|
       MoreMsg = { fg = colors.blue },
-      -- Area for messages and command-line
-      MsgArea = { link = 'Normal' },
-      -- Separator for scrolled messages msgsep
-      MsgSeparator = { link = 'StatusLine' },
+      -- -- Area for messages and command-line
+      -- MsgArea = { link = 'Normal' },
+      -- -- Separator for scrolled messages msgsep
+      -- MsgSeparator = { link = 'StatusLine' },
       -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist
       -- in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line).
       -- See also |hl-EndOfBuffer|.
@@ -236,7 +238,7 @@ function theme.highlights(colors, opts)
       diffLine = { fg = colors.purple },
       diffIndexLine = { fg = colors.orange },
       -- terminal
-      TermCursor = { fg = colors.high_purple, sp = colors.high_purpe, style = 'underline' },
+      TermCursor = { fg = colors.high_purple, sp = colors.high_purple },
       TermCursorNC = { fg = colors.low_purple, style = 'reverse' },
     }
 
@@ -755,11 +757,16 @@ function theme.highlights(colors, opts)
       p['CmpGhostText'] = { fg = colors.selection, style = 'italic' }
     end
     if opts.plugins.matchwith then
-      p['Matchwith'] = { sp = colors.high_purple, style = 'underline' }
-      p['MatchwithOut'] = { sp = colors.high_cyan, style = 'underdouble' }
+      p['Matchwith'] = { sp = colors.high_cyan, style = 'underline' }
+      p['MatchwithOut'] = { sp = colors.high_purple, style = 'underdouble' }
       p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
-      p['MatchwithParent'] = { fg = colors.high_purple }
-      p['MatchwithParentOUT'] = { fg = colors.high_cyan }
+      p['MatchwithParent'] = { fg = colors.high_cyan }
+      p['MatchwithParentOUT'] = { fg = colors.high_purple }
+    end
+    if opts.plugins.rereope then
+      p['RereopeHintBg'] = { fg = colors.olive, bg = colors.shade_olive }
+      p['RereopeHintBorder'] = { fg = colors.high_olive }
+      p['RereopeVisualFlash'] = { bg = colors.shade_olive }
     end
     if opts.plugins.skkeleton_indicator then
       p['SkkeletonIndicatorEiji'] = { fg = colors.bg, bg = colors.cyan }
@@ -770,9 +777,28 @@ function theme.highlights(colors, opts)
       p['SkkeletonIndicatorAbbrev'] = { fg = colors.bg, bg = colors.high_purple }
     end
     if opts.plugins.sandwich then
-      p['OperatorSandwichAdd'] = { fg = colors.fg, bg = colors.highlight, style = 'bold' }
-      p['OperatorSandwichChange'] = { bg = colors.highlight, style = 'bold' }
-      p['OperatorSandwichDelete'] = { fg = colors.high_red, style = 'bold' }
+      p['OperatorSandwichAdd'] = { fg = colors.fg, bg = colors.shade_cyan, style = 'bold' }
+      p['OperatorSandwichChange'] = { bg = colors.shade_green, style = 'bold' }
+      p['OperatorSandwichDelete'] = { fg = colors.high_red, bg = colors.shade_red, style = 'bold' }
+    end
+    if opts.plugins.staba then
+      p['StabaInsertMode'] = { fg = colors.high_green, bg = colors.shade_green, style = 'bold' }
+      p['StabaVisualMode'] = { fg = colors.high_purple, bg = colors.shade_gray, style = 'bold' }
+      p['StabaSelectMode'] = { fg = colors.bg, bg = colors.high_red, style = 'bold' }
+      p['StabaReplaceMode'] = { fg = colors.high_red, bg = colors.shade_red, style = 'bold' }
+      p['StabaCmdlineMode'] = { fg = colors.low_gray }
+      p['StabaNC'] = { fg = colors.fg, bg = colors.nc }
+      p['StabaStatus'] = { fg = colors.fg, bg = colors.bg, sp = colors.border, style = 'underline' }
+      p['StabaStatusNC'] = { fg = colors.low_gray, bg = colors.nc, sp = colors.border, style = 'underline,italic' }
+      p['StabaStatusReverse'] = { fg = colors.bg, bg = colors.fg, sp = colors.fg }
+      p['StabaTabFillReverse'] = { fg = colors.border, bg = colors.high_gray, sp = colors.high_gray }
+      p['StabaTabs'] = { fg = colors.bg, bg = colors.high_purple, sp = colors.high_purple }
+      p['StabaTabsReverse'] = { fg = colors.high_purple }
+      p['StabaBuffers'] = { fg = colors.bg, bg = colors.gray, sp = colors.gray }
+      p['StabaBuffersReverse'] = { fg = colors.gray }
+      p['StabaSpecial'] = { fg = colors.high_olive, sp = colors.border }
+      p['StabaReadonly'] = { fg = colors.low_gray, sp = colors.border }
+      p['StabaModified'] = { fg = colors.high_cyan, sp = colors.border }
     end
     if opts.plugins.dashboard then
       p['DashboardShortCut'] = { fg = colors.cyan }
@@ -969,6 +995,57 @@ function theme.highlights(colors, opts)
         p['TelescopeBorder'] = { link = 'NormalNC' }
         p['TelescopeTitle'] = { link = 'NormalNC' }
       end
+    end
+    --- noice
+    if opts.plugins.noice then
+      p['NoiceCmdline'] = { fg = colors.fg, sp = colors.border }
+      p['NoiceCmdlinePrompt'] = { link = 'NoiceCmdline' }
+      -- p['NoiceCmdlineIcon'] = { link = 'DiagnosticSignInfo' }
+      p['NoiceLspProgressClient'] = { fg = colors.high_orange }
+      p['NoiceLspProgressDone'] = { fg = colors.high_green }
+      p['NoiceLspProgressSpinner'] = { fg = colors.high_purple }
+      p['NoiceLspProgressTodo'] = { fg = colors.high_olive }
+      p['NoiceLspProgressTitle'] = { fg = colors.high_gray }
+      p['NoiceConfirm'] = { fg = colors.high_red, bg = colors.shade_gray }
+      p['NoiceConfirmBorder'] = { fg = colors.shade_gray, bg = colors.shade_gray }
+      p['NoiceCursor'] = { fg = colors.high_Cyan, bg = colors.shade_gray }
+      p['NoiceFormatConfirm'] = { fg = colors.gray, bg = colors.nc }
+      p['NoiceFormatConfirmDefault'] = { fg = colors.high_gray, bg = colors.selection }
+      p['NoiceMini'] = { bg = colors.shade_gray }
+      p['NoiceMiniReverse'] = { fg = colors.shade_gray, bg = colors.bg }
+      p['NoiceMiniError'] = { fg = colors.high_red, bg = colors.shade_red }
+      p['NoiceMiniErrorReverse'] = { fg = colors.shade_red, bg = colors.bg }
+      p['NoiceMiniWarn'] = { fg = colors.high_olive, bg = colors.shade_olive }
+      p['NoiceMiniWarnReverse'] = { fg = colors.shade_olive, bg = colors.bg }
+      p['NoiceMiniHint'] = { fg = colors.high_blue, bg = colors.shade_blue }
+      p['NoiceMiniHintReverse'] = { fg = colors.shade_blue, bg = colors.bg }
+      p['NoicePopup'] = { fg = colors.fg, bg = colors.shade_gray }
+      p['NoicePopupBorder'] = { fg = colors.low_gray, bg = colors.bg }
+      p['NoiceSplit'] = { link = 'NoicePopup' }
+    end
+    if opts.plugins.snacks then
+      -- p['SnacksNormal'] = { link = 'Normal' }
+      -- p['SnacksWinBar'] = { link = 'Title'}
+      -- p['SnacksNormalNC'] = { link = 'NormalFloat'}
+      -- p['SnacksWinBarNC'] = { link = 'SnacksWinBar'}
+      -- p['SnacksScratchKey'] = { link = 'DiagnosticVirtualText'}
+      -- p['SnacksScratchDesc'] = { link = 'DiagnosticInfo'}
+      -- p['SnacksNotifierFooterInfo'] = { link =  'DiagnosticInfo'}
+      -- p['SnacksNotifierFooterWarn'] = { link =  'DiagnosticWarn'}
+      -- p['SnacksNotifierFooterDebug'] = { link = 'DiagnosticHint'}
+      -- p['SnacksNotifierFooterError'] = { link = 'DiagnosticError'}
+      -- p['SnacksNotifierFooterTrace'] = { link = 'DiagnosticHint'}
+      p['SnacksDashboardNormal'] = { link = 'Normal' }
+      p['SnacksDashboardDesc'] = { link = 'Normal' }
+      p['SnacksDashboardFile'] = { link = 'Normal' }
+      p['SnacksDashboardDir'] = { link = 'Normal' }
+      p['SnacksDashboardFooter'] = { fg = colors.low_gray }
+      p['SnacksDashboardHeader'] = { fg = colors.shade_blue }
+      p['SnacksDashboardIcon'] = { fg = colors.cyan }
+      p['SnacksDashboardKey'] = { fg = colors.cyan }
+      p['SnacksDashboardTerminal'] = { link = 'SnacksDashboardNormal' }
+      p['SnacksDashboardSpecial'] = { fg = colors.high_purple }
+      p['SnacksDashboardTitle'] = { bg = colors.high_red }
     end
     if opts.plugins.nvimtree then
       p['NvimTreeSymlink'] = { fg = colors.cyan, style = 'bold' }
