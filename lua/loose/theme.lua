@@ -167,8 +167,6 @@ function theme.highlights(colors, opts)
       Question = { fg = colors.green },
       -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
       QuickFixLine = { bg = colors.float, style = 'bold' },
-      -- Line numbers for quickfix lists
-      qfLineNr = { fg = colors.purple },
       -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
       Search = { fg = colors.orange, bg = colors.highlight, style = 'bold' },
       -- Tabstops in vim.snippets.
@@ -543,9 +541,9 @@ function theme.highlights(colors, opts)
   local function load_lsp()
     -- Lsp highlight groups
     local lsp = {}
+    local lsp_semantic = {}
 
     if opts.plugins.lsp then
-      local disable_semantic = not opts.plugins.lsp_semantic
       lsp = {
         -- used for highlighting "text" references
         LspReferenceText = { bg = colors.shade_gray, style = opts.styles.references },
@@ -615,38 +613,76 @@ function theme.highlights(colors, opts)
         DiagnosticSignOk = { fg = colors.ok },
         DiagnosticDeprecated = { fg = colors.high_red, sp = colors.high_red, style = opts.styles.deprecated },
         DiagnosticUnnecessary = { link = '@comment' },
-
-        ['@lsp.type.class'] = disable_semantic and {} or { link = '@module' },
-        ['@lsp.type.comment'] = disable_semantic and {} or { fg = colors.none },
-        ['@lsp.type.event'] = disable_semantic and {} or { link = 'WarningMsg' },
-        ['@lsp.type.parameter'] = disable_semantic and {} or { link = '@parameter' },
-        ['@lsp.type.type'] = disable_semantic and {} or { fg = colors.low_olive },
-        ['@lsp.type.variable'] = disable_semantic and {} or { fg = colors.none },
-
-        ['@lsp.type.keyword'] = disable_semantic and {} or { link = '@keyword' },
-        ['@lsp.type.property'] = disable_semantic and {} or { link = '@property' },
-        ['@lsp.type.function'] = disable_semantic and {} or { link = 'Function' },
-        ['@lsp.type.method'] = disable_semantic and {} or { link = '@method' },
-        ['@lsp.type.modifier'] = disable_semantic and {} or { fg = colors.low_purple },
-
-        ['@lsp.type.namespace'] = disable_semantic and {} or { link = '@namespace' },
-        ['@lsp.type.enum'] = disable_semantic and {} or { link = 'Type' },
-        ['@lsp.type.interface'] = disable_semantic and {} or { link = 'Type' },
-        ['@lsp.type.struct'] = disable_semantic and {} or { link = 'Type' },
-        ['@lsp.type.typeParameter'] = disable_semantic and {} or { link = '@parameter' },
-        ['@lsp.type.enumMember'] = disable_semantic and {} or { link = '@constant' },
-        ['@lsp.type.macro'] = disable_semantic and {} or { link = '@constant.macro' },
-        ['@lsp.type.string'] = disable_semantic and {} or { link = '@string' },
-        ['@lsp.type.number'] = disable_semantic and {} or { link = '@number' },
-        ['@lsp.type.regexp'] = disable_semantic and {} or { link = '@string.regex' },
-        ['@lsp.type.operator'] = disable_semantic and {} or { link = '@operator' },
-        ['@lsp.type.decorator'] = disable_semantic and {} or { link = '@function.macro' },
-        ['@lsp.mod.documentation'] = disable_semantic and {} or { fg = colors.low_gray, style = opts.styles.keywords },
-        ['@lsp.mod.deprecated'] = disable_semantic and {} or { link = 'DiagnosticDeprecated' },
-        ['@lsp.typemod.function.defaultLibrary'] = disable_semantic and {} or { link = '@function.builtin' },
-        ['@lsp.typemod.method.defaultLibrary'] = disable_semantic and {} or { link = '@function.builtin' },
-        ['@lsp.typemod.variable.defaultLibrary'] = disable_semantic and {} or { link = '@module.builtin' },
       }
+
+      if opts.plugins.lsp_semantic then
+        lsp_semantic = {
+          ['@lsp.type.class'] = { link = '@module' },
+          ['@lsp.type.comment'] = { fg = colors.none },
+          ['@lsp.type.event'] = { link = 'WarningMsg' },
+          ['@lsp.type.parameter'] = { link = '@parameter' },
+          ['@lsp.type.type'] = { fg = colors.low_olive },
+          ['@lsp.type.variable'] = { fg = colors.none },
+
+          ['@lsp.type.keyword'] = { link = '@keyword' },
+          ['@lsp.type.property'] = { link = '@property' },
+          ['@lsp.type.function'] = { link = 'Function' },
+          ['@lsp.type.method'] = { link = '@method' },
+          ['@lsp.type.modifier'] = { fg = colors.low_purple },
+
+          ['@lsp.type.namespace'] = { link = '@namespace' },
+          ['@lsp.type.enum'] = { link = 'Type' },
+          ['@lsp.type.interface'] = { link = 'Type' },
+          ['@lsp.type.struct'] = { link = 'Type' },
+          ['@lsp.type.typeParameter'] = { link = '@parameter' },
+          ['@lsp.type.enumMember'] = { link = '@constant' },
+          ['@lsp.type.macro'] = { link = '@constant.macro' },
+          ['@lsp.type.string'] = { link = '@string' },
+          ['@lsp.type.number'] = { link = '@number' },
+          ['@lsp.type.regexp'] = { link = '@string.regex' },
+          ['@lsp.type.operator'] = { link = '@operator' },
+          ['@lsp.type.decorator'] = { link = '@function.macro' },
+          ['@lsp.mod.documentation'] = { fg = colors.low_gray, style = opts.styles.keywords },
+          ['@lsp.mod.deprecated'] = { link = 'DiagnosticDeprecated' },
+          ['@lsp.typemod.function.defaultLibrary'] = { link = '@function.builtin' },
+          ['@lsp.typemod.method.defaultLibrary'] = { link = '@function.builtin' },
+          ['@lsp.typemod.variable.defaultLibrary'] = { link = '@module.builtin' },
+        }
+      else
+        lsp_semantic = {
+          ['@lsp.type.class'] = {},
+          ['@lsp.type.comment'] = {},
+          ['@lsp.type.event'] = {},
+          ['@lsp.type.parameter'] = {},
+          ['@lsp.type.type'] = {},
+          ['@lsp.type.variable'] = {},
+
+          ['@lsp.type.keyword'] = {},
+          ['@lsp.type.property'] = {},
+          ['@lsp.type.function'] = {},
+          ['@lsp.type.method'] = {},
+          ['@lsp.type.modifier'] = {},
+
+          ['@lsp.type.namespace'] = {},
+          ['@lsp.type.enum'] = {},
+          ['@lsp.type.interface'] = {},
+          ['@lsp.type.struct'] = {},
+          ['@lsp.type.typeParameter'] = {},
+          ['@lsp.type.enumMember'] = {},
+          ['@lsp.type.macro'] = {},
+          ['@lsp.type.string'] = {},
+          ['@lsp.type.number'] = {},
+          ['@lsp.type.regexp'] = {},
+          ['@lsp.type.operator'] = {},
+          ['@lsp.type.decorator'] = {},
+          ['@lsp.mod.documentation'] = {},
+          ['@lsp.mod.deprecated'] = {},
+          ['@lsp.typemod.function.defaultLibrary'] = {},
+          ['@lsp.typemod.method.defaultLibrary'] = {},
+          ['@lsp.typemod.variable.defaultLibrary'] = {},
+        }
+      end
+      lsp = vim.tbl_deep_extend('error', lsp, lsp_semantic)
     end
 
     return lsp
