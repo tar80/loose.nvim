@@ -65,10 +65,14 @@ the author's favorite plugins are also added.
 - [Fuzzy-motion](https://github.com/yuki-yano/fuzzy-motion.vim)
 - [Flash](https://github.com/folke/flash.nvim)
 - [Lazy](https://github.com/folke/lazy.nvim)
+- [Noice](https://github.com/folke/noice.nvim)
 - [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) @deprecated
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Matchwith](https://github.com/tar80/matchwith.nvim)
+- [Rereope](https://github.com/tar80/rereope.nvim)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
+- [Snacks](https://github.com/folke/snacks.nvim)
+- [Staba](https://github.com/tar80/staba.nvim)
 - [Staline](https://github.com/tamton-aquib/staline.nvim)
 - [Vim-sandwich](https://github.com/machakann/vim-sandwich)
 - [Rainbow-delimiters](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
@@ -98,7 +102,6 @@ and
 > - Added `depricated` into `styles` option
 > - Added `statusline`,`tabline`,`tabsel`,`tabfill` into `disable` option
 > - Added `lsp_semantic` into `plugins` option
-> - Added `flash.nvim` highlights
 > - Added global valiable `g:loose_theme`. The current theme name will be saved
 
 > [!IMPORTANT]
@@ -158,8 +161,11 @@ require("loose").setup({
         lazy = false,
         lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
+        noice = false,
+        rereope = false,
         skkeleton_indicator = false,
         sandwich = false,
+        staba = false,
         cmp = false,
         telescope = false, -- If "border_fade" is specified, the border background fades
         trouble = false,
@@ -181,6 +187,7 @@ require("loose").setup({
         nvimtree = false,
         rainbow_delimiters_high = false, -- Rainbow Delimiters can choose one of
         rainbow_delimiters_low = false,  -- either high contrast or low contrast
+        snacks = false,
         sneak = false,
         treesitter_context = false,
         whichkey = false,
