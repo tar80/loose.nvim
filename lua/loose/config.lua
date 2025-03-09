@@ -9,14 +9,14 @@ local _options = {
   -- Style that is applied to various groups: see `highlight-args` for options
   styles = {
     comments = 'NONE',
-    strings = 'NONE',
-    keywords = 'NONE',
-    functions = 'NONE',
-    variables = 'NONE',
     deprecated = 'NONE',
     diagnostics = 'undercurl',
+    functions = 'NONE',
+    keywords = 'NONE',
     references = 'underline',
     spell = 'undercurl',
+    strings = 'NONE',
+    variables = 'NONE',
     virtualtext = 'NONE',
   },
   disable = {

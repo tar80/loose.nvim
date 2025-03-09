@@ -69,6 +69,7 @@ the author's favorite plugins are also added.
 - [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) @deprecated
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Matchwith](https://github.com/tar80/matchwith.nvim)
+- [Mini-icons](https://github.com/echasnovski/mini.icons)
 - [Rereope](https://github.com/tar80/rereope.nvim)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
 - [Snacks](https://github.com/folke/snacks.nvim)
@@ -126,14 +127,14 @@ require("loose").setup({
     -- "NONE"|"[bold][,underline][,italic][,...]"]
     styles = {
         comments = "NONE",
-        strings = "NONE",
-        keywords = "NONE",
-        functions = "NONE",
-        variables = "NONE",
+        depricated = "NONE",
         diagnostics = "undercurl",
+        functions = "NONE",
+        keywords = "NONE",
         references = "underline",
         spell = "undercurl",
-        depricated = "NONE",
+        strings = "NONE",
+        variables = "NONE",
         virtualtext = "NONE",
     },
     disable = {
@@ -161,6 +162,8 @@ require("loose").setup({
         lazy = false,
         lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
+        mini_diff = false,
+        mini_icons = false,
         noice = false,
         rereope = false,
         skkeleton_indicator = false,

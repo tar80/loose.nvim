@@ -8,7 +8,7 @@ local util = {}
 ---@alias Green Decimal
 ---@alias Blue Decimal
 
-local MSG_TITLE = 'loose.nvim'
+local UNIQUE_NAME = 'loose.nvim'
 local feline_ex = {
   '}',
   'M.vi_mode = {',
@@ -131,7 +131,7 @@ local function write(path, highlights)
   local handle, message = io.open(path, 'w')
 
   if not handle then
-    vim.notify(string.format('[%s] %s', MSG_TITLE, message), vim.log.levels.ERROR, { title = MSG_TITLE })
+    vim.notify(string.format('[%s] %s', UNIQUE_NAME, message), vim.log.levels.ERROR, { title = UNIQUE_NAME })
     return
   end
 
@@ -145,16 +145,26 @@ end
 ---@param background string "light|"dark"
 ---@param rgb string RGB color code for Normal background
 function util.create_theme(name, template, background, rgb)
-  if name == 'light' or name == 'dark' or name == 'muted' or name == 'faded' or name:find('^user', 1, true) == 1 then
-    local msg = ('[%s] The name "%s" is not allowed. Because it is used as the default template name.'):format(MSG_TITLE, name)
-    vim.api.nvim_err_writeln(msg)
+  if
+    name == 'light'
+    or name == 'dark'
+    or name == 'muted'
+    or name == 'faded'
+    or name == 'veil'
+    or name:find('^user', 1, true) == 1
+  then
+    local msg = ('[%s] The name "%s" is not allowed. Because it is used as the default template name.'):format(
+      UNIQUE_NAME,
+      name
+    )
+    vim.notify(msg, vim.log.levels.ERROR, { title = UNIQUE_NAME })
     return
   end
 
   local ok, colors = pcall(require, ('loose.colors.%s'):format(template))
   if not ok then
-    local msg = string.format('[loose] Error: could not read template "%s"', template)
-    vim.api.nvim_err_writeln(msg)
+    local msg = string.format('[%s] Could not read template "%s"', UNIQUE_NAME, template)
+    vim.notify(msg, vim.log.levels.ERROR, { title = UNIQUE_NAME })
     return
   end
   local dr, dg, db = split_rgb(rgb)
@@ -167,7 +177,7 @@ function util.create_theme(name, template, background, rgb)
   local dr_, dg_, db_ = math.floor(dr / 1.6), math.floor(dg / 1.6), math.floor(db / 1.6)
   ---@type integer, integer, integer
   local xr, xg, xb
-  local rgx = vim.regex([[^\(nc\|highlight\|float\|boder\|\|selection\)]])
+  local rgx = vim.regex([[^\(nc\|highlight\|float\|border\|\|selection\)]])
   local hl = { 'local colors = {' }
   local theme = { 'local M = {}', 'M.theme = {' }
   local fmt = '  %s = "#%02x%02x%02x",'
@@ -201,7 +211,7 @@ function util.create_theme(name, template, background, rgb)
     write(staline_theme, vim.list_extend(theme_, staline_ex))
   end
 
-  vim.notify(string.format('[%s] create %s.lua', MSG_TITLE, name), vim.log.levels.INFO, { title = MSG_TITLE })
+  vim.notify(string.format('[%s] create %s.lua', UNIQUE_NAME, name), vim.log.levels.INFO, { title = UNIQUE_NAME })
 end
 
 ---Delete user theme
@@ -216,7 +226,7 @@ function util.delete_theme()
   end
 
   vim.ui.select(paths, {
-    prompt = 'Select theme to delete:',
+    prompt = ('[%s] Select theme to delete:'):format(UNIQUE_NAME),
   }, function(choice)
     if not choice then
       return
@@ -235,8 +245,8 @@ function util.delete_theme()
     end
 
     if err == 1 then
-      local msg = string.format('[%s] Could not delete files', MSG_TITLE)
-      vim.notify(msg, vim.log.levels.ERROR)
+      local msg = string.format('[%s] Could not delete files', UNIQUE_NAME)
+      vim.notify(msg, vim.log.levels.ERROR, { title = UNIQUE_NAME })
     end
   end)
 end

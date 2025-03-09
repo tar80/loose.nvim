@@ -137,64 +137,77 @@ function theme.highlights(colors, opts)
       FoldColumn = { fg = colors.low_blue },
       -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
       IncSearch = { fg = colors.high_orange, bg = colors.bg, style = 'reverse' },
-      -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+      Substitute = { fg = colors.Green, bg = colors.bg, style = 'reverse' },
+      -- line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
       LineNr = { fg = colors.fg },
       LineNrAbove = { fg = colors.low_gray },
       LineNrBelow = { fg = colors.low_gray },
-      -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+      -- like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
       CursorLineNr = { fg = colors.cyan },
-      -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+      -- CursorLineFold = { link = 'FoldColumn' },
+      -- CursorLineSign = { link = 'SignColumn' },
+      -- the character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
       MatchParen = { fg = colors.high_orange, bg = colors.none, sp = colors.high_orange, style = 'underline' },
       -- 'showmode' message (e.g., "-- INSERT -- ")
       ModeMsg = { fg = colors.blue },
       -- |more-prompt|
       MoreMsg = { fg = colors.blue },
-      -- -- Area for messages and command-line
+      -- -- area for messages and command-line
       -- MsgArea = { link = 'Normal' },
-      -- -- Separator for scrolled messages msgsep
+      -- -- separator for scrolled messages msgsep
       -- MsgSeparator = { link = 'StatusLine' },
       -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist
       -- in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line).
-      -- See also |hl-EndOfBuffer|.
+      -- see also |hl-EndOfBuffer|.
       NonText = { fg = colors.low_cyan },
       -- normal item |hl-Pmenu|
       Pmenu = { fg = colors.fg, bg = colors.float },
       -- selected item |hl-PmenuSel|
       PmenuSel = { fg = colors.match, bg = colors.float, style = 'reverse' },
+      -- selected item "extra text"
+      PmenuKind = { fg = colors.high_cyan, bg = colors.float },
+      PmenuKindSel = { fg = colors.match, bg = colors.high_cyan, style = 'reverse' },
+      -- normal item "extra text"
+      PmenuExtra = { fg = colors.comment, bg = colors.float },
+      PmenuExtraSel = { fg = colors.match, bg = colors.shade_blue, style = 'reverse' },
       -- scrollbar |hl-PmenuSbar|
       PmenuSbar = { bg = colors.float },
       -- thumb of the scrollbar  |hl-PmenuThumb|
       PmenuThumb = { bg = colors.fg },
+      -- matched text in normal item. combined with |hl-Pmenu|
+      PmenuMatch = { bg = colors.low_orange },
+      -- matched text in normal item. combined with |hl-PmenuMatch| and |hl-PmenuSel|
+      PmenuMatchSel = { bg = colors.high_orange },
       -- |hit-enter| prompt and yes/no questions
       Question = { fg = colors.green },
-      -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
+      -- current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
       QuickFixLine = { bg = colors.float, style = 'bold' },
-      -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
+      -- last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
       Search = { fg = colors.orange, bg = colors.highlight, style = 'bold' },
-      -- Tabstops in vim.snippets.
+      -- tabstops in vim.snippets.
       SnippetTabstop = { link = 'Visual' },
-      -- Unprintable characters: text displayed differently from what it really is.
-      -- But not 'listchars' whitespace. |hl-Whitespace|
+      -- unprintable characters: text displayed differently from what it really is.
+      -- but not 'listchars' whitespace. |hl-Whitespace|
       SpecialKey = { fg = colors.high_blue },
-      -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
+      -- word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
       SpellBad = { fg = colors.red, bg = colors.none, style = opts.styles.spell, sp = colors.red },
-      -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
+      -- word that should start with a capital. |spell| Combined with the highlighting used otherwise.
       SpellCap = { fg = colors.olive, bg = colors.none, style = opts.styles.spell, sp = colors.olive },
-      -- Word that is recognized by the spellchecker as one that is used in another region.
+      -- word that is recognized by the spellchecker as one that is used in another region.
       -- |spell| Combined with the highlighting used otherwise.
       SpellLocal = { fg = colors.cyan, bg = colors.none, style = opts.styles.spell, sp = colors.cyan },
-      -- Word that is recognized by the spellchecker as one that is hardly ever used.
+      -- word that is recognized by the spellchecker as one that is hardly ever used.
       -- |spell| Combined with the highlighting used otherwise.
       SpellRare = { fg = colors.purple, bg = colors.none, style = opts.styles.spell, sp = colors.purple },
       -- status line of current window
       StatusLine = { fg = colors.fg, bg = colors.border, sp = colors.fg },
       -- status lines of not-current windows Note: if this is equal to "StatusLine"
-      -- Vim will use "^^^" in the status line of the current window.
+      -- vim will use "^^^" in the status line of the current window.
       StatusLineNC = { fg = colors.high_gray, bg = colors.border, sp = colors.high_gray },
       -- status line of current terminal window
       StatusLineTerm = { fg = colors.fg, bg = colors.border },
       -- status lines of not-current terminal windows Note: if this is equal to "StatusLine"
-      -- Vim will use "^^^" in the status line of the current window.
+      -- vim will use "^^^" in the status line of the current window.
       StatusLineTermNC = { fg = colors.high_gray, bg = colors.border },
       -- tab pages line, where there are no labels
       TabLineFill = { fg = colors.high_gray, bg = colors.border },
@@ -203,9 +216,9 @@ function theme.highlights(colors, opts)
       TabLine = { fg = colors.high_purple, bg = colors.border },
       -- titles for output from ":set all", ":autocmd" etc.
       Title = { fg = colors.fg, bg = colors.float, style = 'bold' },
-      -- Visual mode selection
+      -- visual mode selection
       Visual = { fg = colors.none, bg = colors.selection },
-      -- Visual mode selection when vim is "Not Owning the Selection".
+      -- visual mode selection when vim is "Not Owning the Selection".
       VisualNOS = { fg = colors.none, bg = colors.selection },
       -- warning messages
       WarningMsg = { fg = colors.warn },
@@ -694,6 +707,26 @@ function theme.highlights(colors, opts)
     -- Plugins highlight groups
     local p = {}
 
+    if opts.plugins.mini_diff then
+      p['MiniDiffSignAdd'] = { fg = colors.high_blue }
+      p['MiniDiffSignChange'] = { fg = colors.high_green }
+      p['MiniDiffSignDelete'] = { fg = colors.high_red }
+      p['MiniDiffOverAdd'] = { bg = colors.shade_blue }
+      p['MiniDiffOverChange'] = { bg = colors.diff_text_bg }
+      p['MiniDiffOverContext'] = { fg = colors.low_gray, bg = colors.shade_gray }
+      p['MiniDiffOverDelete'] = { fg = colors.red, bg = colors.shade_red }
+    end
+    if opts.plugins.mini_icons then
+      p['MiniIconsAzure'] = { fg = colors.blue }
+      p['MiniIconsBlue'] = { fg = colors.high_blue }
+      p['MiniIconsCyan'] = { fg = colors.cyan }
+      p['MiniIconsGreen'] = { fg = colors.green }
+      p['MiniIconsGray'] = { fg = colors.gray }
+      p['MiniIconsOrange'] = { fg = colors.orange }
+      p['MiniIconsPurple'] = { fg = colors.purple }
+      p['MiniIconsRed'] = { fg = colors.red }
+      p['MiniIconsYellow'] = { fg = colors.olive }
+    end
     if opts.plugins.conflict_marker then
       vim.g.conflict_marker_highlow_group = ''
       p['ConflictMarkerBegin'] = { fg = colors.fg, bg = colors.high_green }
@@ -758,10 +791,10 @@ function theme.highlights(colors, opts)
     end
     if opts.plugins.matchwith then
       p['Matchwith'] = { sp = colors.high_cyan, style = 'underline' }
-      p['MatchwithOut'] = { sp = colors.high_purple, style = 'underdouble' }
+      p['MatchwithOut'] = { sp = colors.high_cyan, style = 'underdouble' }
       p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
-      p['MatchwithParent'] = { fg = colors.high_cyan }
-      p['MatchwithParentOUT'] = { fg = colors.high_purple }
+      p['MatchwithParent'] = { fg = colors.high_cyan, bg = colors.shade_cyan, style = 'bold' }
+      p['MatchwithParentOut'] = { fg = colors.high_red, bg = colors.shade_red, style = 'bold' }
     end
     if opts.plugins.rereope then
       p['RereopeHintBg'] = { fg = colors.olive, bg = colors.shade_olive }
@@ -1020,8 +1053,8 @@ function theme.highlights(colors, opts)
       p['NoiceMiniWarnReverse'] = { fg = colors.shade_olive, bg = colors.bg }
       p['NoiceMiniHint'] = { fg = colors.high_blue, bg = colors.shade_blue }
       p['NoiceMiniHintReverse'] = { fg = colors.shade_blue, bg = colors.bg }
-      p['NoicePopup'] = { fg = colors.fg, bg = colors.shade_gray }
-      p['NoicePopupBorder'] = { fg = colors.low_gray, bg = colors.bg }
+      p['NoicePopup'] = { fg = colors.fg }
+      p['NoicePopupBorder'] = { fg = colors.low_gray }
       p['NoiceSplit'] = { link = 'NoicePopup' }
     end
     if opts.plugins.snacks then
@@ -1232,7 +1265,7 @@ function theme.highlights(colors, opts)
 
   function theme.load_terminal()
     -- dark
-    vim.g.terminal_color_0 = colors.float
+    -- vim.g.terminal_color_0 = colors.float
     vim.g.terminal_color_8 = colors.selection
 
     -- light
