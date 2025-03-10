@@ -269,12 +269,12 @@ If nothing is specified, the background color will switch between light and dark
 
 ## User_plugins
 
-You can enable custom highlight settings by placing `<plugin_name>.lua` files
-under the `lua/loose/user_plugins/` directory and adding a `user_plugins` table
-to the options. This allows you to customize the colorscheme for plugins that
-loose does not follow by default, and even override existing colorschemes.
+You can enable user-specific hlgroup settings by placing `<plugin_name>.lua`
+files under the `lua/loose/user_plugins/` directory and adding the `user_plugins`
+table to the options. This allows you to customize hlgroups for plugins that
+loose does not provided by default, and even override existing hlgroups.
 
-For example, to change the colorscheme for `lsp`, first create and edit the file
+For example, to change the hlgroups for `lsp`, first create and edit the file
 `lua/loose/user_plugins/lsp.lua`. Refer to the `lua/loose/user_plugins/.template`
 file for the writing format. Then, unfollow `lsp` from the `plugins` table in
 the options and follow it with `user_plugins`.
