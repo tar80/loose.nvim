@@ -10,21 +10,22 @@
 
 ## Features
 
-Loose has a function to output the palettes (theme) that matches the background color.  
-Since the difference from the default background color is only increased or decreased,  
+Loose has a function to output the palettes (theme) that matches the background color.
+Since the difference from the default background color is only increased or decreased,
 the colors do not always appear beautifully.
 
 ![create_theme](https://github.com/user-attachments/assets/cfa8536f-151d-4f60-9c14-a3217e85d6ce)
+
 <!-- ![sample](https://github.com/tar80/test/assets/45842304/0be2c3dd-9cf5-4cb3-9c5d-58f809261062) -->
 
-You can choose between the `light`, `dark`, `muted` and `faded` templates.  
+You can choose between the `light`, `dark`, `muted` and `faded` templates.
 If `user.lua` exists in the `loose/lua/loose/color` directory, you can also select
-`user` in the template.  
-If you need the user template, create one by copying another template.  
+`user` in the template.
+If you need the user template, create one by copying another template.
 If the template has a `colors.feline` table, a Feline theme with the same name
 will also be output.
 
-> [!WARNING]
+> [!WARNING]  
 > `loose.colors()` has been renamed to `loose.get_colors()`
 
 ```lua
@@ -49,15 +50,15 @@ local colors = require('loose').get_colors(name)
 local palette = require('loose').get_palette(name)
 ```
 
-Each color consists of four types: high, normal, low and shade,  
-and eight colors: gray, blue, cyan, green, olive, orange, red, and purple.  
+Each color consists of four types: high, normal, low and shade,
+and eight colors: gray, blue, cyan, green, olive, orange, red, and purple.
 That is, they are represented as high_xxx, xxx, low_xxx, and shade_xxx.
 
 ### Plugin Support
 
-Loose comes with some preset plugin highlights. These are disabled by default  
-but can be optionally enabled.  
-In addition to the highlight settings built into the base `onenord.nvim`,  
+Loose comes with some preset plugin highlights. These are disabled by default
+but can be optionally enabled.
+In addition to the highlight settings built into the base `onenord.nvim`,
 the author's favorite plugins are also added.
 
 - [Feline](https://github.com/feline-nvim/feline.nvim)
@@ -70,6 +71,7 @@ the author's favorite plugins are also added.
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
 - [Matchwith](https://github.com/tar80/matchwith.nvim)
 - [Mini-icons](https://github.com/echasnovski/mini.icons)
+- [Mini-diff](https://github.com/echasnovski/mini.diff)
 - [Rereope](https://github.com/tar80/rereope.nvim)
 - [Skkeleton_indicator](https://github.com/delphinus/skkeleton_indicator.nvim)
 - [Snacks](https://github.com/folke/snacks.nvim)
@@ -80,18 +82,19 @@ the author's favorite plugins are also added.
 
 and
 
-- [tiny-devicons-auto-colors.nvim](https://github.com/rachartier/tiny-devicons-auto-colors.nvim)  
+- [tiny-devicons-auto-colors.nvim](https://github.com/rachartier/tiny-devicons-auto-colors.nvim)
     <details>
     <summary> Click to see devicons override configuration </summary>
 
-    ```lua
-    local opts = {...} -- tiny-devicons-auto-colors options
-    local ok, loose = pcall(require, 'loose')
-    if ok then
-      opts.colors = loose.get_palette()
-      require('tiny-devicons-auto-colors').setup(opts)
-    end
-    ```
+  ```lua
+  local opts = {...} -- tiny-devicons-auto-colors options
+  local ok, loose = pcall(require, 'loose')
+  if ok then
+    opts.colors = loose.get_palette()
+    require('tiny-devicons-auto-colors').setup(opts)
+  end
+  ```
+
     </details>
 
 ## Configuration
@@ -104,12 +107,15 @@ and
 > - Added `statusline`,`tabline`,`tabsel`,`tabfill` into `disable` option
 > - Added `lsp_semantic` into `plugins` option
 > - Added global valiable `g:loose_theme`. The current theme name will be saved
+> - Added option `user_plugins` available
+
+<BR>
 
 > [!IMPORTANT]
 >
-> - Colorscheme is no longer loaded during `loose.setup()`.  
+> - Colorscheme is no longer loaded during `loose.setup()`.
 >   Execute `Colorscheme loose` to load the colorscheme.
-> - `custom_highlights` has been changed so that it can be set per background.  
+> - `custom_highlights` has been changed so that it can be set per background.
 
 <details>
 <summary> Click to see default configuration </summary>
@@ -194,9 +200,14 @@ require("loose").setup({
         sneak = false,
         treesitter_context = false,
         whichkey = false,
-    }
+    },
+    -- User's own specified plugins highlight groups
+    -- Set the plugin name and value in the same way as the "plugins" table
+    -- You can also set a value other than nil or false and use it as a flag
+    user_plugins = {},
 })
 ```
+
 </details>
 
 ## Statusline
@@ -243,6 +254,7 @@ require('staline').setup({
   mode_colors = palette.vi_mod,
 })
 ```
+
 </details>
 
 Please refer to the file in `staline/themes` or `feline/themes` for available colors.
@@ -251,9 +263,28 @@ Please refer to the file in `staline/themes` or `feline/themes` for available co
 
 `LooseSwitch [theme_name]`
 
-This command is registered when the option `enable_usercmd` is set to `true`.  
-If theme_name is specified, it will be loaded, and the highlight will be updated.  
+This command is registered when the option `enable_usercmd` is set to `true`.
+If theme_name is specified, it will be loaded, and the highlight will be updated.
 If nothing is specified, the background color will switch between light and dark.
+
+## User_plugins
+
+You can enable custom highlight settings by placing `<plugin_name>.lua` files
+under the `lua/loose/user_plugins/` directory and adding a `user_plugins` table
+to the options. This allows you to customize the colorscheme for plugins that
+loose does not follow by default, and even override existing colorschemes.
+
+For example, to change the colorscheme for `lsp`, first create and edit the file
+`lua/loose/user_plugins/lsp.lua`. Refer to the `lua/loose/user_plugins/.template`
+file for the writing format. Then, unfollow `lsp` from the `plugins` table in
+the options and follow it with `user_plugins`.
+
+```lua
+opts = {
+    plugins = { lsp = false },
+    User_plugins = { lsp = true },
+}
+```
 
 ## Acknowledgments
 

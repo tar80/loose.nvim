@@ -31,6 +31,8 @@ local _options = {
   -- Override default highlight groups
   custom_highlights = {},
   plugins = { lsp = true, lsp_semantic = true, treesitter = true },
+  -- User's own specified plugins highlight groups
+  user_plugins = {},
 }
 
 ---@param opts table User-specified option values

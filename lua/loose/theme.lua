@@ -1263,6 +1263,23 @@ function theme.highlights(colors, opts)
     return p
   end
 
+  local function load_user_plugins()
+    -- User plugins highlight groups
+    local p = {}
+    vim.iter(opts.user_plugins):each(function(name, enable)
+      if enable then
+        local plugin_name = 'loose.user_plugins.' .. name
+        local ok, user_plugin = pcall(require, plugin_name)
+        if ok then
+          user_plugin(p, colors, enable)
+          package.loaded[plugin_name] = nil
+        end
+      end
+    end)
+
+    return p
+  end
+
   function theme.load_terminal()
     -- dark
     -- vim.g.terminal_color_0 = colors.float
@@ -1295,7 +1312,15 @@ function theme.highlights(colors, opts)
     vim.g.terminal_color_15 = colors.fg
   end
 
-  return vim.tbl_deep_extend('error', load_syntax(), load_editor(), load_treesitter(), load_lsp(), load_plugins())
+  return vim.tbl_deep_extend(
+    'error',
+    load_syntax(),
+    load_editor(),
+    load_treesitter(),
+    load_lsp(),
+    load_plugins(),
+    load_user_plugins()
+  )
 end
 
 return theme

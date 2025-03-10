@@ -1,0 +1,42 @@
+-- for example:
+-- return function(p, colors, enable)
+--   local bg = colors.bg
+--   if enable = 'fade' then
+--     bg = colors.nc
+--   end
+--   p['ExampleHlgroup'] = { fg = colors.fg k, bg = bg }
+-- end
+
+---@param p table<hlgroupName,HlDetails> Table of hlgroups
+---@param colors table<colorsField,hexColorCode>
+---@param enable boolean|any option.user_plugin property value
+---@return nil
+return function(p, colors, enable)
+  -- p[] = {fg = , bg = , sp = , style = }
+  -- p[] = {link = }
+end
+
+---@alias hlgroupName string
+---@alias HlDetails {['fg'|'bg'|'sp'|'style'|'link']:string}
+---@alias hexColorCode string
+---@alias colorsField
+---| 'fg' # for foreground
+---| 'bg' # for background
+---| 'gray' # high_xxx, low_xxx, shade_xxx are also available
+---| 'blue'
+---| 'cyan'
+---| 'green'
+---| 'olive'
+---| 'orange'
+---| 'red'
+---| 'purple'
+---| 'diff_add'
+---| 'diff_change'
+---| 'diff_remove'
+---| 'diff_text'
+---| 'diff_text_bg'
+---| 'nc' # for non-current windows
+---| 'float' # for float wondows
+---| 'border' # for window borders
+---| 'selection' # for visual selections
+---| 'highlight' # used for search background, etc.
