@@ -20,13 +20,13 @@ local _options = {
     virtualtext = 'NONE',
   },
   disable = {
-    background = false, -- Disable setting the background color. This is override fade_nc
-    cursorline = false, -- Disable the cursorline
-    eob_lines = false, -- Hide the end-of-buffer lines
-    statusline = false, -- Disable setting the statusline background color.
-    tabline = false, -- Disable setting the tabline background color.
-    tabsel = false, -- Disable setting the tablineSel background color.
-    tabfill = false, -- Disable setting the tablineFill background color.
+    background = false,
+    cursorline = false,
+    eob_lines = false,
+    statusline = false,
+    tabline = false,
+    tabsel = false,
+    tabfill = false,
   },
   -- Override default highlight groups
   custom_highlights = {},
@@ -34,12 +34,19 @@ local _options = {
 }
 
 ---@param opts table User-specified option values
+---@param name string Unique name
 ---@return table - Options
-function config.set_options(opts)
+function config.set_options(opts, name)
   config.options = vim.tbl_deep_extend('force', _options, opts or {})
   if type(opts.theme) ~= 'table' then
     opts.theme = { light = 'light', dark = 'dark' }
-    vim.deprecate('[loose.nvim] Option "theme"', '"theme.light" and "theme.dark"', 'course.', 'due', false)
+    vim.deprecate(
+      ('[%s] Option "theme"'):format(name),
+      '"theme.light" and "theme.dark"',
+      'course.',
+      'due',
+      false
+    )
   end
   return config.options
 end

@@ -2,6 +2,8 @@ local loose = {}
 local config = require('loose.config')
 local theme = require('loose.theme')
 
+local UNIQUE_NAME = 'loose.nvim'
+
 local function set_hl(group, colors)
   local hl = {}
   if colors.link then
@@ -22,7 +24,7 @@ end
 ---Setup loose
 ---@param opts table User-specified option values
 function loose.setup(opts)
-  local enable_usercmd = config.set_options(opts).enable_usercmd
+  local enable_usercmd = config.set_options(opts, UNIQUE_NAME).enable_usercmd
   if enable_usercmd then
     require('loose.util').enable_usercmd()
   end
@@ -34,10 +36,10 @@ function loose.load(name)
   local theme_name, colors = require('loose.colors').load(name)
   if not colors.shade_gray then
     local msg = {
-      '[loose.nvim] The palette has been updated. Please run',
+      ('[%s] The palette has been updated. Please run'):format(UNIQUE_NAME),
       ('`lua require("loose.util").create_theme("%s",theme,background,"%s")`'):format(theme_name, colors.bg),
     }
-    vim.notify_once(table.concat(msg, '\n'), vim.log.levels.WARN, { opts = 'loose-nvim' })
+    vim.notify_once(table.concat(msg, '\n'), vim.log.levels.WARN, { opts = UNIQUE_NAME })
   end
   local options = config.options
   if vim.g.colors_name then
