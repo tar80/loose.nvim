@@ -34,11 +34,11 @@ local colors = {
   shade_red = '#1D0F12',
   shade_purple = '#160C19',
 
-  diff_add = '#5E8494',
-  diff_change = '#577B57',
-  diff_remove = '#9A5975',
-  diff_text = '#79A96A',
-  diff_text_bg = '#142E14',
+  diff_add = '#141d2f',
+  diff_change = '#0e200e',
+  diff_remove = '#290b18',
+  diff_text = '#95e295',
+  diff_text_bg = '#2a4d2a',
 
   nc = '#0D0E0E',
   float = '#1A1D20',

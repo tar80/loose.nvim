@@ -122,13 +122,13 @@ function theme.highlights(colors, opts)
       -- directory names (and other special names in listings)
       Directory = { fg = colors.blue, bg = colors.none },
       -- diff mode: Added line
-      DiffAdd = { bg = colors.shade_cyan },
+      DiffAdd = { bg = colors.diff_add },
       -- diff mode: Changed line
-      DiffChange = { fg = colors.diff_change, bg = colors.shade_green },
+      DiffChange = { bg = colors.diff_change },
       -- diff mode: Deleted line
-      DiffDelete = { bg = colors.shade_red },
+      DiffDelete = { bg = colors.diff_remove },
       -- diff mode: Changed text within a changed line
-      DiffText = { bg = colors.diff_text_bg },
+      DiffText = { fg = colors.diff_text, bg = colors.diff_text_bg },
       -- error messages
       ErrorMsg = { fg = colors.error },
       -- line used for closed folds
@@ -798,7 +798,7 @@ function theme.highlights(colors, opts)
     end
     if opts.plugins.rereope then
       p['RereopeHintBg'] = { fg = colors.olive, bg = colors.shade_olive }
-      p['RereopeHintBorder'] = { fg = colors.high_olive }
+      p['RereopeHintBorder'] = { fg = colors.high_olive, bg = colors.shade_olive }
       p['RereopeVisualFlash'] = { bg = colors.shade_olive }
     end
     if opts.plugins.skkeleton_indicator then
