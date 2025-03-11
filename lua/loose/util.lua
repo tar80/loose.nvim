@@ -263,7 +263,7 @@ end
 
 ---@return string[]
 local function get_completion_list()
-  local list = { 'light', 'dark', 'muted', 'faded' }
+  local list = { 'light', 'dark', 'muted', 'faded' , 'veil' }
   local user_dir = string.format('%s/colors/user', loose_dir())
   vim.fs.find(function(name, _)
     if name:find('.lua', 2, true) then

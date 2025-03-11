@@ -2,6 +2,11 @@
 
 ![theme](https://github.com/user-attachments/assets/8d44ac3f-51fd-44dd-b440-ca0f5cf18b6d)
 
+> [!NOTE]  
+> New theme `veil` available. It is designed for transparent backgrounds.
+
+![veil](https://github.com/user-attachments/assets/8efd6602-063c-404d-8fab-3a382193c914)
+
 <!-- ![logo](https://github.com/tar80/test/assets/45842304/6649eafa-0e4d-4468-9060-fa5d94e72aa2) -->
 
 ## Requirements
@@ -96,6 +101,41 @@ and
   ```
 
     </details>
+
+### User_plugins
+
+To enable user-specific hlgroup settings, place a `<plugin_name>.lua` file in
+the `lua/loose/user_plugins/` directory and add the `user_plugins` table to the
+options. This allows you to customize hlgroups, whether by defining them for
+plugins that Loose doesn't provide by default, or by modifying the existing ones.
+
+For example, to modify the hlgroup for `lsp`, first create and edit the file
+`lua/loose/user_plugins/lsp.lua`. Refer to the `lua/loose/user_plugins/.template`
+file for the writing format. Next, exclude `lsp` from the `plugins` table, and
+then add it to the `user_plugins` table.
+
+```lua
+opts = {
+    plugins = { lsp = false },
+    User_plugins = { lsp = true },
+}
+```
+
+> [!IMPORTANT]
+> Here's an example of what **not** to do:
+>
+> ```lua
+> opts = {
+>     plugins = { lsp = true },
+>     User_plugins = { lsp = true },
+> }
+> ```
+>
+> This configuration is not allowed and will result in an error.
+> This is to maintain a clear and consistent configuration, preventing potential
+> issues and making it easier to understand and manage highlight settings.
+> Therefore, the `user_plugins` option must configure the hlgroup for the entire
+> plugin; partial application is not possible.
 
 ## Configuration
 
@@ -266,25 +306,6 @@ Please refer to the file in `staline/themes` or `feline/themes` for available co
 This command is registered when the option `enable_usercmd` is set to `true`.
 If theme_name is specified, it will be loaded, and the highlight will be updated.
 If nothing is specified, the background color will switch between light and dark.
-
-## User_plugins
-
-You can enable user-specific hlgroup settings by placing `<plugin_name>.lua`
-files under the `lua/loose/user_plugins/` directory and adding the `user_plugins`
-table to the options. This allows you to customize hlgroups for plugins that
-loose does not provided by default, and even override existing hlgroups.
-
-For example, to change the hlgroups for `lsp`, first create and edit the file
-`lua/loose/user_plugins/lsp.lua`. Refer to the `lua/loose/user_plugins/.template`
-file for the writing format. Then, unfollow `lsp` from the `plugins` table in
-the options and follow it with `user_plugins`.
-
-```lua
-opts = {
-    plugins = { lsp = false },
-    User_plugins = { lsp = true },
-}
-```
 
 ## Acknowledgments
 

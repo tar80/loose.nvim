@@ -4,7 +4,7 @@ local M = {}
 ---@param name string
 ---@return string `Palette name`
 function M.get_palette_name(name)
-  local has_palette = vim.iter({ 'light', 'dark', 'muted', 'faded', 'user' }):find(name)
+  local has_palette = vim.iter({ 'light', 'dark', 'muted', 'faded', 'veil', 'user' }):find(name)
   if not has_palette then
     name = string.format('user.%s', name)
   end
