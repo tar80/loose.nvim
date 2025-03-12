@@ -137,7 +137,7 @@ function theme.highlights(colors, opts)
       FoldColumn = { fg = colors.low_blue },
       -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
       IncSearch = { fg = colors.high_orange, bg = colors.bg, style = 'reverse' },
-      Substitute = { fg = colors.Green, bg = colors.bg, style = 'reverse' },
+      Substitute = { fg = colors.green, bg = colors.bg, style = 'reverse' },
       -- line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
       LineNr = { fg = colors.fg },
       LineNrAbove = { fg = colors.low_gray },
