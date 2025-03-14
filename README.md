@@ -208,7 +208,6 @@ require("loose").setup({
         lazy = false,
         lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
-        mini_diff = false,
         mini_icons = false,
         noice = false,
         rereope = false,
@@ -221,7 +220,7 @@ require("loose").setup({
         -- non maintained
         barbar = false,
         bufferline = false,
-        confliet_marker = false,
+        conflict_marker = false,
         dashboard = false,
         fern = false,
         fuzzy_motion = false,
@@ -230,6 +229,7 @@ require("loose").setup({
         illuminate = false,
         lightspeed = false,
         lspsaga = false,
+        mini_diff = false,
         navic = false
         notify = false,
         neogit = false,

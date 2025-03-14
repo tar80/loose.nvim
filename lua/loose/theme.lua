@@ -124,11 +124,11 @@ function theme.highlights(colors, opts)
       -- diff mode: Added line
       DiffAdd = { bg = colors.diff_add },
       -- diff mode: Changed line
-      DiffChange = { bg = colors.diff_change },
+      DiffChange = { fg = colors.diff_text, bg = colors.diff_change },
       -- diff mode: Deleted line
       DiffDelete = { bg = colors.diff_remove },
       -- diff mode: Changed text within a changed line
-      DiffText = { fg = colors.diff_text, bg = colors.diff_text_bg },
+      DiffText = { bg = colors.diff_text_bg },
       -- error messages
       ErrorMsg = { fg = colors.error },
       -- line used for closed folds

@@ -37,8 +37,8 @@ local colors = {
   diff_add = '#c2defe',
   diff_change = '#d1fcc3',
   diff_remove = '#fecad0',
-  diff_text = '#f7feea',
-  diff_text_bg = '#8ccb80',
+  diff_text = '#87b178',
+  diff_text_bg = '#b2f4b0',
 
   nc = '#F4F4F8',
   highlight = '#F8EDD7',
