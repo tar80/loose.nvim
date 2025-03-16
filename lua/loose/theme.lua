@@ -833,6 +833,7 @@ function theme.highlights(colors, opts)
       p['StabaSpecial'] = { fg = colors.high_olive, sp = colors.border }
       p['StabaReadonly'] = { fg = colors.low_gray, sp = colors.border }
       p['StabaModified'] = { fg = colors.high_cyan, sp = colors.border }
+      p['StabaSignMarks'] = { fg = colors.green, sp = colors.low_green, style = 'bold,underline' }
     end
     if opts.plugins.dashboard then
       p['DashboardShortCut'] = { fg = colors.cyan }
@@ -1002,6 +1003,9 @@ function theme.highlights(colors, opts)
       p['GitSignsChangeLn'] = { link = 'DiffChange' }
       -- p['GitSignsChangeDeleteLn'] = { link = 'GitSignsChangeLn' }
       p['GitSignsUntrackedLn'] = { link = 'DiffText' }
+      p['GitSignsAddCul'] = { fg = colors.bg, bg = colors.high_blue }
+      p['GitSignsChangeCul'] = { fg = colors.bg, bg = colors.high_green }
+      p['GitSignsDeleteCul'] = { fg = colors.bg, bg = colors.high_red }
       p['GitSignsAddPreview'] = { fg = colors.cyan }
       p['GitSignsDeletePreview'] = { fg = colors.red }
       p['GitSignsCurrentLineBlame'] =
@@ -1015,6 +1019,9 @@ function theme.highlights(colors, opts)
       p['GitSignsDeleteVirtLn'] = { link = 'DiffDelete' }
       -- p['GitSignsDeleteVirtLnInline'] = { link = 'GitSignsDeleteVirtLn' }
       -- p['GitSignsDeleteVirtLnum'] = { link = 'GitSignsDeleteVirtLn' }
+      p['GitSignsStagedAdd'] = { fg = colors.low_blue, bg = colors.shade_blue }
+      p['GitSignsStagedChange'] = { fg = colors.low_green, bg = colors.shade_green }
+      p['GitSignsStagedDelete'] = { fg = colors.low_red, bg = colors.shade_red }
     end
     local telescope = opts.plugins.telescope
     if telescope then
