@@ -108,7 +108,7 @@ function theme.highlights(colors, opts)
       -- used for the columns set with 'signcolumn'
       SignColumn = { fg = colors.gray, bg = colors.none },
       -- used for the columns set with 'colorcolumn'
-      ColorColumn = { fg = colors.none, bg = colors.nc },
+      ColorColumn = { fg = colors.none, bg = colors.float },
       -- matched text of the currently inserted completion
       ComplMatchIns = { link = 'Search' },
       -- placeholder characters substituted for concealed text (see 'conceallevel')
@@ -177,7 +177,7 @@ function theme.highlights(colors, opts)
       -- matched text in normal item. combined with |hl-Pmenu|
       PmenuMatch = { bg = colors.low_orange },
       -- matched text in normal item. combined with |hl-PmenuMatch| and |hl-PmenuSel|
-      PmenuMatchSel = { bg = colors.high_orange },
+      PmenuMatchSel = { fg = colors.shade_orange, bg = colors.high_orange },
       -- |hit-enter| prompt and yes/no questions
       Question = { fg = colors.green },
       -- current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
@@ -542,7 +542,7 @@ function theme.highlights(colors, opts)
         markdownIdDelimiter = { fg = colors.high_gray },
         markdownLinkDelimiter = { fg = colors.high_gray },
         markdownItalic = { fg = colors.olive, style = 'italic' },
-        markdownLinkText = { fg = colors.purple },
+        markdownLinkText = { fg = colors.cyan },
         markdownListMarker = { fg = colors.red },
         markdownOrderedListMarker = { fg = colors.red },
         markdownRule = { fg = colors.purple },
@@ -566,7 +566,8 @@ function theme.highlights(colors, opts)
         LspReferenceRead = { bg = colors.shade_gray, style = opts.styles.references },
         -- used for highlighting "write" references
         LspReferenceWrite = { bg = colors.shade_gray, style = opts.styles.references },
-        LspSignatureActiveParameter = { fg = colors.none, bg = colors.highlight, style = 'bold' },
+        LspReferenceTarget = { bg = colors.highlight },
+        LspSignatureActiveParameter = { fg = colors.match, bg = colors.bg, style = 'bold,reverse' },
         LspCodeLens = { fg = colors.high_gray },
         --TODO:testing
         -- LspCodeLensSeparator = { fg = colors.purple, bg = colors.shade_purple },
@@ -761,7 +762,7 @@ function theme.highlights(colors, opts)
     end
     if opts.plugins.cmp then
       p['CmpItemAbbr'] = { fg = colors.fg }
-      p['CmpItemAbbrDeprecated'] = { fg = colors.low_gray, sp = colors.low_gray, style = opts.styles.deprecated }
+      p['CmpItemAbbrDeprecated'] = { fg = colors.red, sp = colors.red, style = opts.styles.deprecated }
       p['CmpItemAbbrMatch'] = { fg = colors.match, style = 'bold' }
       p['CmpItemAbbrMatchFuzzy'] = { fg = colors.match, style = 'bold' }
       p['CmpItemKind'] = { fg = colors.low_gray }
@@ -792,9 +793,11 @@ function theme.highlights(colors, opts)
     if opts.plugins.matchwith then
       p['Matchwith'] = { sp = colors.high_cyan, style = 'underline' }
       p['MatchwithOut'] = { sp = colors.high_cyan, style = 'underdouble' }
-      p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
+      p['MatchwithNext'] = { sp = colors.low_cyan, style = 'underline' }
+      p['MatchwithNextOut'] = { sp = colors.low_cyan, style = 'underdouble' }
       p['MatchwithParent'] = { fg = colors.high_cyan, bg = colors.shade_cyan, style = 'bold' }
       p['MatchwithParentOut'] = { fg = colors.high_red, bg = colors.shade_red, style = 'bold' }
+      p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
     end
     if opts.plugins.rereope then
       p['RereopeHintBg'] = { fg = colors.olive, bg = colors.shade_olive }
@@ -834,6 +837,23 @@ function theme.highlights(colors, opts)
       p['StabaReadonly'] = { fg = colors.low_gray, sp = colors.border }
       p['StabaModified'] = { fg = colors.high_cyan, sp = colors.border }
       p['StabaSignMarks'] = { fg = colors.green, sp = colors.low_green, style = 'bold,underline' }
+    end
+    if opts.plugins.render_markdown then
+      p['RenderMarkdownCode'] = { bg = colors.float }
+      -- p['RenderMarkdownCodeInline'] = { link = 'RenderMarkdownCode' }
+      p['RenderMarkdownH1Bg'] = {  fg = colors.bg, bg = colors.orange, style = 'bold' }
+      p['RenderMarkdownH2Bg'] = {  fg = colors.bg, bg = colors.purple, style = 'bold' }
+      p['RenderMarkdownH3Bg'] = {  fg = colors.bg,  bg = colors.olive, style = 'bold' }
+      p['RenderMarkdownH4Bg'] = {  fg = colors.bg,  bg = colors.green, style = 'bold' }
+      p['RenderMarkdownH5Bg'] = {  fg = colors.bg,   bg = colors.cyan, style = 'bold' }
+      p['RenderMarkdownH6Bg'] = {  fg = colors.bg,   bg = colors.blue, style = 'bold' }
+      p['RenderMarkdownLink'] = { fg = colors.cyan }
+      p['RenderMarkdownTodo'] = { link = 'Todo' }
+      p['RenderMarkdownDash'] = { fg = colors.shade_gray }
+      p['RenderMarkdownTableHead'] = { fg = colors.low_gray }
+      p['RenderMarkdownTableRow'] = { fg = colors.low_gray }
+      p['RenderMarkdownTableFill'] = { fg = colors.low_gray }
+      -- p['RenderMarkdown'] = { link = '' }
     end
     if opts.plugins.dashboard then
       p['DashboardShortCut'] = { fg = colors.cyan }
@@ -1060,7 +1080,7 @@ function theme.highlights(colors, opts)
       p['NoiceMiniWarnReverse'] = { fg = colors.shade_olive, bg = colors.bg }
       p['NoiceMiniHint'] = { fg = colors.high_blue, bg = colors.shade_blue }
       p['NoiceMiniHintReverse'] = { fg = colors.shade_blue, bg = colors.bg }
-      p['NoicePopup'] = { fg = colors.fg }
+      p['NoicePopup'] = { fg = colors.fg, bg = colors.shade_blue }
       p['NoicePopupBorder'] = { fg = colors.low_gray }
       p['NoiceSplit'] = { link = 'NoicePopup' }
     end
