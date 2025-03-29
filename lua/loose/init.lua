@@ -56,7 +56,7 @@ function loose.load(name)
   vim.go.termguicolors = true
   vim.g.colors_name = 'loose'
   vim.g.loose_theme = theme_name
-  local custom_highlights = options.custom_highlights[vim.go.background] or options.custom_highlights
+  local custom_highlights = options.custom_highlights[theme_name] or {}
   if options.fade_tr then
     custom_highlights['Normal'] = { guibg = 'NONE' }
     custom_highlights['LineNr'] = { guibg = 'NONE' }
