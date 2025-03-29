@@ -1,13 +1,8 @@
-![logo](https://github.com/user-attachments/assets/6c56a5c2-4b07-4728-8b1b-71777829f0a0)
+# ![logo](https://github.com/user-attachments/assets/6c56a5c2-4b07-4728-8b1b-71777829f0a0)
 
 ![theme](https://github.com/user-attachments/assets/8d44ac3f-51fd-44dd-b440-ca0f5cf18b6d)
 
-> [!NOTE]  
-> New theme `veil` available. It is designed for transparent backgrounds.
-
 ![veil](https://github.com/user-attachments/assets/8efd6602-063c-404d-8fab-3a382193c914)
-
-<!-- ![logo](https://github.com/tar80/test/assets/45842304/6649eafa-0e4d-4468-9060-fa5d94e72aa2) -->
 
 ## Requirements
 
@@ -20,8 +15,6 @@ Since the difference from the default background color is only increased or decr
 the colors do not always appear beautifully.
 
 ![create_theme](https://github.com/user-attachments/assets/cfa8536f-151d-4f60-9c14-a3217e85d6ce)
-
-<!-- ![sample](https://github.com/tar80/test/assets/45842304/0be2c3dd-9cf5-4cb3-9c5d-58f809261062) -->
 
 You can choose between the `light`, `dark`, `muted` and `faded` templates.
 If `user.lua` exists in the `loose/lua/loose/color` directory, you can also select
@@ -84,6 +77,7 @@ the author's favorite plugins are also added.
 - [Staline](https://github.com/tamton-aquib/staline.nvim)
 - [Vim-sandwich](https://github.com/machakann/vim-sandwich)
 - [Rainbow-delimiters](https://gitlab.com/HiPhish/rainbow-delimiters.nvim)
+- [Render-markdown](https://github.com/MeanderingProgrammer/render-markdown.nvim)
 
 and
 
@@ -102,7 +96,7 @@ and
 
     </details>
 
-### User_plugins
+### User plugins
 
 To enable user-specific hlgroup settings, place a `<plugin_name>.lua` file in
 the `lua/loose/user_plugins/` directory and add the `user_plugins` table to the
@@ -139,23 +133,11 @@ opts = {
 
 ## Configuration
 
-> [!NOTE]
->
-> - Added `enable_usercmd`. This registers the command `LooseSwitch`
-> - `theme` option has been deparecated. and split into `light_theme` and `dark_theme`
-> - Added `depricated` into `styles` option
-> - Added `statusline`,`tabline`,`tabsel`,`tabfill` into `disable` option
-> - Added `lsp_semantic` into `plugins` option
-> - Added global valiable `g:loose_theme`. The current theme name will be saved
-> - Added option `user_plugins` available
-
-<BR>
-
 > [!IMPORTANT]
 >
+> - `custom_highlights` has been changed so that it can be set per theme-name.
 > - Colorscheme is no longer loaded during `loose.setup()`.
 >   Execute `Colorscheme loose` to load the colorscheme.
-> - `custom_highlights` has been changed so that it can be set per background.
 
 <details>
 <summary> Click to see default configuration </summary>
@@ -164,7 +146,6 @@ opts = {
 require("loose").setup({
     enable_usercmd = false, -- Enable user command "LooseSwitch"
     background = "dark", -- Background color applied at strtup. "light"|"dark"
-    @depricated theme = "dark", -- A palette name
     light_theme = "light", -- A light palette name
     dark_theme = "dark", -- A dark palette name
     borders = true, -- Enable split window borders
@@ -193,7 +174,7 @@ require("loose").setup({
         tabfill = false,
     },
     -- Override or add to default settings. See `nvim_set_hl()` for details.
-    -- highlight_group = {fg = "white", bg = "black", style = "underline"}
+    -- [theme_name] = {hlgroup = {fg = "white", bg = "black", style = "underline"}}
     custom_highlights = {light = {}, dark = {}},
     plugins = {
         -- maintained
@@ -210,6 +191,7 @@ require("loose").setup({
         matchwith = false,
         mini_icons = false,
         noice = false,
+        render_markdown = false,
         rereope = false,
         skkeleton_indicator = false,
         sandwich = false,
