@@ -163,7 +163,7 @@ function theme.highlights(colors, opts)
       -- normal item |hl-Pmenu|
       Pmenu = { fg = colors.fg, bg = colors.float },
       -- selected item |hl-PmenuSel|
-      PmenuSel = { fg = colors.match, bg = colors.float, style = 'reverse' },
+      PmenuSel = { fg = colors.match, bg = colors.bg, style = 'reverse' },
       -- selected item "extra text"
       PmenuKind = { fg = colors.high_cyan, bg = colors.float },
       PmenuKindSel = { fg = colors.match, bg = colors.high_cyan, style = 'reverse' },
@@ -173,11 +173,11 @@ function theme.highlights(colors, opts)
       -- scrollbar |hl-PmenuSbar|
       PmenuSbar = { bg = colors.float },
       -- thumb of the scrollbar  |hl-PmenuThumb|
-      PmenuThumb = { bg = colors.fg },
+      PmenuThumb = { bg = colors.matchsub },
       -- matched text in normal item. combined with |hl-Pmenu|
-      PmenuMatch = { bg = colors.low_orange },
+      PmenuMatch = { fg = colors.match },
       -- matched text in normal item. combined with |hl-PmenuMatch| and |hl-PmenuSel|
-      PmenuMatchSel = { fg = colors.shade_orange, bg = colors.high_orange },
+      PmenuMatchSel = { fg = colors.matchsub, bg = colors.float, style = 'reverse,bold' },
       -- |hit-enter| prompt and yes/no questions
       Question = { fg = colors.green },
       -- current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
@@ -841,12 +841,12 @@ function theme.highlights(colors, opts)
     if opts.plugins.render_markdown then
       p['RenderMarkdownCode'] = { bg = colors.float }
       -- p['RenderMarkdownCodeInline'] = { link = 'RenderMarkdownCode' }
-      p['RenderMarkdownH1Bg'] = {  fg = colors.bg, bg = colors.orange, style = 'bold' }
-      p['RenderMarkdownH2Bg'] = {  fg = colors.bg, bg = colors.purple, style = 'bold' }
-      p['RenderMarkdownH3Bg'] = {  fg = colors.bg,  bg = colors.olive, style = 'bold' }
-      p['RenderMarkdownH4Bg'] = {  fg = colors.bg,  bg = colors.green, style = 'bold' }
-      p['RenderMarkdownH5Bg'] = {  fg = colors.bg,   bg = colors.cyan, style = 'bold' }
-      p['RenderMarkdownH6Bg'] = {  fg = colors.bg,   bg = colors.blue, style = 'bold' }
+      p['RenderMarkdownH1Bg'] = { fg = colors.bg, bg = colors.orange, style = 'bold' }
+      p['RenderMarkdownH2Bg'] = { fg = colors.bg, bg = colors.purple, style = 'bold' }
+      p['RenderMarkdownH3Bg'] = { fg = colors.bg, bg = colors.olive, style = 'bold' }
+      p['RenderMarkdownH4Bg'] = { fg = colors.bg, bg = colors.green, style = 'bold' }
+      p['RenderMarkdownH5Bg'] = { fg = colors.bg, bg = colors.cyan, style = 'bold' }
+      p['RenderMarkdownH6Bg'] = { fg = colors.bg, bg = colors.blue, style = 'bold' }
       p['RenderMarkdownLink'] = { fg = colors.cyan }
       p['RenderMarkdownTodo'] = { link = 'Todo' }
       p['RenderMarkdownDash'] = { fg = colors.shade_gray }
@@ -1085,9 +1085,9 @@ function theme.highlights(colors, opts)
       p['NoiceSplit'] = { link = 'NoicePopup' }
     end
     if opts.plugins.snacks then
-      -- p['SnacksNormal'] = { link = 'Normal' }
+      p['SnacksNormal'] = { link = 'Normal' }
+      p['SnacksNormalNC'] = { link = 'Normal'}
       -- p['SnacksWinBar'] = { link = 'Title'}
-      -- p['SnacksNormalNC'] = { link = 'NormalFloat'}
       -- p['SnacksWinBarNC'] = { link = 'SnacksWinBar'}
       -- p['SnacksScratchKey'] = { link = 'DiagnosticVirtualText'}
       -- p['SnacksScratchDesc'] = { link = 'DiagnosticInfo'}
@@ -1106,7 +1106,17 @@ function theme.highlights(colors, opts)
       p['SnacksDashboardKey'] = { fg = colors.cyan }
       p['SnacksDashboardTerminal'] = { link = 'SnacksDashboardNormal' }
       p['SnacksDashboardSpecial'] = { fg = colors.high_purple }
-      p['SnacksDashboardTitle'] = { bg = colors.high_red }
+      p['SnacksDashboardTitle'] = { fg = colors.bg, bg = colors.high_red }
+      p['SnacksIndent'] = { fg = colors.shade_gray }
+      p['SnacksIndentScope'] = { fg = colors.low_orange }
+      p['SnacksPickerBoxTitle'] = { fg = colors.gray }
+      p['SnacksPickerDir'] = { link = 'Comment' }
+      p['SnacksPickerInput'] = { link = 'Normal' }
+      p['SnacksPickerInputCursorline'] = { link = 'Normal' }
+      p['SnacksPickerInputTitle'] = { fg = colors.gray }
+      p['SnacksPickerListTitle'] = { fg = colors.gray }
+      p['SnacksPickerMatch'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
+      p['SnacksPickerPreviewTitle'] = { fg = colors.gray }
     end
     if opts.plugins.nvimtree then
       p['NvimTreeSymlink'] = { fg = colors.cyan, style = 'bold' }

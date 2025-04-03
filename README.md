@@ -195,11 +195,13 @@ require("loose").setup({
         rereope = false,
         skkeleton_indicator = false,
         sandwich = false,
+        snacks = false,
         staba = false,
         cmp = false,
         telescope = false, -- If "border_fade" is specified, the border background fades
         trouble = false,
-        -- non maintained
+
+        -- non-maintenance
         barbar = false,
         bufferline = false,
         conflict_marker = false,
@@ -218,7 +220,6 @@ require("loose").setup({
         nvimtree = false,
         rainbow_delimiters_high = false, -- Rainbow Delimiters can choose one of
         rainbow_delimiters_low = false,  -- either high contrast or low contrast
-        snacks = false,
         sneak = false,
         treesitter_context = false,
         whichkey = false,
