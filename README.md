@@ -190,7 +190,6 @@ require("loose").setup({
         lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
         mini_icons = false,
-        noice = false,
         render_markdown = false,
         rereope = false,
         skkeleton_indicator = false,
@@ -215,6 +214,7 @@ require("loose").setup({
         lspsaga = false,
         mini_diff = false,
         navic = false
+        noice = false,
         notify = false,
         neogit = false,
         nvimtree = false,

@@ -269,6 +269,7 @@ function theme.highlights(colors, opts)
     if opts.disable.background then
       remove_bg(editor.Normal)
       remove_bg(editor.NormalNC)
+      remove_bg(editor.FloatBorder)
       remove_bg(editor.SignColumn)
     end
 
@@ -1110,13 +1111,14 @@ function theme.highlights(colors, opts)
       p['SnacksIndent'] = { fg = colors.shade_gray }
       p['SnacksIndentScope'] = { fg = colors.low_orange }
       p['SnacksPickerBoxTitle'] = { fg = colors.gray }
-      p['SnacksPickerDir'] = { link = 'Comment' }
       p['SnacksPickerInput'] = { link = 'Normal' }
       p['SnacksPickerInputCursorline'] = { link = 'Normal' }
       p['SnacksPickerInputTitle'] = { fg = colors.gray }
       p['SnacksPickerListTitle'] = { fg = colors.gray }
-      p['SnacksPickerMatch'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
       p['SnacksPickerPreviewTitle'] = { fg = colors.gray }
+      p['SnacksPickerDir'] = { fg = colors.low_blue, style = opts.styles.comments }
+      p['SnacksPickerFile'] = { fg = colors.blue }
+      p['SnacksPickerMatch'] = { fg = colors.bg, bg = colors.match, style = 'bold' }
     end
     if opts.plugins.nvimtree then
       p['NvimTreeSymlink'] = { fg = colors.cyan, style = 'bold' }
