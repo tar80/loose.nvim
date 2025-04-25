@@ -129,6 +129,8 @@ function theme.highlights(colors, opts)
       DiffDelete = { bg = colors.diff_remove },
       -- diff mode: Changed text within a changed line
       DiffText = { bg = colors.diff_text_bg },
+      -- TODO: for test
+      DiffTextAdd = { fg = colors.bg, bg = colors.low_green },
       -- error messages
       ErrorMsg = { fg = colors.error },
       -- line used for closed folds
@@ -404,7 +406,7 @@ function theme.highlights(colors, opts)
         -- ['@markup.heading'] = {link = 'Title'},
         -- Literal or verbatim text.
         ['@markup.raw'] = { fg = colors.fg, bg = colors.nc },
-        -- ['@markup.raw.block'] = { bg = colors.float },
+        ['@markup.raw.block'] = { bg = colors.none },
         -- URIs like hyperlinks or email addresses.
         ['@markup.link.url'] = { link = '@string.special.url' },
         -- Math environments like LaTeX's `$ ... $`
@@ -709,6 +711,13 @@ function theme.highlights(colors, opts)
     -- Plugins highlight groups
     local p = {}
 
+    if opts.nvim_treesitter then
+      -- p['TSModuleInfoHeader'] = { fg = colors.high_olive }
+      -- p['TSModuleInfoNamespace'] = { fg = colors.high_gray }
+      -- p['TSModuleInfoParser'] = { fg = colors.fg }
+      p['TSModuleInfoGood'] = { fg = colors.high_green }
+      p['TSModuleInfoBad'] = { fg = colors.high_red }
+    end
     if opts.plugins.mini_diff then
       p['MiniDiffSignAdd'] = { fg = colors.high_blue }
       p['MiniDiffSignChange'] = { fg = colors.high_green }
@@ -801,8 +810,8 @@ function theme.highlights(colors, opts)
       p['MatchwithSign'] = { fg = colors.hint, style = 'bold' }
     end
     if opts.plugins.rereope then
-      p['RereopeHintBg'] = { fg = colors.olive, bg = colors.shade_olive }
-      p['RereopeHintBorder'] = { fg = colors.high_olive, bg = colors.shade_olive }
+      p['RereopeHintBg'] = { fg = colors.shade_olive, bg = colors.olive }
+      p['RereopeHintBorder'] = { fg = colors.shade_olive, bg = colors.olive }
       p['RereopeVisualFlash'] = { bg = colors.shade_olive }
     end
     if opts.plugins.skkeleton_indicator then
@@ -837,7 +846,7 @@ function theme.highlights(colors, opts)
       p['StabaSpecial'] = { fg = colors.high_olive, sp = colors.border }
       p['StabaReadonly'] = { fg = colors.low_gray, sp = colors.border }
       p['StabaModified'] = { fg = colors.high_cyan, sp = colors.border }
-      p['StabaSignMarks'] = { fg = colors.green, sp = colors.low_green, style = 'bold,underline' }
+      p['StabaSignMarks'] = { fg = colors.green, bg = colors.shade_green, sp = colors.low_green, style = 'bold' }
     end
     if opts.plugins.render_markdown then
       p['RenderMarkdownCode'] = { bg = colors.float }

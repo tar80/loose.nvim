@@ -67,6 +67,7 @@ the author's favorite plugins are also added.
 - [Noice](https://github.com/folke/noice.nvim)
 - [Nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) @deprecated
 - [Nvim-dap-virtual-text](https://github.com/theHamsta/nvim-dap-virtual-text)
+- [Nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
 - [Matchwith](https://github.com/tar80/matchwith.nvim)
 - [Mini-icons](https://github.com/echasnovski/mini.icons)
 - [Mini-diff](https://github.com/echasnovski/mini.diff)
@@ -190,6 +191,7 @@ require("loose").setup({
         lspconfig = false, -- @deprecated: LspInfo has been updated. Hlgroup is no longer used
         matchwith = false,
         mini_icons = false,
+        nvim_treesitter = false,
         render_markdown = false,
         rereope = false,
         skkeleton_indicator = false,
